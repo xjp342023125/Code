@@ -106,7 +106,7 @@ CURL_SRC_DIR = ..\src
 WITH_DEVEL          = ../../deps
 !ENDIF
 DEVEL_INCLUDE  = $(WITH_DEVEL)/include
-DEVEL_LIB      = $(WITH_DEVEL)/lib
+DEVEL_LIB      = $(WITH_DEVEL)/
 DEVEL_BIN      = $(WITH_DEVEL)/bin
 
 CFLAGS         = $(CFLAGS) /I"$(DEVEL_INCLUDE)"
@@ -114,7 +114,7 @@ LFLAGS         = $(LFLAGS) "/LIBPATH:$(DEVEL_LIB)"
 
 
 !IF "$(WITH_SSL)"=="dll"
-SSL_LIBS     = libeay32.lib ssleay32.lib
+SSL_LIBS     = libcrypto.lib libssl.lib
 USE_SSL      = true
 SSL          = dll
 !ELSEIF "$(WITH_SSL)"=="static"

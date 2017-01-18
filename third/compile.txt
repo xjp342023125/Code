@@ -1,0 +1,9 @@
+openssl
+windows
+1 install activeperl
+2 perl Configure  VC-WIN32
+3 namake
+
+curl
+window-ssl
+nmake /f Makefile.vc mode=dll VC=14 WITH_SSL=dll ENABLE_WINSSL=false WITH_DEVEL=..\..\openssl

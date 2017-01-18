@@ -55,6 +55,10 @@ Then you can call nmake /f Makefile.vc with the desired options (see below).
 The builds will be in the top src directory, builds\ directory, in 
 a directory named using the options given to the nmake call.
 
+
+nmake /f Makefile.vc mode=dll VC=14 WITH_SSL=dll ENABLE_WINSSL=false WITH_DEVEL=..\..\openssl
+
+
 nmake /f Makefile.vc mode=<static or dll> <options>
 
 where <options> is one or many of:
