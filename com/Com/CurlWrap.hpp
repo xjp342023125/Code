@@ -1,7 +1,7 @@
 #pragma once
 #include "../ComAll/XSTL.hpp"
 #include "CMicro.hpp"
-#include "../third/curl/include/curl/curl.h"
+#include "../../third/out/include/curl/curl.h"
 
 template <class T>
 struct CurlDownInfo
