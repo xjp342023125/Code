@@ -6,6 +6,7 @@ using namespace std;
 #include "../ComAll/XType.h"
 #include "../ComAll/XStr.hpp"
 #include "../ComAll/XMicro.h"
+#include "windows.h"
 //utf-8תunicode
 static wchar_t *Utf8_Unicode(const char* szU8) {
 	int wcsLen = ::MultiByteToWideChar(CP_UTF8, NULL, szU8, strlen(szU8), NULL, 0);

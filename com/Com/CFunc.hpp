@@ -13,8 +13,10 @@
 #include "stdio.h"
 #include "string.h"
 #include  <direct.h>  
-
-#include "VMProtectSDK.h"
+#include "Wininet.h"
+#include "tchar.h"
+#pragma comment(lib,"Wininet.lib")
+//#include "VMProtectSDK.h"
 
 #include "CMicro.hpp"
 #include "../ComAll/XType.h"
@@ -23,6 +25,7 @@
 
 #include "CFile.hpp"
 #include "CStr.hpp"
+
 using namespace std;
 #pragma comment(lib,"psapi.lib")
 
@@ -603,9 +606,7 @@ struct InitVal
 
 
 
-#include "Wininet.h"
-#include "tchar.h"
-#pragma comment(lib,"Wininet.lib")
+
 
 static void SetIEProxy(TCHAR *buff, BOOL enableproxy = 1)
 {

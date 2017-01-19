@@ -6,6 +6,7 @@
 #include <iostream>
 #include "CStr.hpp"
 #include <memory>
+#include "CSock.hpp"
 using namespace std;
 #define CHECK(val)	if(!(val)) return ;
 
@@ -365,7 +366,7 @@ static CHttpNode::node_ptr_t GetHttpNodeEx(CurlDMem &sd, bool convert_utf8)
 
 	return pRoot;
 }
-#include "CSock.hpp"
+
 static CHttpNode::node_ptr_t GetHttpNodeByURL(cstr_t url, bool convert_utf8, CAddr *proxy = NULL)
 {
 	CurlDMem sd;
@@ -376,7 +377,7 @@ static CHttpNode::node_ptr_t GetHttpNodeByURL(cstr_t url, bool convert_utf8, CAd
 		sd.curl_handle.set_proxy(proxy->GetIPStr(), proxy->GetPort());
 	}
 	DownInfo Ret = sd.CurlPerform();
-	CHttpNode::node_ptr_t p = GetHttpNodeEx(sd, true);
+	CHttpNode::node_ptr_t p = GetHttpNodeEx(sd, convert_utf8);
 	sd.bf.Clean();
 	return p;
 }
