@@ -3,10 +3,7 @@
 
 #include "stdafx.h"
 
-#include "../../../com/Com/CHttpDown.hpp"
-//#include "../../../com/Com/CFunc.hpp"
-#include "../../../com/Com/CFile.hpp"
-#pragma comment ( lib,"../../../third/out/lib/libcurl.lib" )
+#include "../../../com/Com/CAllHead.h"
 #include <sstream>
 using namespace std;
 
