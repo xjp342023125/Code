@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="E:\git\third\libevent\buffer.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\bufferevent.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\bufferevent_filter.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\bufferevent_pair.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\bufferevent_ratelim.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\bufferevent_sock.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\event.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\evmap.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\evthread.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\evutil.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\evutil_rand.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\evutil_time.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\listener.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\log.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\signal.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\strlcpy.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\evthread_win32.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\buffer_iocp.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\bufferevent_async.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\event_iocp.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\git\third\libevent\win32select.c">
+      <Filter>Source Core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="E:\git\third\libevent\bufferevent-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\changelist-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\defer-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\epolltable-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\evbuffer-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\event-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\evmap-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\evrpc-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\evsignal-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\evthread-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\ht-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\http-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\iocp-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\ipv6-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\log-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\minheap-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\mm-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\ratelim-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\strlcpy-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\util-internal.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\evconfig-private.h.in">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\compat\sys\queue.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\WIN32-Code\getopt.h">
+      <Filter>Headers Private</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\evdns.h">
+      <Filter>Header Compat</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\evrpc.h">
+      <Filter>Header Compat</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event.h">
+      <Filter>Header Compat</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\evhttp.h">
+      <Filter>Header Compat</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\evutil.h">
+      <Filter>Header Compat</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\buffer.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\bufferevent.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\bufferevent_compat.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\bufferevent_struct.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\buffer_compat.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\dns.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\dns_compat.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\dns_struct.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\event.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\event_compat.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\event_struct.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\http.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\http_compat.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\http_struct.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\keyvalq_struct.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\listener.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\rpc.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\rpc_compat.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\rpc_struct.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\tag.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\tag_compat.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\thread.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\util.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\include\event2\visibility.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\git\third\libevent\build\include\event2\event-config.h">
+      <Filter>Headers Public</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\git\third\libevent\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{486987FE-98C0-39EC-9AB6-D61D8F3CE6DA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers Private">
+      <UniqueIdentifier>{C56D2B4D-7541-34BE-9936-0E622B4DFE19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Compat">
+      <UniqueIdentifier>{F0F148F9-66B3-394F-8681-BB5B299D86A5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers Public">
+      <UniqueIdentifier>{3653A6B1-F800-3958-BC67-60316BB5F3CF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Core">
+      <UniqueIdentifier>{D89FD99D-6D61-3B96-B4F0-EE0930C2EA44}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
