@@ -4,10 +4,14 @@
 #include "stdafx.h"
 
 #include "../../../com/Com/CAllHead.h"
+#include <event2/event.h>
+#pragma comment ( lib,"../../../third/out/lib/libcurl.lib" )
+#pragma comment ( lib,"../../../third/out/lib/event.lib" )
 #include <sstream>
 using namespace std;
 void test_dowm();
 int test_multi();
+void test_multi_with_libevent();
 int _tmain(int argc, _TCHAR* argv[])
 {
 	//test_dowm();
@@ -92,4 +96,111 @@ int test_multi()
 	curl_global_cleanup();
 
 	return 0;
+}
+//=========================================================
+#define MSG_OUT stdout /* Send info to stdout, change to stderr if you want */
+
+/* Global information, common to all connections */
+typedef struct _GlobalInfo
+{
+	struct event_base *evbase;
+	struct event *fifo_event;
+	struct event *timer_event;
+	CURLM *multi;
+	int still_running;
+} GlobalInfo;
+
+/* Information associated with a specific easy handle */
+typedef struct _ConnInfo
+{
+	CURL *easy;
+	char *url;
+	GlobalInfo *global;
+	char error[CURL_ERROR_SIZE];
+} ConnInfo;
+
+/* Information associated with a specific socket */
+typedef struct _SockInfo
+{
+	curl_socket_t sockfd;
+	CURL *easy;
+	int action;
+	long timeout;
+	struct event *ev;
+	int evset;
+	GlobalInfo *global;
+} SockInfo;
+/* Die if we get a bad CURLMcode somewhere */
+static void mcode_or_die(const char *where, CURLMcode code)
+{
+	if (CURLM_OK != code) {
+		const char *s;
+		switch (code) {
+		case     CURLM_BAD_HANDLE:         s = "CURLM_BAD_HANDLE";         break;
+		case     CURLM_BAD_EASY_HANDLE:    s = "CURLM_BAD_EASY_HANDLE";    break;
+		case     CURLM_OUT_OF_MEMORY:      s = "CURLM_OUT_OF_MEMORY";      break;
+		case     CURLM_INTERNAL_ERROR:     s = "CURLM_INTERNAL_ERROR";     break;
+		case     CURLM_UNKNOWN_OPTION:     s = "CURLM_UNKNOWN_OPTION";     break;
+		case     CURLM_LAST:               s = "CURLM_LAST";               break;
+		default: s = "CURLM_unknown";
+			break;
+		case     CURLM_BAD_SOCKET:         s = "CURLM_BAD_SOCKET";
+			fprintf(MSG_OUT, "ERROR: %s returns %s\n", where, s);
+			/* ignore this error */
+			return;
+		}
+		fprintf(MSG_OUT, "ERROR: %s returns %s\n", where, s);
+		exit(code);
+	}
+}
+
+/* Check for completed transfers, and remove their easy handles */
+static void check_multi_info(GlobalInfo *g)
+{
+	char *eff_url;
+	CURLMsg *msg;
+	int msgs_left;
+	ConnInfo *conn;
+	CURL *easy;
+	CURLcode res;
+
+	fprintf(MSG_OUT, "REMAINING: %d\n", g->still_running);
+	while ((msg = curl_multi_info_read(g->multi, &msgs_left))) {
+		if (msg->msg == CURLMSG_DONE) {
+			easy = msg->easy_handle;
+			res = msg->data.result;
+			curl_easy_getinfo(easy, CURLINFO_PRIVATE, &conn);
+			curl_easy_getinfo(easy, CURLINFO_EFFECTIVE_URL, &eff_url);
+			fprintf(MSG_OUT, "DONE: %s => (%d) %s\n", eff_url, res, conn->error);
+			curl_multi_remove_handle(g->multi, easy);
+			free(conn->url);
+			curl_easy_cleanup(easy);
+			free(conn);
+		}
+	}
+}
+
+
+/* Called by libevent when our timeout expires */
+static void timer_cb(int fd, short kind, void *userp)
+{
+	GlobalInfo *g = (GlobalInfo *)userp;
+	CURLMcode rc;
+	(void)fd;
+	(void)kind;
+
+	rc = curl_multi_socket_action(g->multi,
+		CURL_SOCKET_TIMEOUT, 0, &g->still_running);
+	mcode_or_die("timer_cb: curl_multi_socket_action", rc);
+	check_multi_info(g);
+}
+void test_multi_with_libevent()
+{
+	GlobalInfo g;
+
+	memset(&g, 0, sizeof(GlobalInfo));
+	g.evbase = event_base_new();
+
+	g.multi = curl_multi_init();
+	g.timer_event = evtimer_new(g.evbase, timer_cb, &g);
 }
