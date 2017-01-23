@@ -7,3 +7,6 @@ windows
 curl
 window-ssl
 nmake /f Makefile.vc mode=dll VC=14 WITH_SSL=dll ENABLE_WINSSL=false WITH_DEVEL=..\..\openssl
+
+libevent
+ÎÞcmake:nmake /f Makefile.nmake
