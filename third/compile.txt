@@ -13,7 +13,7 @@ curl
 输出:dll win32 openssl-dll
 # develop command prompt 2015
 # cd winbuild
-# nmake /f Makefile.vc mode=dll VC=14 WITH_SSL=dll ENABLE_WINSSL=false WITH_DEVEL=..\..\openssl  ENABLE_IPV6=no ENABLE_SSPI=no MACHINE=x86
+# nmake /f Makefile.vc mode=dll VC=14 WITH_SSL=dll ENABLE_WINSSL=false WITH_DEVEL=..\..\openssl  ENABLE_IPV6=no ENABLE_SSPI=no MACHINE=x86 DEBUG=yes GEN_PDB=yes
 
 libevent
 操作系统：windows

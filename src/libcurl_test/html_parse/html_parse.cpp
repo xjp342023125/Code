@@ -5,7 +5,7 @@
 
 #include "../../../com/Com/CAllHead.h"
 #include <event2/event.h>
-#pragma comment ( lib,"../../../third/out/lib/libcurl.lib" )
+#pragma comment ( lib,"../../../third/out/lib/libcurl_debug.lib" )
 #pragma comment ( lib,"../../../third/out/lib/event.lib" )
 #include <sstream>
 using namespace std;
@@ -14,8 +14,13 @@ int test_multi();
 void test_multi_with_libevent();
 int _tmain(int argc, _TCHAR* argv[])
 {
+#ifdef _WIN32
+	WSADATA wsa_data;
+	WSAStartup(0x0201, &wsa_data);
+#endif
 	//test_dowm();
-	test_multi();
+	//test_multi();
+	test_multi_with_libevent();
 	return 0;
 
 }
@@ -194,8 +199,161 @@ static void timer_cb(int fd, short kind, void *userp)
 	mcode_or_die("timer_cb: curl_multi_socket_action", rc);
 	check_multi_info(g);
 }
+
+/* Update the event timer after curl_multi library calls */
+static int multi_timer_cb(CURLM *multi, long timeout_ms, GlobalInfo *g)
+{
+	struct timeval timeout;
+	(void)multi; /* unused */
+
+	timeout.tv_sec = timeout_ms / 1000;
+	timeout.tv_usec = (timeout_ms % 1000) * 1000;
+	fprintf(MSG_OUT, "multi_timer_cb: Setting timeout to %ld ms\n", timeout_ms);
+	evtimer_add(g->timer_event, &timeout);
+	return 0;
+}
+/* Clean up the SockInfo structure */
+static void remsock(SockInfo *f)
+{
+	if (f) {
+		if (f->evset)
+			event_free(f->ev);
+		free(f);
+	}
+}
+
+static void event_cb(int fd, short kind, void *userp)
+{
+	GlobalInfo *g = (GlobalInfo*)userp;
+	CURLMcode rc;
+
+	int action =
+		(kind & EV_READ ? CURL_CSELECT_IN : 0) |
+		(kind & EV_WRITE ? CURL_CSELECT_OUT : 0);
+
+	rc = curl_multi_socket_action(g->multi, fd, action, &g->still_running);
+	mcode_or_die("event_cb: curl_multi_socket_action", rc);
+
+	check_multi_info(g);
+	if (g->still_running <= 0) {
+		fprintf(MSG_OUT, "last transfer done, kill timeout\n");
+		if (evtimer_pending(g->timer_event, NULL)) {
+			evtimer_del(g->timer_event);
+		}
+	}
+}
+/* Assign information to a SockInfo structure */
+static void setsock(SockInfo *f, curl_socket_t s, CURL *e, int act,
+	GlobalInfo *g)
+{
+	int kind =
+		(act&CURL_POLL_IN ? EV_READ : 0) | (act&CURL_POLL_OUT ? EV_WRITE : 0) | EV_PERSIST;
+
+	f->sockfd = s;
+	f->action = act;
+	f->easy = e;
+	if (f->evset)
+		event_free(f->ev);
+	f->ev = event_new(g->evbase, f->sockfd, kind, event_cb, g);
+	f->evset = 1;
+	event_add(f->ev, NULL);
+}
+/* Initialize a new SockInfo structure */
+static void addsock(curl_socket_t s, CURL *easy, int action, GlobalInfo *g)
+{
+	SockInfo *fdp = (SockInfo*)calloc(sizeof(SockInfo), 1);
+
+	fdp->global = g;
+	setsock(fdp, s, easy, action, g);
+	curl_multi_assign(g->multi, s, fdp);
+}
+/* Called by libevent when we get action on a multi socket */
+
+
+
+/* CURLMOPT_SOCKETFUNCTION */
+static int sock_cb(CURL *e, curl_socket_t s, int what, void *cbp, void *sockp)
+{
+	GlobalInfo *g = (GlobalInfo*)cbp;
+	SockInfo *fdp = (SockInfo*)sockp;
+	const char *whatstr[] = { "none", "IN", "OUT", "INOUT", "REMOVE" };
+
+	fprintf(MSG_OUT,
+		"socket callback: s=%d e=%p what=%s ", s, e, whatstr[what]);
+	if (what == CURL_POLL_REMOVE) {
+		fprintf(MSG_OUT, "\n");
+		remsock(fdp);
+	}
+	else {
+		if (!fdp) {
+			fprintf(MSG_OUT, "Adding data: %s\n", whatstr[what]);
+			addsock(s, e, what, g);
+		}
+		else {
+			fprintf(MSG_OUT,
+				"Changing action from %s to %s\n",
+				whatstr[fdp->action], whatstr[what]);
+			setsock(fdp, s, e, what, g);
+		}
+	}
+	return 0;
+}
+
+/* CURLOPT_WRITEFUNCTION */
+static size_t write_cb(void *ptr, size_t size, size_t nmemb, void *data)
+{
+	size_t realsize = size * nmemb;
+	ConnInfo *conn = (ConnInfo*)data;
+	(void)ptr;
+	(void)conn;
+	return realsize;
+}
+
+/* CURLOPT_PROGRESSFUNCTION */
+static int prog_cb(void *p, double dltotal, double dlnow, double ult,
+	double uln)
+{
+	ConnInfo *conn = (ConnInfo *)p;
+	(void)ult;
+	(void)uln;
+
+	fprintf(MSG_OUT, "Progress: %s (%g/%g)\n", conn->url, dlnow, dltotal);
+	return 0;
+}
+void add_url_to_multi_libevent(GlobalInfo *g, const char *url)
+{
+	ConnInfo *conn;
+	CURLMcode rc;
+
+	conn = (ConnInfo*)calloc(1, sizeof(ConnInfo));
+	memset(conn, 0, sizeof(ConnInfo));
+	conn->error[0] = '\0';
+
+	conn->easy = curl_easy_init();
+	if (!conn->easy) {
+		fprintf(MSG_OUT, "curl_easy_init() failed, exiting!\n");
+		exit(2);
+	}
+	conn->global = g;
+	conn->url = strdup(url);
+	curl_easy_setopt(conn->easy, CURLOPT_URL, conn->url);
+	curl_easy_setopt(conn->easy, CURLOPT_WRITEFUNCTION, write_cb);
+	curl_easy_setopt(conn->easy, CURLOPT_WRITEDATA, conn);
+	curl_easy_setopt(conn->easy, CURLOPT_VERBOSE, 1L);
+	curl_easy_setopt(conn->easy, CURLOPT_ERRORBUFFER, conn->error);
+	curl_easy_setopt(conn->easy, CURLOPT_PRIVATE, conn);
+	curl_easy_setopt(conn->easy, CURLOPT_NOPROGRESS, 0L);
+	curl_easy_setopt(conn->easy, CURLOPT_PROGRESSFUNCTION, prog_cb);
+	curl_easy_setopt(conn->easy, CURLOPT_PROGRESSDATA, conn);
+	fprintf(MSG_OUT,
+		"Adding easy %p to multi %p (%s)\n", conn->easy, g->multi, url);
+	rc = curl_multi_add_handle(g->multi, conn->easy);
+	mcode_or_die("new_conn: curl_multi_add_handle", rc);
+}
 void test_multi_with_libevent()
 {
+	//CreateThread(0, 0, 0, 0, 0, 0);
+
 	GlobalInfo g;
 
 	memset(&g, 0, sizeof(GlobalInfo));
@@ -203,4 +361,27 @@ void test_multi_with_libevent()
 
 	g.multi = curl_multi_init();
 	g.timer_event = evtimer_new(g.evbase, timer_cb, &g);
+
+
+	curl_multi_setopt(g.multi, CURLMOPT_SOCKETFUNCTION, sock_cb);
+	curl_multi_setopt(g.multi, CURLMOPT_SOCKETDATA, &g);
+	curl_multi_setopt(g.multi, CURLMOPT_TIMERFUNCTION, multi_timer_cb);
+	curl_multi_setopt(g.multi, CURLMOPT_TIMERDATA, &g);
+
+	//add_url_to_multi_libevent(&g, "https://www.github.com/");
+	//add_url_to_multi_libevent(&g, "http://ip.taobao.com/service/getIpInfo.php?ip=127.0.0.1");
+	add_url_to_multi_libevent(&g, "http://mat.client.dl.kingsoft.com/MATOnline_2.1.6.839.rar");
+	add_url_to_multi_libevent(&g, "http://mat.update.dl.kingsoft.com/update838-839.exe");
+
+	/* we don't call any curl_multi_socket*() function yet as we have no handles
+	added! */
+	
+	event_base_dispatch(g.evbase);
+
+	/* this, of course, won't get called since only way to stop this program is
+	via ctrl-C, but it is here to show how cleanup /would/ be done. */
+
+	event_free(g.timer_event);
+	event_base_free(g.evbase);
+	curl_multi_cleanup(g.multi);
 }

@@ -13,7 +13,7 @@
 
 #include "CHttpDown.hpp"
 #include "ChttpTree.hpp"
-#pragma comment ( lib,"../../../third/out/lib/libcurl.lib" )
+
 
 
 
