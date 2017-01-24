@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -36,11 +36,11 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup>
-    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
-  </PropertyGroup>
+    <PropertyGroup>
+      <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
       <AdditionalIncludeDirectories>E:\git\third\libevent\build\include;E:\git\third\libevent\include;E:\git\third\libevent\compat;E:\git\third\libevent;E:\git\third\libevent\.\WIN32-Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -93,8 +93,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="E:\git\third\libevent\build\CMakeFiles\ab0fe97a244ace9058702570e7fc8cd0\verify.rule">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'"></Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
 call verify_tests.bat
 if %errorlevel% neq 0 goto :cmEnd
@@ -107,8 +106,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">E:/git/third/libevent/build/CMakeFiles/ab0fe97a244ace9058702570e7fc8cd0/verify.rule;E:\git\third\libevent\build\bin\Debug\event.dll;E:\git\third\libevent\build\bin\Debug\test-changelist.exe;E:\git\third\libevent\build\bin\Debug\test-eof.exe;E:\git\third\libevent\build\bin\Debug\test-fdleak.exe;E:\git\third\libevent\build\bin\Debug\test-init.exe;E:\git\third\libevent\build\bin\Debug\test-time.exe;E:\git\third\libevent\build\bin\Debug\test-weof.exe;E:\git\third\libevent\build\bin\Debug\test-dumpevents.exe;E:\git\third\libevent\build\bin\Debug\test-ratelim.exe;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">E:\git\third\libevent\build\CMakeFiles\verify</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'"></Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
 call verify_tests.bat
 if %errorlevel% neq 0 goto :cmEnd
@@ -132,6 +130,30 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ProjectReference>
     <ProjectReference Include="E:/git/third/libevent/build/event.vcxproj">
       <Project>C3D831F2-6395-3709-8447-27602E054720</Project>
+    </ProjectReference>
+    <ProjectReference Include="E:/git/third/libevent/build/test-changelist.vcxproj">
+      <Project>80DDECDD-3C6D-3159-95CE-719EB464213C</Project>
+    </ProjectReference>
+    <ProjectReference Include="E:/git/third/libevent/build/test-dumpevents.vcxproj">
+      <Project>EFEA3EA4-3F5C-31E5-A6A9-BF1C8C52875C</Project>
+    </ProjectReference>
+    <ProjectReference Include="E:/git/third/libevent/build/test-eof.vcxproj">
+      <Project>4D265879-E5D0-3607-B0B9-CA8DC6CA5CE8</Project>
+    </ProjectReference>
+    <ProjectReference Include="E:/git/third/libevent/build/test-fdleak.vcxproj">
+      <Project>E2846FF8-6498-357B-928F-B2CEA4717B06</Project>
+    </ProjectReference>
+    <ProjectReference Include="E:/git/third/libevent/build/test-init.vcxproj">
+      <Project>143C662C-929E-346C-9959-3DA2E7DAD485</Project>
+    </ProjectReference>
+    <ProjectReference Include="E:/git/third/libevent/build/test-ratelim.vcxproj">
+      <Project>13DD84AA-FE38-3306-B6B2-15C1D8868917</Project>
+    </ProjectReference>
+    <ProjectReference Include="E:/git/third/libevent/build/test-time.vcxproj">
+      <Project>E13195F9-FB33-3266-A1F6-BBC2CD39A9E3</Project>
+    </ProjectReference>
+    <ProjectReference Include="E:/git/third/libevent/build/test-weof.vcxproj">
+      <Project>AA3D5A1E-0C8A-3235-8E4A-7A7622F54287</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
