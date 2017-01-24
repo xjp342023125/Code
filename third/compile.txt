@@ -1,13 +1,32 @@
 openssl
-windows
-1 install activeperl
-2 perl Configure  VC-WIN32
-3 namake
+操作系统：windows
+说明文件：INSTALL
+输出:dll win32
+# install activeperl
+# develop command prompt 2015
+# perl Configure  VC-WIN32 no-asm
+# nmake
 
 curl
-window-ssl
-cd winbuild
-nmake /f Makefile.vc mode=dll VC=14 WITH_SSL=dll ENABLE_WINSSL=false WITH_DEVEL=..\..\openssl DEBUG=yes MACHINE=x86 ENABLE_IPV6=no ENABLE_SSPI=no
+操作系统：windows
+说明文件：winbuild\BUILD.WINDOWS.txt
+输出:dll win32 openssl-dll
+# develop command prompt 2015
+# cd winbuild
+# nmake /f Makefile.vc mode=dll VC=14 WITH_SSL=dll ENABLE_WINSSL=false WITH_DEVEL=..\..\openssl  ENABLE_IPV6=no ENABLE_SSPI=no MACHINE=x86
 
 libevent
-无cmake:nmake /f Makefile.nmake
+操作系统：windows
+
+说明文件：无
+输出 lib win32
+# develop command prompt 2015
+# nmake /f Makefile.nmake
+
+说明文件：README.md
+输出 dll win32
+# 改cmakelists.txt  EVENT__BUILD_SHARED_LIBRARIES 动态连接
+# develop command prompt 2015
+# mkdir build && cd build
+cmake -G "Visual Studio 14" ..
+
