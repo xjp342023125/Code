@@ -345,8 +345,12 @@ void add_url_to_multi_libevent(GlobalInfo *g, const char *url)
 	curl_easy_setopt(conn->easy, CURLOPT_NOPROGRESS, 0L);
 	curl_easy_setopt(conn->easy, CURLOPT_PROGRESSFUNCTION, prog_cb);
 	curl_easy_setopt(conn->easy, CURLOPT_PROGRESSDATA, conn);
-	fprintf(MSG_OUT,
-		"Adding easy %p to multi %p (%s)\n", conn->easy, g->multi, url);
+	curl_easy_setopt(conn->easy, CURLOPT_PROGRESSDATA, conn);
+	curl_easy_setopt(conn->easy,CURLOPT_USERAGENT,"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36");
+	curl_easy_setopt(conn->easy, CURLOPT_SSL_VERIFYPEER, 0);
+	curl_easy_setopt(conn->easy, CURLOPT_FOLLOWLOCATION, 1);
+	curl_easy_setopt(conn->easy, CURLOPT_VERBOSE, 1);
+	fprintf(MSG_OUT,"Adding easy %p to multi %p (%s)\n", conn->easy, g->multi, url);
 	rc = curl_multi_add_handle(g->multi, conn->easy);
 	mcode_or_die("new_conn: curl_multi_add_handle", rc);
 }
@@ -368,9 +372,9 @@ void test_multi_with_libevent()
 	curl_multi_setopt(g.multi, CURLMOPT_TIMERFUNCTION, multi_timer_cb);
 	curl_multi_setopt(g.multi, CURLMOPT_TIMERDATA, &g);
 
-	//add_url_to_multi_libevent(&g, "https://www.github.com/");
-	//add_url_to_multi_libevent(&g, "http://ip.taobao.com/service/getIpInfo.php?ip=127.0.0.1");
-	add_url_to_multi_libevent(&g, "http://mat.client.dl.kingsoft.com/MATOnline_2.1.6.839.rar");
+	//add_url_to_multi_libevent(&g, "https://github.com/");
+	add_url_to_multi_libevent(&g, "http://ip.taobao.com/service/getIpInfo.php?ip=127.0.0.1");
+	//add_url_to_multi_libevent(&g, "http://mat.client.dl.kingsoft.com/MATOnline_2.1.6.839.rar");
 	add_url_to_multi_libevent(&g, "http://mat.update.dl.kingsoft.com/update838-839.exe");
 
 	/* we don't call any curl_multi_socket*() function yet as we have no handles
