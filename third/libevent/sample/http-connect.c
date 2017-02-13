@@ -1,119 +1,148 @@
-#include "event2/event-config.h"
-
-#include <event2/event.h>
-#include <event2/http.h>
-#include <event2/http_struct.h>
-#include <event2/buffer.h>
 #include <stdlib.h>
-#include <stdio.h>
-#include <limits.h>
+#include <string.h>
+#include "event2/event.h"
+#include "event2/http.h"
+#include "event2/buffer.h"
+#include "event2/http_struct.h"
+#include "event2/dns.h"
 
-#define VERIFY(cond) do {                       \
-	if (!(cond)) {                              \
-		fprintf(stderr, "[error] %s\n", #cond); \
-	}                                           \
-} while (0);                                    \
 
-#define URL_MAX 4096
-
-struct connect_base
-{
-	struct evhttp_connection *evcon;
-	struct evhttp_uri *location;
+struct download_context {
+	struct evhttp_uri * uri;
+	struct event_base * base;
+	struct evdns_base * dnsbase;
+	struct evhttp_connection * conn;
+	struct evhttp_request *req;
+	struct evbuffer *buffer;
+	int ok;
 };
 
-static void get_cb(struct evhttp_request *req, void *arg)
+static void download_callback(struct evhttp_request *req, void *arg);
+static int download_renew_request(struct download_context *ctx);
+
+static void download_callback(struct evhttp_request *req, void *arg)
 {
-	ev_ssize_t len;
-	struct evbuffer *evbuf;
+	struct download_context * ctx = (struct download_context*)arg;
+	struct evhttp_uri * new_uri = 0;
+	const char * new_location = 0;
+	if (!req) {
+		printf("timeout\n");
+		return;
+	}
 
-	VERIFY(req);
+	switch (req->response_code)
+	{
+	case HTTP_OK:
+		event_base_loopexit(ctx->base, 0);
+		break;
+	case HTTP_MOVEPERM:
+	case HTTP_MOVETEMP:
+		new_location = evhttp_find_header(req->input_headers, "Location");
+		if (!new_location) return;
+		new_uri = evhttp_uri_parse(new_location);
+		if (!new_uri)return;
+		evhttp_uri_free(ctx->uri);
+		ctx->uri = new_uri;
+		download_renew_request(ctx);
+		return;
+	default:/* failed */
+		event_base_loopexit(ctx->base, 0);
+		return;
+	}
 
-	evbuf = evhttp_request_get_input_buffer(req);
-	len = evbuffer_get_length(evbuf);
-	fwrite(evbuffer_pullup(evbuf, len), len, 1, stdout);
-	evbuffer_drain(evbuf, len);
+	evbuffer_add_buffer(ctx->buffer, req->input_buffer);
+	ctx->ok = 1;
 }
 
-static void connect_cb(struct evhttp_request *proxy_req, void *arg)
+struct download_context * context_new(const char *url)
 {
-	char buffer[URL_MAX];
+	struct download_context * ctx = 0;
+	ctx = (struct download_context*)calloc(1, sizeof(struct download_context));
+	ctx->uri = evhttp_uri_parse(url);
+	if (!ctx->uri) return 0;
 
-	struct connect_base *base = arg;
-	struct evhttp_connection *evcon = base->evcon;
-	struct evhttp_uri *location = base->location;
+	ctx->base = event_base_new();
+	ctx->buffer = evbuffer_new();
+	ctx->dnsbase = evdns_base_new(ctx->base, 1);
 
-	VERIFY(proxy_req);
-	if (evcon) {
-		struct evhttp_request *req = evhttp_request_new(get_cb, NULL);
-		evhttp_add_header(req->output_headers, "Connection", "close");
-		VERIFY(!evhttp_make_request(evcon, req, EVHTTP_REQ_GET,
-			evhttp_uri_join(location, buffer, URL_MAX)));
-	}
+	download_renew_request(ctx);
+	return ctx;
 }
 
-int main(int argc, const char **argv)
+void context_free(struct download_context *ctx)
 {
-	char buffer[URL_MAX];
+	if (ctx->conn)
+		evhttp_connection_free(ctx->conn);
 
-	struct evhttp_uri *host_port;
-	struct evhttp_uri *location;
-	struct evhttp_uri *proxy;
+	if (ctx->buffer)
+		evbuffer_free(ctx->buffer);
 
-	struct event_base *base;
-	struct evhttp_connection *evcon;
-	struct evhttp_request *req;
+	if (ctx->uri)
+		evhttp_uri_free(ctx->uri);
 
-	struct connect_base connect_base;
+	free(ctx);
+}
 
-	if (argc != 3) {
-		printf("Usage: %s proxy url\n", argv[0]);
-		return 1;
-	}
+static int download_renew_request(struct download_context *ctx)
+{
+	int port = evhttp_uri_get_port(ctx->uri);
+	if (port == -1) port = 80;
+	if (ctx->conn) evhttp_connection_free(ctx->conn);
 
+	printf("host:%s, port:%d, path:%s\n", evhttp_uri_get_host(ctx->uri), port, evhttp_uri_get_path(ctx->uri));
+
+	ctx->conn = evhttp_connection_base_new(ctx->base, ctx->dnsbase, evhttp_uri_get_host(ctx->uri), port);
+	ctx->req = evhttp_request_new(download_callback, ctx);
+	evhttp_make_request(ctx->conn, ctx->req, EVHTTP_REQ_GET, evhttp_uri_get_path(ctx->uri));
+	evhttp_add_header(ctx->req->output_headers, "Host", evhttp_uri_get_host(ctx->uri));
+
+	return 0;
+}
+
+struct evbuffer *download_url(const char *url)
+{
+	struct download_context * ctx = context_new(url);
+	if (!ctx) return 0;
+
+	event_base_dispatch(ctx->base);
+
+	struct evbuffer * retval = 0;
+	if (ctx->ok)
 	{
-		proxy = evhttp_uri_parse(argv[1]);
-		VERIFY(evhttp_uri_get_host(proxy));
-		VERIFY(evhttp_uri_get_port(proxy) > 0);
+		retval = ctx->buffer;
+		ctx->buffer = 0;
 	}
+
+	context_free(ctx);
+	return retval;
+}
+
+int main(int argc, char **argv)
+{
+	struct evbuffer * data = 0;
+
+
+#ifdef WIN32
+	WORD wVersionRequested;
+	WSADATA wsaData;
+
+	wVersionRequested = MAKEWORD(2, 2);
+
+	(void)WSAStartup(wVersionRequested, &wsaData);
+#endif
+
+	data = download_url("http://example.com/");
+
+	printf("got %d bytes\n", data ? evbuffer_get_length(data) : -1);
+
+	if (data)
 	{
-		host_port = evhttp_uri_parse(argv[2]);
-		evhttp_uri_set_scheme(host_port, NULL);
-		evhttp_uri_set_userinfo(host_port, NULL);
-		evhttp_uri_set_path(host_port, NULL);
-		evhttp_uri_set_query(host_port, NULL);
-		evhttp_uri_set_fragment(host_port, NULL);
-		VERIFY(evhttp_uri_get_host(host_port));
-		VERIFY(evhttp_uri_get_port(host_port) > 0);
-	}
-	{
-		location = evhttp_uri_parse(argv[2]);
-		evhttp_uri_set_scheme(location, NULL);
-		evhttp_uri_set_userinfo(location, 0);
-		evhttp_uri_set_host(location, NULL);
-		evhttp_uri_set_port(location, -1);
+		const unsigned char * joined = evbuffer_pullup(data, -1);
+		printf("data itself:\n====================\n");
+		fwrite(joined, evbuffer_get_length(data), 1, stderr);
+		printf("\n====================\n");
+		evbuffer_free(data);
 	}
 
-	VERIFY(base = event_base_new());
-	VERIFY(evcon = evhttp_connection_base_new(base, NULL,
-		evhttp_uri_get_host(proxy), evhttp_uri_get_port(proxy)));
-	connect_base = (struct connect_base){
-		.evcon = evcon,
-		.location = location,
-	};
-	VERIFY(req = evhttp_request_new(connect_cb, &connect_base));
-
-	evhttp_add_header(req->output_headers, "Connection", "keep-alive");
-	evhttp_add_header(req->output_headers, "Proxy-Connection", "keep-alive");
-	evutil_snprintf(buffer, URL_MAX, "%s:%d",
-		evhttp_uri_get_host(host_port), evhttp_uri_get_port(host_port));
-	evhttp_make_request(evcon, req, EVHTTP_REQ_CONNECT, buffer);
-
-	event_base_dispatch(base);
-	evhttp_connection_free(evcon);
-	event_base_free(base);
-	evhttp_uri_free(proxy);
-	evhttp_uri_free(host_port);
-	evhttp_uri_free(location);
 	return 0;
 }
