@@ -5,7 +5,8 @@
 #include "event2/buffer.h"
 #include "event2/http_struct.h"
 #include "event2/dns.h"
-
+#include <string>
+using namespace std;
 
 struct download_context {
 	struct evhttp_uri * uri;
@@ -20,19 +21,20 @@ struct download_context {
 static void download_callback(struct evhttp_request *req, void *arg);
 static int download_renew_request(struct download_context *ctx);
 
+int ok_cnt = 0;
 static void on_http_ok(struct download_context * ctx)
 {
 	struct evbuffer * data = 0;
 	data = ctx->buffer;
-
+	++ok_cnt;
 	printf("got %d bytes\n", data ? evbuffer_get_length(data) : -1);
 
 	if (data)
 	{
 		const unsigned char * joined = evbuffer_pullup(data, -1);
-		printf("data itself:\n====================\n");
-		fwrite(joined, evbuffer_get_length(data), 1, stderr);
-		printf("\n====================\n");
+		//printf("data itself:\n====================\n");
+		//fwrite(joined, evbuffer_get_length(data), 1, stderr);
+		//printf("\n====================\n");
 		evbuffer_free(data);
 	}
 }
@@ -109,11 +111,11 @@ static int download_renew_request(struct download_context *ctx)
 	if (port == -1) port = 80;
 	if (ctx->conn) evhttp_connection_free(ctx->conn);
 
-	printf("host:%s, port:%d, path:%s,query:%s\n", 
-		evhttp_uri_get_host(ctx->uri), 
-		port, 
-		evhttp_uri_get_path(ctx->uri),
-		evhttp_uri_get_query(ctx->uri));
+	//printf("host:%s, port:%d, path:%s,query:%s\n", 
+	//	evhttp_uri_get_host(ctx->uri), 
+	//	port, 
+	//	evhttp_uri_get_path(ctx->uri),
+	//	evhttp_uri_get_query(ctx->uri));
 
 
 	ctx->conn = evhttp_connection_base_new(ctx->base, ctx->dnsbase, evhttp_uri_get_host(ctx->uri), port);
@@ -140,8 +142,7 @@ int main(int argc, char **argv)
 {
 	
 	struct event_base * base = NULL;
-	struct download_context *ctx1 = NULL;
-	struct download_context *ctx2 = NULL;
+
 
 #ifdef WIN32
 	WORD wVersionRequested;
@@ -152,10 +153,17 @@ int main(int argc, char **argv)
 	(void)WSAStartup(wVersionRequested, &wsaData);
 #endif
 	base = event_base_new();
-	ctx1 = context_new("http://example.com/", base);
-	ctx2 = context_new("http://ip.taobao.com/service/getIpInfo.php?ip=218.24.136.211", base);
-
-	event_base_dispatch(base);
+	for (int i = 0; i < 100;++i)
+	{
+		context_new("http://example.com/", base);
+	}
+	
+	while (1)
+	{
+		int ret = event_base_loop(base, EVLOOP_NONBLOCK);
+		printf("event_base_loop=%d\n", ret);
+		Sleep(100);
+	}
 
 
 	return 0;
