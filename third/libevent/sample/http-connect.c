@@ -8,6 +8,7 @@
 #include <string>
 #include "time.h"
 using namespace std;
+#define AUTH_STR "eyJhdXRoVG9rZW4iOiJhdXRoVG9rZW4iLCJjaGFubmVsSWQiOiJtaSIsImRldmljZUlkIjoiZGV2aWNlSWQiLCJuYW1lIjoibmFtZSIsInBsYW5JZCI6IjEiLCJ4Z0FwcElkIjoiMjAxOCIsInNpZ24iOiJmYTM0MzgxZGM1ODRmNjMxYTg3YTA0MzZlNDllZjRkM2E3MWVlNTVkIiwidHMiOiIyMDE1MDcyMzE1MDAyOCIsInVpZCI6InVpZCJ9"
 
 struct download_context {
 	struct evhttp_uri * uri;
@@ -18,8 +19,34 @@ struct download_context {
 	struct evbuffer *buffer;
 	int ok;
 };
+static int download_renew_request(struct download_context *ctx, const char *url);
 
+bool get_tm(time_t in, tm &out)
+{
+	memset(&out, 0, sizeof(out));
+	tm *temp = localtime(&in);
+	if (nullptr == temp)
+	{
+		return false;
+	}
+	out = *temp;
+	return true;
+}
+string get_xgsdk_str(string appid, string auth)
+{
+	string ret = "http://a2.xgsdk.com/account/verify-session/" + appid;
+	ret += "?authInfo=" + auth;
 
+	tm t;
+	get_tm(time(NULL), t);
+	char pwszBuf[50];
+	sprintf(pwszBuf, "%i%2.2i%2.2i%2.2i%2.2i%2.2i",
+		t.tm_year + 1900, t.tm_mon + 1, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec);
+
+	ret += string("&ts=") + pwszBuf;
+	ret += "&type=verify-session";
+	return ret;
+}
 
 static void on_http_ok(struct download_context * ctx)
 {
@@ -35,6 +62,8 @@ static void on_http_ok(struct download_context * ctx)
 		printf("\n====================\n");
 	}
 	evbuffer_drain(data, evbuffer_get_length(data));
+
+	download_renew_request(ctx, get_xgsdk_str("17952", AUTH_STR).c_str());
 }
 static void download_callback(struct evhttp_request *req, void *arg)
 {
@@ -90,6 +119,11 @@ void context_free(struct download_context *ctx)
 
 static int download_renew_request(struct download_context *ctx, const char *url)
 {
+	if (ctx->uri)
+	{
+		evhttp_uri_free(ctx->uri);
+		ctx->uri = NULL;
+	}
 	ctx->uri = evhttp_uri_parse(url);
 	if (!ctx->uri)
 		return 0;
@@ -122,32 +156,6 @@ static int download_renew_request(struct download_context *ctx, const char *url)
 
 	return 0;
 }
-bool get_tm(time_t in, tm &out)
-{
-	memset(&out, 0, sizeof(out));
-	tm *temp = localtime(&in);
-	if (nullptr == temp)
-	{
-		return false;
-	}
-	out = *temp;
-	return true;
-}
-string get_xgsdk_str(string appid,string auth)
-{
-	string ret= "http://a2.xgsdk.com/account/verify-session/" + appid;
-	ret += "?authInfo=" + auth;
-
-	tm t;
-	get_tm(time(NULL), t);
-	char pwszBuf[50];
-	sprintf(pwszBuf, "%i%2.2i%2.2i%2.2i%2.2i%2.2i",
-		t.tm_year + 1900, t.tm_mon + 1, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec);
-
-	ret += string("&ts=") + pwszBuf;
-	ret += "&type=verify-session";
-	return ret;
-}
 
 int main(int argc, char **argv)
 {
@@ -167,13 +175,13 @@ int main(int argc, char **argv)
 
 
 	ctx = context_new(base);
-	download_renew_request(ctx, get_xgsdk_str("17952", "zxhzxdhxchzxchzxch").c_str());
+	download_renew_request(ctx, get_xgsdk_str("17952", AUTH_STR).c_str());
 	
 	while (1)
 	{
 		int ret = event_base_loop(base, EVLOOP_NONBLOCK);
 		//printf("event_base_loop=%d\n", ret);
-		Sleep(100);
+		//Sleep(100);
 	}
 
 
