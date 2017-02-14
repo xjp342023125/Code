@@ -6,6 +6,7 @@
 #include "event2/http_struct.h"
 #include "event2/dns.h"
 #include <string>
+#include "time.h"
 using namespace std;
 
 struct download_context {
@@ -18,25 +19,22 @@ struct download_context {
 	int ok;
 };
 
-static void download_callback(struct evhttp_request *req, void *arg);
-static int download_renew_request(struct download_context *ctx);
 
-int ok_cnt = 0;
+
 static void on_http_ok(struct download_context * ctx)
 {
 	struct evbuffer * data = 0;
 	data = ctx->buffer;
-	++ok_cnt;
 	printf("got %d bytes\n", data ? evbuffer_get_length(data) : -1);
 
 	if (data)
 	{
 		const unsigned char * joined = evbuffer_pullup(data, -1);
-		//printf("data itself:\n====================\n");
-		//fwrite(joined, evbuffer_get_length(data), 1, stderr);
-		//printf("\n====================\n");
-		evbuffer_free(data);
+		printf("data itself:\n====================\n");
+		fwrite(joined, evbuffer_get_length(data), 1, stderr);
+		printf("\n====================\n");
 	}
+	evbuffer_drain(data, evbuffer_get_length(data));
 }
 static void download_callback(struct evhttp_request *req, void *arg)
 {
@@ -55,16 +53,6 @@ static void download_callback(struct evhttp_request *req, void *arg)
 		on_http_ok(ctx);
 		//event_base_loopexit(ctx->base, 0);
 		break;
-	case HTTP_MOVEPERM:
-	case HTTP_MOVETEMP:
-		new_location = evhttp_find_header(req->input_headers, "Location");
-		if (!new_location) return;
-		new_uri = evhttp_uri_parse(new_location);
-		if (!new_uri)return;
-		evhttp_uri_free(ctx->uri);
-		ctx->uri = new_uri;
-		download_renew_request(ctx);
-		return;
 	default:/* failed */
 		//event_base_loopexit(ctx->base, 0);
 		return;
@@ -74,19 +62,15 @@ static void download_callback(struct evhttp_request *req, void *arg)
 	ctx->ok = 1;
 }
 
-struct download_context * context_new(const char *url, struct event_base * base)
+struct download_context * context_new( struct event_base * base)
 {
 	struct download_context * ctx = 0;
 	ctx = (struct download_context*)calloc(1, sizeof(struct download_context));
-	ctx->uri = evhttp_uri_parse(url);
-	if (!ctx->uri) return 0;
 
 	ctx->base = base;
 	ctx->buffer = evbuffer_new();
 	ctx->dnsbase = evdns_base_new(ctx->base, 1);
 	ctx->ok = 0;
-
-	download_renew_request(ctx);
 	return ctx;
 }
 
@@ -104,8 +88,11 @@ void context_free(struct download_context *ctx)
 	free(ctx);
 }
 
-static int download_renew_request(struct download_context *ctx)
+static int download_renew_request(struct download_context *ctx, const char *url)
 {
+	ctx->uri = evhttp_uri_parse(url);
+	if (!ctx->uri)
+		return 0;
 	char path_query[1000] = {0};
 	int port = evhttp_uri_get_port(ctx->uri);
 	if (port == -1) port = 80;
@@ -135,14 +122,38 @@ static int download_renew_request(struct download_context *ctx)
 
 	return 0;
 }
+bool get_tm(time_t in, tm &out)
+{
+	memset(&out, 0, sizeof(out));
+	tm *temp = localtime(&in);
+	if (nullptr == temp)
+	{
+		return false;
+	}
+	out = *temp;
+	return true;
+}
+string get_xgsdk_str(string appid,string auth)
+{
+	string ret= "http://a2.xgsdk.com/account/verify-session/" + appid;
+	ret += "?authInfo=" + auth;
 
+	tm t;
+	get_tm(time(NULL), t);
+	char pwszBuf[50];
+	sprintf(pwszBuf, "%i%2.2i%2.2i%2.2i%2.2i%2.2i",
+		t.tm_year + 1900, t.tm_mon + 1, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec);
 
+	ret += string("&ts=") + pwszBuf;
+	ret += "&type=verify-session";
+	return ret;
+}
 
 int main(int argc, char **argv)
 {
-	
+	get_xgsdk_str("17952","abcd");
 	struct event_base * base = NULL;
-
+	download_context *ctx = NULL;
 
 #ifdef WIN32
 	WORD wVersionRequested;
@@ -153,15 +164,15 @@ int main(int argc, char **argv)
 	(void)WSAStartup(wVersionRequested, &wsaData);
 #endif
 	base = event_base_new();
-	for (int i = 0; i < 100;++i)
-	{
-		context_new("http://example.com/", base);
-	}
+
+
+	ctx = context_new(base);
+	download_renew_request(ctx, get_xgsdk_str("17952", "zxhzxdhxchzxchzxch").c_str());
 	
 	while (1)
 	{
 		int ret = event_base_loop(base, EVLOOP_NONBLOCK);
-		printf("event_base_loop=%d\n", ret);
+		//printf("event_base_loop=%d\n", ret);
 		Sleep(100);
 	}
 
