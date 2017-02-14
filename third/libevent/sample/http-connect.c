@@ -11,13 +11,11 @@ using namespace std;
 #define AUTH_STR "eyJhdXRoVG9rZW4iOiJhdXRoVG9rZW4iLCJjaGFubmVsSWQiOiJtaSIsImRldmljZUlkIjoiZGV2aWNlSWQiLCJuYW1lIjoibmFtZSIsInBsYW5JZCI6IjEiLCJ4Z0FwcElkIjoiMjAxOCIsInNpZ24iOiJmYTM0MzgxZGM1ODRmNjMxYTg3YTA0MzZlNDllZjRkM2E3MWVlNTVkIiwidHMiOiIyMDE1MDcyMzE1MDAyOCIsInVpZCI6InVpZCJ9"
 
 struct download_context {
-	struct evhttp_uri * uri;
 	struct event_base * base;
 	struct evdns_base * dnsbase;
 	struct evhttp_connection * conn;
 	struct evhttp_request *req;
 	struct evbuffer *buffer;
-	int ok;
 };
 static int download_renew_request(struct download_context *ctx, const char *url);
 
@@ -86,9 +84,6 @@ static void download_callback(struct evhttp_request *req, void *arg)
 		//event_base_loopexit(ctx->base, 0);
 		return;
 	}
-
-	
-	ctx->ok = 1;
 }
 
 struct download_context * context_new( struct event_base * base)
@@ -99,8 +94,28 @@ struct download_context * context_new( struct event_base * base)
 	ctx->base = base;
 	ctx->buffer = evbuffer_new();
 	ctx->dnsbase = evdns_base_new(ctx->base, 1);
-	ctx->ok = 0;
 	return ctx;
+}
+
+int  ctx_init_con(download_context *ctx,string url)
+{
+	auto uri = evhttp_uri_parse(url.c_str());
+	if (!uri)
+		return -1;
+
+	int port = evhttp_uri_get_port(uri);
+	if (port == -1) 
+		port = 80;
+
+	if (ctx->conn) 
+		evhttp_connection_free(ctx->conn);
+
+	ctx->conn = evhttp_connection_base_new(ctx->base, ctx->dnsbase, evhttp_uri_get_host(ctx->uri), port);
+
+
+	if (uri)
+		evhttp_uri_free(uri);
+	return 0;
 }
 
 void context_free(struct download_context *ctx)
@@ -110,36 +125,24 @@ void context_free(struct download_context *ctx)
 
 	if (ctx->buffer)
 		evbuffer_free(ctx->buffer);
-
-	if (ctx->uri)
-		evhttp_uri_free(ctx->uri);
-
 	free(ctx);
 }
 
 static int download_renew_request(struct download_context *ctx, const char *url)
 {
-	if (ctx->uri)
-	{
-		evhttp_uri_free(ctx->uri);
-		ctx->uri = NULL;
-	}
-	ctx->uri = evhttp_uri_parse(url);
-	if (!ctx->uri)
-		return 0;
+	auto uri = evhttp_uri_parse(url);
+	if (!uri)
+		return -1;
+
 	char path_query[1000] = {0};
-	int port = evhttp_uri_get_port(ctx->uri);
-	if (port == -1) port = 80;
-	if (ctx->conn) evhttp_connection_free(ctx->conn);
+	
 
-	//printf("host:%s, port:%d, path:%s,query:%s\n", 
-	//	evhttp_uri_get_host(ctx->uri), 
-	//	port, 
-	//	evhttp_uri_get_path(ctx->uri),
-	//	evhttp_uri_get_query(ctx->uri));
+	printf("host:%s, path:%s,query:%s\n", 
+		evhttp_uri_get_host(uri), 
+		evhttp_uri_get_path(uri),
+		evhttp_uri_get_query(uri));
 
 
-	ctx->conn = evhttp_connection_base_new(ctx->base, ctx->dnsbase, evhttp_uri_get_host(ctx->uri), port);
 	ctx->req = evhttp_request_new(download_callback, ctx);
 	
 	if (evhttp_uri_get_query(ctx->uri))
@@ -159,7 +162,7 @@ static int download_renew_request(struct download_context *ctx, const char *url)
 
 int main(int argc, char **argv)
 {
-	get_xgsdk_str("17952","abcd");
+	//connect(0, 0, 0);
 	struct event_base * base = NULL;
 	download_context *ctx = NULL;
 
