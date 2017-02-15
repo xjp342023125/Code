@@ -1,23 +1,21 @@
 #include <stdlib.h>
 #include <string.h>
-#include "event2/event.h"
-#include "event2/http.h"
-#include "event2/buffer.h"
-#include "event2/http_struct.h"
-#include "event2/dns.h"
+#include "event2/evhttp_tool.hpp"
+
 #include <string>
 #include "time.h"
 using namespace std;
 #define AUTH_STR "eyJhdXRoVG9rZW4iOiJhdXRoVG9rZW4iLCJjaGFubmVsSWQiOiJtaSIsImRldmljZUlkIjoiZGV2aWNlSWQiLCJuYW1lIjoibmFtZSIsInBsYW5JZCI6IjEiLCJ4Z0FwcElkIjoiMjAxOCIsInNpZ24iOiJmYTM0MzgxZGM1ODRmNjMxYTg3YTA0MzZlNDllZjRkM2E3MWVlNTVkIiwidHMiOiIyMDE1MDcyMzE1MDAyOCIsInVpZCI6InVpZCJ9"
 
 struct download_context {
+	struct evhttp_uri * uri;
 	struct event_base * base;
 	struct evdns_base * dnsbase;
 	struct evhttp_connection * conn;
 	struct evhttp_request *req;
 	struct evbuffer *buffer;
+	int ok;
 };
-static int download_renew_request(struct download_context *ctx, const char *url);
 
 bool get_tm(time_t in, tm &out)
 {
@@ -32,7 +30,7 @@ bool get_tm(time_t in, tm &out)
 }
 string get_xgsdk_str(string appid, string auth)
 {
-	string ret = "http://a2.xgsdk.com/account/verify-session/" + appid;
+	string ret = "/account/verify-session/" + appid;
 	ret += "?authInfo=" + auth;
 
 	tm t;
@@ -46,126 +44,35 @@ string get_xgsdk_str(string appid, string auth)
 	return ret;
 }
 
-static void on_http_ok(struct download_context * ctx)
-{
-	struct evbuffer * data = 0;
-	data = ctx->buffer;
-	printf("got %d bytes\n", data ? evbuffer_get_length(data) : -1);
 
-	if (data)
+
+class evhttp_wrap_xg :public evhttp_wrap
+{
+public:
+	virtual void on_http_ok()
 	{
-		const unsigned char * joined = evbuffer_pullup(data, -1);
-		printf("data itself:\n====================\n");
-		fwrite(joined, evbuffer_get_length(data), 1, stderr);
-		printf("\n====================\n");
+		struct evbuffer * data = 0;
+		data = this->buffer;
+		printf("got %d bytes\n", data ? evbuffer_get_length(data) : -1);
+
+		if (data)
+		{
+			const unsigned char * joined = evbuffer_pullup(data, -1);
+			printf("data itself:\n====================\n");
+			fwrite(joined, evbuffer_get_length(data), 1, stderr);
+			printf("\n====================\n");
+		}
+		evbuffer_drain(data, evbuffer_get_length(data));
+
+		init_con("a2.xgsdk.com");
+		make_get_query(get_xgsdk_str("17952", AUTH_STR));
 	}
-	evbuffer_drain(data, evbuffer_get_length(data));
-
-	download_renew_request(ctx, get_xgsdk_str("17952", AUTH_STR).c_str());
-}
-static void download_callback(struct evhttp_request *req, void *arg)
-{
-	struct download_context * ctx = (struct download_context*)arg;
-	struct evhttp_uri * new_uri = 0;
-	const char * new_location = 0;
-	if (!req) {
-		printf("timeout\n");
-		return;
-	}
-
-	switch (req->response_code)
-	{
-	case HTTP_OK:
-		evbuffer_add_buffer(ctx->buffer, req->input_buffer);
-		on_http_ok(ctx);
-		//event_base_loopexit(ctx->base, 0);
-		break;
-	default:/* failed */
-		//event_base_loopexit(ctx->base, 0);
-		return;
-	}
-}
-
-struct download_context * context_new( struct event_base * base)
-{
-	struct download_context * ctx = 0;
-	ctx = (struct download_context*)calloc(1, sizeof(struct download_context));
-
-	ctx->base = base;
-	ctx->buffer = evbuffer_new();
-	ctx->dnsbase = evdns_base_new(ctx->base, 1);
-	return ctx;
-}
-
-int  ctx_init_con(download_context *ctx,string url)
-{
-	auto uri = evhttp_uri_parse(url.c_str());
-	if (!uri)
-		return -1;
-
-	int port = evhttp_uri_get_port(uri);
-	if (port == -1) 
-		port = 80;
-
-	if (ctx->conn) 
-		evhttp_connection_free(ctx->conn);
-
-	ctx->conn = evhttp_connection_base_new(ctx->base, ctx->dnsbase, evhttp_uri_get_host(ctx->uri), port);
-
-
-	if (uri)
-		evhttp_uri_free(uri);
-	return 0;
-}
-
-void context_free(struct download_context *ctx)
-{
-	if (ctx->conn)
-		evhttp_connection_free(ctx->conn);
-
-	if (ctx->buffer)
-		evbuffer_free(ctx->buffer);
-	free(ctx);
-}
-
-static int download_renew_request(struct download_context *ctx, const char *url)
-{
-	auto uri = evhttp_uri_parse(url);
-	if (!uri)
-		return -1;
-
-	char path_query[1000] = {0};
-	
-
-	printf("host:%s, path:%s,query:%s\n", 
-		evhttp_uri_get_host(uri), 
-		evhttp_uri_get_path(uri),
-		evhttp_uri_get_query(uri));
-
-
-	ctx->req = evhttp_request_new(download_callback, ctx);
-	
-	if (evhttp_uri_get_query(ctx->uri))
-	{
-		sprintf(path_query, "%s?%s", evhttp_uri_get_path(ctx->uri), evhttp_uri_get_query(ctx->uri));
-		evhttp_make_request(ctx->conn, ctx->req, EVHTTP_REQ_GET, path_query);
-	}
-	else
-	{
-		evhttp_make_request(ctx->conn, ctx->req, EVHTTP_REQ_GET, evhttp_uri_get_path(ctx->uri));
-	}
-	
-	evhttp_add_header(ctx->req->output_headers, "Host", evhttp_uri_get_host(ctx->uri));
-
-	return 0;
-}
-
+};
 int main(int argc, char **argv)
 {
-	//connect(0, 0, 0);
 	struct event_base * base = NULL;
-	download_context *ctx = NULL;
 
+	evhttp_wrap_xg http;
 #ifdef WIN32
 	WORD wVersionRequested;
 	WSADATA wsaData;
@@ -175,10 +82,9 @@ int main(int argc, char **argv)
 	(void)WSAStartup(wVersionRequested, &wsaData);
 #endif
 	base = event_base_new();
-
-
-	ctx = context_new(base);
-	download_renew_request(ctx, get_xgsdk_str("17952", AUTH_STR).c_str());
+	http.init(base);
+	http.init_con("a2.xgsdk.com");
+	http.make_get_query(get_xgsdk_str("17952", AUTH_STR));
 	
 	while (1)
 	{
