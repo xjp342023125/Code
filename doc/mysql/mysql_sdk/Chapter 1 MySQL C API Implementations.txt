@@ -1,0 +1,31 @@
+The MySQL C API is a C-based API that client applications written in C can use to communicate with MySQL Server. Client programs refer to C API header files at compile time and link to a C API library file at link time. The library comes in two versions, depending on how the application is intended to communicate with the server:
+
+libmysqlclient: The client version of the library, used for applications that communicate over a network connection as a client of a standalone server process.
+
+libmysqld: The embedded server version of the library, used for applications intended to include an embedded MySQL server within the application itself. The application communicates with its own private server instance.
+
+Both libraries have the same interface. In terms of C API calls, an application communicates with a standalone server the same way it communicates with an embedded server. A given client can be built to communicate with a standalone or embedded server, depending on whether it is linked against libmysqlclient or libmysqld at build time.
+
+There are two ways to obtain the C API header and library files required to build C API client programs:
+
+Install a MySQL Server distribution. Server distributions include both libmysqlclient and libmysqld.
+
+Install a Connector/C distribution. Connector/C distributions include only libmysqlclient. They do not include libmysqld.
+
+For both MySQL Server and Connector/C, you can install a binary distribution that contains the C API files pre-built, or you can use a source distribution and build the C API files yourself.
+
+Normally, you install either a MySQL Server distribution or a Connector/C distribution, but not both. For information about issues involved with simultaneous MySQL Server and Connector/C installations, see Section 23.8.2, ¡°Simultaneous MySQL Server and Connector/C Installations¡±.
+
+The names of the library files to use when linking C API client applications depend on the library type and platform for which a distribution is built:
+
+On Unix (and Unix-like) sytems, the static library is libmysqlclient.a. The dynamic library is libmysqlclient.so on most Unix systems and libmysqlclient.dylib on OS X.
+
+For distributions that include embedded server libraries, the corresponding library names begin with libmysqld rather than libmysqlclient.
+
+On Windows, the static library is mysqlclient.lib and the dynamic library is libmysql.dll. Windows distributions also include libmysql.lib, a static import library needed for using the dynamic library.
+
+For distributions that include embedded server libraries, the corresponding library names are mysqlserver.lib, libmysqld.dll, and libmysqld.lib.
+
+Windows distributions also include a set of debug libraries. These have the same names as the nondebug libraries, but are located in the lib/debug library. You must use the debug libraries when compiling clients built using the debug C runtime.
+
+On Unix, you may also see libraries that include _r in the names. Before MySQL 5.5, these were built as thread-safe (re-entrant) libraries separately from the non-_r libraries. As of 5.5, both libraries are the same and the _r names are symbolic links to the corresponding non-_r names. There is no need to use the _r libraries. For example, if you use mysql_config to obtain linker flags, you can use mysql_config --libs in all cases, even for threaded clients. There is no need to use mysql_config --libs_r.

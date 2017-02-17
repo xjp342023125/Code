@@ -1,0 +1,3 @@
+CURLOPT_VERBOSE
+¥Ú”°debug–≈œ¢
+curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);

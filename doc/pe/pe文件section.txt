@@ -1,0 +1,11 @@
+以下是 PEDUMP 输出的 Windows XP 中的 KERNEL32.DLL 的.text 节和.data 节的情况： 
+Section Table 
+  01 .text     VirtSize: 00074658  VirtAddr:  00001000 
+    raw data offs:   00000400  raw data size: 00074800 
+…… 
+  02 .data     VirtSize: 000028CA  VirtAddr:  00076000 
+raw data offs:   00074C00  raw data size: 00002400 
+ 
+上面的输出表明，.text 节的文件偏移是 0x400，在内存中它比 KERNEL32 的加载地址高
+0x1000 字节。同样，.data 节的文件偏移是 0x74C00，它在内存中比 KERNEL32 的加载地址高
+0x76000 字节。 

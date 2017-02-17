@@ -1,0 +1,4 @@
+ifconfig 查看激活的网卡
+ifconfig -a 查看所有
+ifdown 关闭网卡
+ifup 激活网卡

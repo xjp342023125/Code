@@ -1,0 +1,5 @@
+git log --pretty=oneline bj.html
+git blame bj.html
+
+
+git reset bd4a3c2161131f3b8a638041a4c957fd3af0e999 bj.html

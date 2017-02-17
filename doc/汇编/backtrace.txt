@@ -1,0 +1,11 @@
+int backtrace(void **buffer,int size)  
+
+该函数用于获取当前线程的调用堆栈,获取的信息将会被存放在buffer中,它是一个指针列表。参数 size 用来指定buffer中可以保存多少个void* 元素。函数返回值是实际获取的指针个数,最大不超过size大小
+
+在buffer中的指针实际是从堆栈中获取的返回地址,每一个堆栈框架有一个返回地址
+
+char ** backtrace_symbols (void *const *buffer, int size)  
+
+backtrace_symbols将从backtrace函数获取的信息转化为一个字符串数组. 参数buffer应该是从backtrace函数获取的指针数组,size是该数组中的元素个数(backtrace的返回值)
+
+编译时加 -rdynamic,可以打印函数名

@@ -1,0 +1,1 @@
+./configure --without-ssl --without-libssh2 --disable-ldap --without-librtmp --without-winidn --without-libidn --without-zlib  --without-nghttp2

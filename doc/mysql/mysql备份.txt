@@ -1,0 +1,24 @@
+备份
+/usr/local/mysql/bin/mysqldump -R -umysql -pabc@123 -h 192.168.66.95 --add-drop-database --no-data --skip-comments fox_tft > /home/create_tft.sql
+/usr/local/mysql/bin/mysqldump -R -umysql -pabc@123 -h 192.168.66.95 --add-drop-database --no-data --skip-comments fox_tft_sniff > /home/create_tft_sniff.sql
+
+/usr/local/mysql/bin/mysqldump -R -umysql -pabc@123 -h 192.168.66.95 --add-drop-database --skip-comments hequ1 > /home/hequ/hequ.sql
+
+还原
+/usr/local/mysql/bin/mysql -umysql -pabc@123
+mysql> source /home/tft.sql;
+
+
+/usr/local/mysql/bin/mysqldump -R -umysql -pabc@123 -h 192.168.66.95 --add-drop-database --skip-comments trunk-bk > /home/trunk-bk.sql
+/usr/local/mysql/bin/mysqldump -R -umysql -pabc@123 -h 192.168.66.95 --add-drop-database --skip-comments trunk-82-bk > /home/trunk-82-bk.sql
+
+
+/usr/local/mysql/bin/mysqldump -R -umysql -pabc@123 -h 192.168.66.95 --add-drop-database --skip-comments hequ1 > /home/hequ1.sql
+/usr/local/mysql/bin/mysqldump -R -umysql -pabc@123 -h 192.168.66.95 --add-drop-database --skip-comments hequ2 > /home/hequ2.sql
+
+
+source /home/trunk-bk.sql
+source /home/trunk-82-bk.sql
+
+source /home/hequ1.sql
+source /home/hequ2.sql

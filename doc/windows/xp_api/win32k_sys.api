@@ -1,0 +1,235 @@
+		按下 "ESC" 键关闭这窗口         
+
+模块名称:WIN32K.SYS  
+更多
+	TimeDateStamp: 521EA476
+	版本: 0.00   
+	序数基址: 00000001    
+	函数编号: 000000E1           
+	编号名称: 000000E1       
+	
+  FLOATOBJ_AddFloatObj rva: 00137E9C ord:   1
+  FLOATOBJ_DivFloatObj rva: 00137FF2 ord:   2
+  FLOATOBJ_MulFloatObj rva: 00137F80 ord:   3
+  FLOATOBJ_SubFloatObj rva: 00137F0E ord:   4
+  BRUSHOBJ_hGetColorTransform rva: 00104A16 ord:   5
+  BRUSHOBJ_pvAllocRbrush rva: 0001B413 ord:   6
+  BRUSHOBJ_pvGetRbrush rva: 0001B31B ord:   7
+  BRUSHOBJ_ulGetBrushColor rva: 000FB68B ord:   8
+  CLIPOBJ_bEnum rva: 000361EE ord:   9
+  CLIPOBJ_cEnumStart rva: 000361CC ord:  10
+  CLIPOBJ_ppoGetPath rva: 0013842C ord:  11
+  EngAcquireSemaphore rva: 00006254 ord:  12
+  EngAllocMem rva: 00054099 ord:  13
+  EngAllocPrivateUserMem rva: 00138C43 ord:  14
+  EngAllocSectionMem rva: 00138558 ord:  15
+  EngAllocUserMem rva: 000FA7C3 ord:  16
+  EngAlphaBlend rva: 000BE5DD ord:  17
+  EngAssociateSurface rva: 00019663 ord:  18
+  EngBitBlt rva: 0002B516 ord:  19
+  EngBugCheckEx rva: 001B5E7F ord:  20  [forwarder RVA : NTOSKRNL.KeBugCheckEx]
+  EngCheckAbort rva: 00139B99 ord:  21
+  EngClearEvent rva: 0013B4B6 ord:  22
+  EngComputeGlyphSet rva: 00084869 ord:  23
+  EngControlSprites rva: 0013CB09 ord:  24
+  EngCopyBits rva: 00033F6C ord:  25
+  EngCreateBitmap rva: 0002D9BF ord:  26
+  EngCreateClip rva: 00112FC9 ord:  27
+  EngCreateDeviceBitmap rva: 0001959B ord:  28
+  EngCreateDeviceSurface rva: 000909AB ord:  29
+  EngCreateDriverObj rva: 0010669D ord:  30
+  EngCreateEvent rva: 000AD796 ord:  31
+  EngCreatePalette rva: 000B9CAE ord:  32
+  EngCreatePath rva: 0013DFBF ord:  33
+  EngCreateSemaphore rva: 0008589C ord:  34
+  EngCreateWnd rva: 0013E292 ord:  35
+  EngDebugBreak rva: 001B5E95 ord:  36  [forwarder RVA : NTOSKRNL.DbgBreakPoint]
+  EngDebugPrint rva: 001384A6 ord:  37
+  EngDeleteClip rva: 0017E03A ord:  38
+  EngDeleteDriverObj rva: 0010687C ord:  39
+  EngDeleteEvent rva: 0013B39D ord:  40
+  EngDeleteFile rva: 0013B858 ord:  41
+  EngDeletePalette rva: 000C942B ord:  42
+  EngDeletePath rva: 0013E00E ord:  43
+  EngDeleteSafeSemaphore rva: 001386FA ord:  44
+  EngDeleteSemaphore rva: 000E0B98 ord:  45
+  EngDeleteSurface rva: 0001394F ord:  46
+  EngDeleteWnd rva: 0013E6BA ord:  47
+  EngDeviceIoControl rva: 00077D77 ord:  48
+  EngDitherColor rva: 0013F3FE ord:  49
+  EngDxIoctl rva: 00138C6F ord:  50
+  EngEnumForms rva: 0013FC92 ord:  51
+  EngEraseSurface rva: 00088E38 ord:  52
+  EngFileIoControl rva: 001405A9 ord:  53
+  EngFileWrite rva: 00140576 ord:  54
+  EngFillPath rva: 000C8237 ord:  55
+  EngFindImageProcAddress rva: 000A96C1 ord:  56
+  EngFindResource rva: 000AFA4C ord:  57
+  EngFntCacheAlloc rva: 000A2569 ord:  58
+  EngFntCacheFault rva: 00143904 ord:  59
+  EngFntCacheLookUp rva: 000A20CD ord:  60
+  EngFreeMem rva: 000540F0 ord:  61
+  EngFreeModule rva: 000B0466 ord:  62
+  EngFreePrivateUserMem rva: 00138C59 ord:  63
+  EngFreeSectionMem rva: 001385F0 ord:  64
+  EngFreeUserMem rva: 000092F9 ord:  65
+  EngGetCurrentCodePage rva: 000946E5 ord:  66
+  EngGetCurrentProcessId rva: 00106ED2 ord:  67
+  EngGetCurrentThreadId rva: 0013844A ord:  68
+  EngGetDriverName rva: 001444CA ord:  69
+  EngGetFileChangeTime rva: 0013B5DA ord:  70
+  EngGetFilePath rva: 0013B5AE ord:  71
+  EngGetForm rva: 0013FE9A ord:  72
+  EngGetLastError rva: 000B42F1 ord:  73
+  EngGetPrinter rva: 0013FD82 ord:  74
+  EngGetPrinterData rva: 00140130 ord:  75
+  EngGetPrinterDataFileName rva: 001444B3 ord:  76
+  EngGetPrinterDriver rva: 00140120 ord:  77
+  EngGetProcessHandle rva: 00138442 ord:  78
+  EngGetTickCount rva: 001405E1 ord:  79
+  EngGetType1FontList rva: 001397DA ord:  80
+  EngGradientFill rva: 000B67B3 ord:  81
+  EngHangNotification rva: 00142E8E ord:  82
+  EngInitializeSafeSemaphore rva: 001386BE ord:  83
+  EngIsSemaphoreOwned rva: 0013847C ord:  84
+  EngIsSemaphoreOwnedByCurrentThread rva: 00138496 ord:  85
+  EngLineTo rva: 000D5BC1 ord:  86
+  EngLoadImage rva: 000A9837 ord:  87
+  EngLoadModule rva: 000B0347 ord:  88
+  EngLoadModuleForWrite rva: 0014431B ord:  89
+  EngLockDirectDrawSurface rva: 00138C85 ord:  90
+  EngLockDriverObj rva: 00106857 ord:  91
+  EngLockSurface rva: 0002DADD ord:  92
+  EngLpkInstalled rva: 00029D6C ord:  93
+  EngMapEvent rva: 0013B3C1 ord:  94
+  EngMapFile rva: 0014433C ord:  95
+  EngMapFontFile rva: 0010F22F ord:  96
+  EngMapFontFileFD rva: 0005283C ord:  97
+  EngMapModule rva: 00143BD4 ord:  98
+  EngMapSection rva: 0013861A ord:  99
+  EngMarkBandingSurface rva: 000FAD89 ord: 100
+  EngModifySurface rva: 000BDAE4 ord: 101
+  EngMovePointer rva: 0013D48E ord: 102
+  EngMulDiv rva: 0001F3D1 ord: 103
+  EngMultiByteToUnicodeN rva: 000A5C3B ord: 104
+  EngMultiByteToWideChar rva: 000848EC ord: 105
+  EngNineGrid rva: 00016EA7 ord: 106
+  EngPaint rva: 0002C3C2 ord: 107
+  EngPlgBlt rva: 00146BA0 ord: 108
+  EngProbeForRead rva: 00138519 ord: 109
+  EngProbeForReadAndWrite rva: 001B5EAC ord: 110  [forwarder RVA : NTOSKRNL.ProbeForWrite]
+  EngQueryDeviceAttribute rva: 001444E7 ord: 111
+  EngQueryLocalTime rva: 0013990C ord: 112
+  EngQueryPalette rva: 0013DCA9 ord: 113
+  EngQueryPerformanceCounter rva: 00019799 ord: 114
+  EngQueryPerformanceFrequency rva: 000AB6EE ord: 115
+  EngQuerySystemAttribute rva: 000AD7DA ord: 116
+  EngReadStateEvent rva: 0013B4CF ord: 117
+  EngReleaseSemaphore rva: 0000622A ord: 118
+  EngRestoreFloatingPointState rva: 00019706 ord: 119
+  EngSaveFloatingPointState rva: 0001973A ord: 120
+  EngSecureMem rva: 000AD76A ord: 121
+  EngSetEvent rva: 0013B499 ord: 122
+  EngSetLastError rva: 00020F16 ord: 123
+  EngSetPointerShape rva: 0013D610 ord: 124
+  EngSetPointerTag rva: 001183BF ord: 125
+  EngSetPrinterData rva: 0014023D ord: 126
+  EngSort rva: 000D21D7 ord: 127
+  EngStretchBlt rva: 0007F86E ord: 128
+  EngStretchBltROP rva: 0007EF42 ord: 129
+  EngStrokeAndFillPath rva: 000FD07F ord: 130
+  EngStrokePath rva: 000C98CD ord: 131
+  EngTextOut rva: 0006B462 ord: 132
+  EngTransparentBlt rva: 00019092 ord: 133
+  EngUnicodeToMultiByteN rva: 000781FF ord: 134
+  EngUnloadImage rva: 000AD786 ord: 135
+  EngUnlockDirectDrawSurface rva: 00138C9B ord: 136
+  EngUnlockDriverObj rva: 0013DC71 ord: 137
+  EngUnlockSurface rva: 0002DA4B ord: 138
+  EngUnmapEvent rva: 0013B46B ord: 139
+  EngUnmapFile rva: 00143BF0 ord: 140
+  EngUnmapFontFile rva: 00110042 ord: 141
+  EngUnmapFontFileFD rva: 00052A5A ord: 142
+  EngUnsecureMem rva: 001B5EC3 ord: 143  [forwarder RVA : NTOSKRNL.MmUnsecureVirtualMemory]
+  EngWaitForSingleObject rva: 000781C6 ord: 144
+  EngWideCharToMultiByte rva: 000A3C2F ord: 145
+  EngWritePrinter rva: 00140323 ord: 146
+  FLOATOBJ_Add rva: 00137E9C ord: 147
+  FLOATOBJ_AddFloat rva: 00137E46 ord: 148
+  FLOATOBJ_AddLong rva: 00137E71 ord: 149
+  FLOATOBJ_Div rva: 00137FF2 ord: 150
+  FLOATOBJ_DivFloat rva: 00137F9C ord: 151
+  FLOATOBJ_DivLong rva: 00137FC7 ord: 152
+  FLOATOBJ_Equal rva: 001380E9 ord: 153
+  FLOATOBJ_EqualLong rva: 00138024 ord: 154
+  FLOATOBJ_GetFloat rva: 00137E17 ord: 155
+  FLOATOBJ_GetLong rva: 00137E27 ord: 156
+  FLOATOBJ_GreaterThan rva: 00138102 ord: 157
+  FLOATOBJ_GreaterThanLong rva: 00138068 ord: 158
+  FLOATOBJ_LessThan rva: 0013811B ord: 159
+  FLOATOBJ_LessThanLong rva: 001380B0 ord: 160
+  FLOATOBJ_Mul rva: 00137F80 ord: 161
+  FLOATOBJ_MulFloat rva: 00137F2A ord: 162
+  FLOATOBJ_MulLong rva: 00137F55 ord: 163
+  FLOATOBJ_Neg rva: 0013800E ord: 164
+  FLOATOBJ_SetFloat rva: 00137DE5 ord: 165
+  FLOATOBJ_SetLong rva: 00137DFE ord: 166
+  FLOATOBJ_Sub rva: 00137F0E ord: 167
+  FLOATOBJ_SubFloat rva: 00137EB8 ord: 168
+  FLOATOBJ_SubLong rva: 00137EE3 ord: 169
+  FONTOBJ_cGetAllGlyphHandles rva: 0014A951 ord: 170
+  FONTOBJ_cGetGlyphs rva: 0010468A ord: 171
+  FONTOBJ_pQueryGlyphAttrs rva: 0014AA81 ord: 172
+  FONTOBJ_pfdg rva: 0014A93A ord: 173
+  FONTOBJ_pifi rva: 000F94F7 ord: 174
+  FONTOBJ_pjOpenTypeTablePointer rva: 0014AA00 ord: 175
+  FONTOBJ_pvTrueTypeFontFile rva: 0014A982 ord: 176
+  FONTOBJ_pwszFontFilePaths rva: 0014AA3A ord: 177
+  FONTOBJ_pxoGetXform rva: 00062C10 ord: 178
+  FONTOBJ_vGetInfo rva: 001043DC ord: 179
+  HT_ComputeRGBGammaTable rva: 0018560F ord: 180
+  HT_Get8BPPFormatPalette rva: 00103E34 ord: 181
+  HT_Get8BPPMaskPalette rva: 00103A75 ord: 182
+  HeapVidMemAllocAligned rva: 00138C17 ord: 183
+  PALOBJ_cGetColors rva: 00110455 ord: 184
+  PATHOBJ_bCloseFigure rva: 000EE22B ord: 185
+  PATHOBJ_bEnum rva: 00069427 ord: 186
+  PATHOBJ_bEnumClipLines rva: 0010E88D ord: 187
+  PATHOBJ_bMoveTo rva: 000EDDC4 ord: 188
+  PATHOBJ_bPolyBezierTo rva: 0013E0EF ord: 189
+  PATHOBJ_bPolyLineTo rva: 000EDDE0 ord: 190
+  PATHOBJ_vEnumStart rva: 000C52FC ord: 191
+  PATHOBJ_vEnumStartClipLines rva: 0010E862 ord: 192
+  PATHOBJ_vGetBounds rva: 000F3192 ord: 193
+  RtlAnsiCharToUnicodeChar rva: 001B5EE4 ord: 194  [forwarder RVA : NTOSKRNL.RtlAnsiCharToUnicodeChar]
+  RtlMultiByteToUnicodeN rva: 001B5F06 ord: 195  [forwarder RVA : NTOSKRNL.RtlMultiByteToUnicodeN]
+  RtlRaiseException rva: 001B5F26 ord: 196  [forwarder RVA : NTOSKRNL.RtlRaiseException]
+  RtlUnicodeToMultiByteN rva: 001B5F41 ord: 197  [forwarder RVA : NTOSKRNL.RtlUnicodeToMultiByteN]
+  RtlUnicodeToMultiByteSize rva: 001B5F61 ord: 198  [forwarder RVA : NTOSKRNL.RtlUnicodeToMultiByteSize]
+  RtlUnwind rva: 001B5F84 ord: 199  [forwarder RVA : NTOSKRNL.RtlUnwind]
+  RtlUpcaseUnicodeChar rva: 001B5F97 ord: 200  [forwarder RVA : NTOSKRNL.RtlUpcaseUnicodeChar]
+  RtlUpcaseUnicodeToMultiByteN rva: 001B5FB5 ord: 201  [forwarder RVA : NTOSKRNL.RtlUpcaseUnicodeToMultiByteN]
+  STROBJ_bEnum rva: 000FD554 ord: 202
+  STROBJ_bEnumPositionsOnly rva: 001040D5 ord: 203
+  STROBJ_bGetAdvanceWidths rva: 00104752 ord: 204
+  STROBJ_dwGetCodePage rva: 00149373 ord: 205
+  STROBJ_fxBreakExtra rva: 001493A5 ord: 206
+  STROBJ_fxCharacterExtra rva: 00149387 ord: 207
+  STROBJ_vEnumStart rva: 0006ACFF ord: 208
+  VidMemFree rva: 00138C2D ord: 209
+  WNDOBJ_bEnum rva: 000361EE ord: 210
+  WNDOBJ_cEnumStart rva: 0013E127 ord: 211
+  WNDOBJ_vSetConsumer rva: 0013E148 ord: 212
+  XFORMOBJ_bApplyXform rva: 00104184 ord: 213
+  XFORMOBJ_iGetFloatObjXform rva: 00137D95 ord: 214
+  XFORMOBJ_iGetXform rva: 00062BCE ord: 215
+  XLATEOBJ_cGetPalette rva: 0014C02C ord: 216
+  XLATEOBJ_hGetColorTransform rva: 0014C0AF ord: 217
+  XLATEOBJ_iXlate rva: 0006CB97 ord: 218
+  XLATEOBJ_piVector rva: 0014C018 ord: 219
+  _abnormal_termination rva: 001B5FDB ord: 220  [forwarder RVA : NTOSKRNL._abnormal_termination]
+  _except_handler2 rva: 001B5FFA ord: 221  [forwarder RVA : NTOSKRNL._except_handler2]
+  _global_unwind2 rva: 001B6014 ord: 222  [forwarder RVA : NTOSKRNL._global_unwind2]
+  _itoa rva: 001B602D ord: 223  [forwarder RVA : NTOSKRNL._itoa]
+  _itow rva: 001B603C ord: 224  [forwarder RVA : NTOSKRNL._itow]
+  _local_unwind2 rva: 001B604B ord: 225  [forwarder RVA : NTOSKRNL._local_unwind2]

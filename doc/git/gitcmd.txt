@@ -1,0 +1,74 @@
+小结
+
+现在总结一下今天学的两点内容：
+
+初始化一个Git仓库，使用git init命令。
+
+添加文件到Git仓库，分两步：
+
+第一步，使用命令git add <file>，注意，可反复多次使用，添加多个文件；
+
+第二步，使用命令git commit，完成。
+
+
+
+小结
+
+要随时掌握工作区的状态，使用git status命令。
+
+如果git status告诉你有文件被修改过，用git diff可以查看修改内容。
+
+
+
+小结
+
+HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令git reset --hard commit_id。
+
+穿梭前，用git log可以查看提交历史，以便确定要回退到哪个版本。
+
+要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。
+
+===========================================
+git config --global user.email "qt00@qq.com"
+git config --global user.name "xujinping"
+
+git init
+ssh-keygen -t rsa -C "qt00@qq.com"
+git remote add origin git@github.com:fpstop/fpstop.github.io.git
+git clone git@github.com:fpstop/fpstop.github.io.git
+
+git add -all
+git commit -m "all"
+git push origin master
+
+git add . 添加变化的文件
+git config --global core.autocrlf false 关闭换行符转换
+
+git clone git@192.168.66.109:/git_server/go_server.git
+
+git remote add origin git@github.com:xjp342023125/libcurl_wrap
+git clone git@github.com:xjp342023125/libcurl_wrap
+
+
+git log  HEAD --pretty=format:%s
+
+=======================================
+CNAME文件 www.fpstop.com
+fpstop.github.io
+=====================================
+svnadmin create  ------------------------------> git init
+svn co                 ------------------------------> git clone
+svn update          ------------------------------> git pull
+svn add              ------------------------------> git add
+svn commit        ------------------------------>  git add, git commit
+svn status          ------------------------------>  git status
+svn switch <branch>  ------------------------>  git checkout <branch>
+svn merge <branch>  ------------------------>  git merge <branch>
+svn revert <file>  ------------------------------> git checkout <file>
+=====================================
+git fetch :获取是否有变动
+git pull:获取内容
+=============================
+git clone https://github.com/cloudwu/skynet_sample
+cd skynet_sample/
+git submodule update --init

@@ -1,0 +1,26 @@
+git init
+
+$ ssh-keygen -t rsa -C "qt00@qq.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/c/Users/Administrator/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /c/Users/Administrator/.ssh/id_rsa.
+Your public key has been saved in /c/Users/Administrator/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:DbCOEED2oXoFsSQj2yjky8bQH+/KEB2EurJxF6JdIwI qt00@qq.com
+The key's randomart image is:
++---[RSA 2048]----+
+|*==+. .          |
+|EO+=.  o         |
+|*+=.+ . .        |
+|O +=+*   o       |
+|.Xo++oo S .      |
+|*.o...           |
+|.+..  .          |
+|.  o .           |
+|    o            |
++----[SHA256]-----+
+
+git remote add origin git@github.com:fpstop/fpstop.github.io.git
+git clone git@github.com:fpstop/fpstop.github.io.git

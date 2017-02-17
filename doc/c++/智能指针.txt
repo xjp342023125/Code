@@ -1,0 +1,20 @@
+1 不能隐式使用 T*来初始化,所以构造函数要用explicit形容;
+explicit shared_ptr(T *p_real = NULL)
+
+2 拷贝构造函数
+shared_ptr& operator =(const shared_ptr &r)
+不加template
+
+3 返回一个函数指针
+	typedef T* (*ret_Tptr_func_t)();
+	
+	operator ret_Tptr_func_t() const
+	{
+		return &shared_ptr<T>::get;
+	}
+这个可以 if(T)这样使用
+
+4 虚基类需要一个虚析构函数,不然基类指针指针析构时不会调用子类的
+
+5 智能指针的意义
+这个对象我还用,先不要删除

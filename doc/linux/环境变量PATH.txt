@@ -1,0 +1,5 @@
+[root@ser109 xujinping]# echo $PATH
+/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
+[root@ser109 xujinping]# export PATH=$PATH:/usr/local/go/bin
+[root@ser109 xujinping]# echo $PATH
+/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/go/bin

@@ -1,0 +1,4 @@
+用windos系统大家都知道，本地连接里面有一个DNS设置。 那么这个选项对应Linux系统的话就是在网卡配置文件，通过编辑vi  /etc/sysconfig/network-scripts 网卡下面的ifcfg-eth0 配置文件添加DNS服务器地址
+
+2
+查看DNS服务器地址网卡配置，输入 ifconfig -a 可以查看所有设备配置

@@ -1,0 +1,11 @@
+http://www.xicidaili.com/
+
+
+
+ip.cn
+
+phantomjs --proxy=125.42.247.215:8118 printmargins.js http://www.fpstop.com 1.png 0 0 0 0
+phantomjs --proxy=125.42.247.215:8118 loadspeed.js http://www.fpstop.com
+
+phantomjs.exe --output-encoding=gbk --proxy=106.119.96.117:8118 loadspeed.js http://www.fpstop.com/post/tunshizhe/
+phantomjs.exe --output-encoding=gbk --proxy=106.119.96.117:8118 printmargins.js http://www.fpstop.com/post/tunshizhe/ 1.png 0 0 0 0

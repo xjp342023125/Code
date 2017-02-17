@@ -1,0 +1,5 @@
+1 ±äÁ¿
+name="val"
+Àý×Ó£º
+realm_dir="./kproject/krealm/krealmlib"
+bin_dir="${PWD}"

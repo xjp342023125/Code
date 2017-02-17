@@ -1,0 +1,108 @@
+关于 errno ==EINTR 的小结 
+  如果read（）读到数据为0，那么就表示文件读完了，如果在读的过程中遇到了中断则read()应该返回-1，同时置errno为EINTR。
+ 
+因此判断read的条件如下：
+ 
+   if <=0
+ {
+      if==0
+      {
+
+          表示文件结束， 处理
+　　}
+      if(<0 && errno==EINTR)
+      {
+
+    　　表示中断，处理
+
+　   }
+
+      else
+
+     {
+        否则，出错
+     }
+
+}
+
+     如果 write（）返回0，那么就表示出错，也就是无法写入了;而如果在写的过程中遇到了中断，那么write（）会返回-1，同时置errno为EINTR。
+
+因此判断write的条件如下： 
+if<=0
+ {
+     if<0
+     {
+        if errno==EINTR  
+          那么重试
+ 
+       else
+           错误处理
+     }
+ 
+    if ==0
+        break;
+ }
+
+  ssize_t   readn ( int fd, void *vptr, size_t n )
+ {
+     size_t     nleft;
+     ssize_t   nread;
+     char       *ptr;
+ 
+    ptr=vptr;
+     nleft=n;
+ 
+    while ( nleft>0 )
+     {
+        if ( ( nread = read ( fd,ptr,nleft ) ) < 0 )
+        {
+           if ( errno == EINTR )
+              nread = 0;
+           else
+              return ( -1 );
+        }
+        
+       nleft-=nread;
+        ptr+=nread;
+     }
+      
+    return ( n-nleft );
+ }
+ 
+ssize_t   writen (  int fd,   const void *ptr,    size_t n  )
+ {
+     size_t   nleft;
+     ssize_t   nwritten;
+     const char *ptr;
+ 
+    ptr=vptr;
+     nleft=n;
+ 
+    while ( nleft>0 )
+     {
+        if( ( nwritten=write( fd, ptr, nleft ) )<=0 )
+        {
+           if( nwritten<0 && errno == EINTR )
+              nwritten = 0;
+           else
+              return (-1);
+        }
+           
+          nleft-=nwritten;
+           ptr+=nwritten;
+     }
+ 
+    return (n);
+ }
+ 
+
+写函数write
+ ssize_t write(int fd,const void *buf,size_t nbytes)
+ write函数将buf中的nbytes字节内容写入文件描述符fd。成功时返回写的字节数，失败时返回-1，并设置errno变量。
+ 在网络程序中,当我们向套接字文件描述符写时有俩种可能：
+ 1) write的返回值大于0，表示写了部分或者是全部的数据；
+ 2) 返回的值小于0，此时出现了错误，我们要根据错误类型来处理。
+ 如果错误为EINTR表示在写的时候出现了中断错误。如果为EPIPE表示网络连接出现了问题（对方已经关闭了连接）。
+ 读函数read
+ 　　ssize_t read(int fd,void *buf,size_t nbyte)
+ 　　read函数是负责从fd中读取内容。当读成功时，read返回实际所读的字节数。如果返回的值是0，表示已经读到文件的结束了。小于0表示出现了错误。如果错误为EINTR说明读是由中断引起的，如果是ECONNREST表示网络连接出了问题。 

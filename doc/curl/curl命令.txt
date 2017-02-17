@@ -1,0 +1,8 @@
+curl url -o path
+eg:curl www.ip.cn -o 1.txt
+下载文件
+
+
+curl -x ip:port url
+eg:curl -x 10.0.0.172:80 www.wo.com.cn
+设置代理

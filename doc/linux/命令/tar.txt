@@ -1,0 +1,6 @@
+打包命令
+tar -zcvf  src.tar.gz src
+
+解压命令
+tar -xzvf src.tar.gz
+tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz    到指定目录

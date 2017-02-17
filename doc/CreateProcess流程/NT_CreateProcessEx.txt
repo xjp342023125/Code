@@ -1,0 +1,596 @@
+xp
+nt!NtCreateProcessEx:
+8058224c 6a0c            push    0Ch
+8058224e 68a0da4f80      push    offset nt!ObWatchHandles+0x684 (804fdaa0)
+80582253 e8f311f6ff      call    nt!_SEH_prolog (804e344b)
+80582258 64a124010000    mov     eax,dword ptr fs:[00000124h]
+8058225e 33d2            xor     edx,edx
+80582260 389040010000    cmp     byte ptr [eax+140h],dl
+80582266 0f84da600400    je      nt!NtCreateProcessEx+0x51 (805c8346)
+8058226c 8955fc          mov     dword ptr [ebp-4],edx
+8058226f 8b4d08          mov     ecx,dword ptr [ebp+8]
+80582272 a1540c5680      mov     eax,dword ptr [nt!MmUserProbeAddress (80560c54)]
+80582277 3bc8            cmp     ecx,eax
+80582279 0f839b980700    jae     nt!NtCreateProcessEx+0x2b (805fbb1a)
+8058227f 8b01            mov     eax,dword ptr [ecx]
+80582281 8901            mov     dword ptr [ecx],eax
+80582283 834dfcff        or      dword ptr [ebp-4],0FFFFFFFFh
+80582287 395514          cmp     dword ptr [ebp+14h],edx
+8058228a 0f84be600400    je      nt!NtCreateProcessEx+0x79 (805c834e)
+80582290 ff7528          push    dword ptr [ebp+28h]
+80582293 ff7524          push    dword ptr [ebp+24h]
+80582296 ff7520          push    dword ptr [ebp+20h]
+80582299 ff751c          push    dword ptr [ebp+1Ch]
+8058229c ff7518          push    dword ptr [ebp+18h]
+8058229f ff7514          push    dword ptr [ebp+14h]
+805822a2 ff7510          push    dword ptr [ebp+10h]
+805822a5 ff750c          push    dword ptr [ebp+0Ch]
+805822a8 51              push    ecx
+805822a9 e825060000      call    nt!PspCreateProcess (805828d3)
+805822ae e8d311f6ff      call    nt!_SEH_epilog (804e3486)
+805822b3 c22400          ret     24h
+805822b6 0fb74e08        movzx   ecx,word ptr [esi+8]
+805822ba e953920100      jmp     nt!NtQuerySymbolicLinkObject+0x150 (8059b512)
+
+
+kd> kb
+ChildEBP RetAddr  Args to Child              
+b83c0b98 80582bdb 89379748 b83c0ca4 893798f8 nt!MmCreatePeb
+b83c0ce4 805822ae 020cdc54 001f0fff 00000000 nt!PspCreateProcess+0x54d
+b83c0d38 804df7ec 020cdc54 001f0fff 00000000 nt!NtCreateProcessEx+0x7e
+b83c0d38 7c92e526 020cdc54 001f0fff 00000000 nt!KiFastCallEntry+0xf8
+
+
+kd> dt -r _eprocess 89379748 
+nt!_EPROCESS
+   +0x000 Pcb              : _KPROCESS
+      +0x000 Header           : _DISPATCHER_HEADER
+         +0x000 Type             : 0x3 ''
+         +0x001 Absolute         : 0 ''
+         +0x002 Size             : 0x1b ''
+         +0x003 Inserted         : 0 ''
+         +0x004 SignalState      : 0n0
+         +0x008 WaitListHead     : _LIST_ENTRY [ 0x89379750 - 0x89379750 ]
+      +0x010 ProfileListHead  : _LIST_ENTRY [ 0x89379758 - 0x89379758 ]
+         +0x000 Flink            : 0x89379758 _LIST_ENTRY [ 0x89379758 - 0x89379758 ]
+         +0x004 Blink            : 0x89379758 _LIST_ENTRY [ 0x89379758 - 0x89379758 ]
+      +0x018 DirectoryTableBase : [2] 0x1ba7a000
+      +0x020 LdtDescriptor    : _KGDTENTRY
+         +0x000 LimitLow         : 0
+         +0x002 BaseLow          : 0
+         +0x004 HighWord         : __unnamed
+      +0x028 Int21Descriptor  : _KIDTENTRY
+         +0x000 Offset           : 0
+         +0x002 Selector         : 0
+         +0x004 Access           : 0
+         +0x006 ExtendedOffset   : 0
+      +0x030 IopmOffset       : 0x20ac
+      +0x032 Iopl             : 0 ''
+      +0x033 Unused           : 0 ''
+      +0x034 ActiveProcessors : 0
+      +0x038 KernelTime       : 0
+      +0x03c UserTime         : 0
+      +0x040 ReadyListHead    : _LIST_ENTRY [ 0x89379788 - 0x89379788 ]
+         +0x000 Flink            : 0x89379788 _LIST_ENTRY [ 0x89379788 - 0x89379788 ]
+         +0x004 Blink            : 0x89379788 _LIST_ENTRY [ 0x89379788 - 0x89379788 ]
+      +0x048 SwapListEntry    : _SINGLE_LIST_ENTRY
+         +0x000 Next             : (null) 
+      +0x04c VdmTrapcHandler  : (null) 
+      +0x050 ThreadListHead   : _LIST_ENTRY [ 0x89379798 - 0x89379798 ]
+         +0x000 Flink            : 0x89379798 _LIST_ENTRY [ 0x89379798 - 0x89379798 ]
+         +0x004 Blink            : 0x89379798 _LIST_ENTRY [ 0x89379798 - 0x89379798 ]
+      +0x058 ProcessLock      : 0
+      +0x05c Affinity         : 1
+      +0x060 StackCount       : 0x7fff
+      +0x062 BasePriority     : 8 ''
+      +0x063 ThreadQuantum    : 6 ''
+      +0x064 AutoAlignment    : 0 ''
+      +0x065 State            : 0 ''
+      +0x066 ThreadSeed       : 0 ''
+      +0x067 DisableBoost     : 0 ''
+      +0x068 PowerState       : 0 ''
+      +0x069 DisableQuantum   : 0 ''
+      +0x06a IdealNode        : 0 ''
+      +0x06b Flags            : _KEXECUTE_OPTIONS
+         +0x000 ExecuteDisable   : 0y0
+         +0x000 ExecuteEnable    : 0y0
+         +0x000 DisableThunkEmulation : 0y0
+         +0x000 Permanent        : 0y0
+         +0x000 ExecuteDispatchEnable : 0y0
+         +0x000 ImageDispatchEnable : 0y0
+         +0x000 Spare            : 0y00
+      +0x06b ExecuteOptions   : 0 ''
+   +0x06c ProcessLock      : _EX_PUSH_LOCK
+      +0x000 Waiting          : 0y0
+      +0x000 Exclusive        : 0y0
+      +0x000 Shared           : 0y000000000000000000000000000000 (0)
+      +0x000 Value            : 0
+      +0x000 Ptr              : (null) 
+   +0x070 CreateTime       : _LARGE_INTEGER 0x0
+      +0x000 LowPart          : 0
+      +0x004 HighPart         : 0n0
+      +0x000 u                : __unnamed
+         +0x000 LowPart          : 0
+         +0x004 HighPart         : 0n0
+      +0x000 QuadPart         : 0n0
+   +0x078 ExitTime         : _LARGE_INTEGER 0x0
+      +0x000 LowPart          : 0
+      +0x004 HighPart         : 0n0
+      +0x000 u                : __unnamed
+         +0x000 LowPart          : 0
+         +0x004 HighPart         : 0n0
+      +0x000 QuadPart         : 0n0
+   +0x080 RundownProtect   : _EX_RUNDOWN_REF
+      +0x000 Count            : 0
+      +0x000 Ptr              : (null) 
+   +0x084 UniqueProcessId  : 0x00000710 Void
+   +0x088 ActiveProcessLinks : _LIST_ENTRY [ 0x0 - 0x0 ]
+      +0x000 Flink            : (null) 
+      +0x004 Blink            : (null) 
+   +0x090 QuotaUsage       : [3] 0x50
+   +0x09c QuotaPeak        : [3] 0x50
+   +0x0a8 CommitCharge     : 8
+   +0x0ac PeakVirtualSize  : 0x9c000
+   +0x0b0 VirtualSize      : 0x9c000
+   +0x0b4 SessionProcessLinks : _LIST_ENTRY [ 0xf79bd014 - 0x892c1b34 ]
+      +0x000 Flink            : 0xf79bd014 _LIST_ENTRY [ 0x893e30d4 - 0x893797fc ]
+         +0x000 Flink            : 0x893e30d4 _LIST_ENTRY [ 0x8935b60c - 0xf79bd014 ]
+         +0x004 Blink            : 0x893797fc _LIST_ENTRY [ 0xf79bd014 - 0x892c1b34 ]
+      +0x004 Blink            : 0x892c1b34 _LIST_ENTRY [ 0x893797fc - 0x89359b2c ]
+         +0x000 Flink            : 0x893797fc _LIST_ENTRY [ 0xf79bd014 - 0x892c1b34 ]
+         +0x004 Blink            : 0x89359b2c _LIST_ENTRY [ 0x892c1b34 - 0x892ad514 ]
+   +0x0bc DebugPort        : (null) 
+   +0x0c0 ExceptionPort    : (null) 
+   +0x0c4 ObjectTable      : 0xe129f9f8 _HANDLE_TABLE
+      +0x000 TableCode        : 0xe1074000
+      +0x004 QuotaProcess     : 0x89379748 _EPROCESS
+         +0x000 Pcb              : _KPROCESS
+         +0x06c ProcessLock      : _EX_PUSH_LOCK
+         +0x070 CreateTime       : _LARGE_INTEGER 0x0
+         +0x078 ExitTime         : _LARGE_INTEGER 0x0
+         +0x080 RundownProtect   : _EX_RUNDOWN_REF
+         +0x084 UniqueProcessId  : 0x00000710 Void
+         +0x088 ActiveProcessLinks : _LIST_ENTRY [ 0x0 - 0x0 ]
+         +0x090 QuotaUsage       : [3] 0x50
+         +0x09c QuotaPeak        : [3] 0x50
+         +0x0a8 CommitCharge     : 8
+         +0x0ac PeakVirtualSize  : 0x9c000
+         +0x0b0 VirtualSize      : 0x9c000
+         +0x0b4 SessionProcessLinks : _LIST_ENTRY [ 0xf79bd014 - 0x892c1b34 ]
+         +0x0bc DebugPort        : (null) 
+         +0x0c0 ExceptionPort    : (null) 
+         +0x0c4 ObjectTable      : 0xe129f9f8 _HANDLE_TABLE
+         +0x0c8 Token            : _EX_FAST_REF
+         +0x0cc WorkingSetLock   : _FAST_MUTEX
+         +0x0ec WorkingSetPage   : 0x1ba3d
+         +0x0f0 AddressCreationLock : _FAST_MUTEX
+         +0x110 HyperSpaceLock   : 0
+         +0x114 ForkInProgress   : (null) 
+         +0x118 HardwareTrigger  : 0
+         +0x11c VadRoot          : 0x8931be68 Void
+         +0x120 VadHint          : 0x8935e448 Void
+         +0x124 CloneRoot        : (null) 
+         +0x128 NumberOfPrivatePages : 1
+         +0x12c NumberOfLockedPages : 0
+         +0x130 Win32Process     : (null) 
+         +0x134 Job              : (null) 
+         +0x138 SectionObject    : 0xe18a6ed0 Void
+         +0x13c SectionBaseAddress : 0x00400000 Void
+         +0x140 QuotaBlock       : 0x89350cc0 _EPROCESS_QUOTA_BLOCK
+         +0x144 WorkingSetWatch  : (null) 
+         +0x148 Win32WindowStation : (null) 
+         +0x14c InheritedFromUniqueProcessId : 0x000005d8 Void
+         +0x150 LdtInformation   : (null) 
+         +0x154 VadFreeHint      : (null) 
+         +0x158 VdmObjects       : (null) 
+         +0x15c DeviceMap        : 0xe1737920 Void
+         +0x160 PhysicalVadList  : _LIST_ENTRY [ 0x893798a8 - 0x893798a8 ]
+         +0x168 PageDirectoryPte : _HARDWARE_PTE
+         +0x168 Filler           : 0
+         +0x170 Session          : 0xf79bd000 Void
+         +0x174 ImageFileName    : [16]  "dosys.exe"
+         +0x184 JobLinks         : _LIST_ENTRY [ 0x0 - 0x0 ]
+         +0x18c LockedPagesList  : (null) 
+         +0x190 ThreadListHead   : _LIST_ENTRY [ 0x893798d8 - 0x893798d8 ]
+         +0x198 SecurityPort     : (null) 
+         +0x19c PaeTop           : (null) 
+         +0x1a0 ActiveThreads    : 0
+         +0x1a4 GrantedAccess    : 0
+         +0x1a8 DefaultHardErrorProcessing : 0
+         +0x1ac LastThreadExitStatus : 0n0
+         +0x1b0 Peb              : (null) 
+         +0x1b4 PrefetchTrace    : _EX_FAST_REF
+         +0x1b8 ReadOperationCount : _LARGE_INTEGER 0x0
+         +0x1c0 WriteOperationCount : _LARGE_INTEGER 0x0
+         +0x1c8 OtherOperationCount : _LARGE_INTEGER 0x0
+         +0x1d0 ReadTransferCount : _LARGE_INTEGER 0x0
+         +0x1d8 WriteTransferCount : _LARGE_INTEGER 0x0
+         +0x1e0 OtherTransferCount : _LARGE_INTEGER 0x0
+         +0x1e8 CommitChargeLimit : 0
+         +0x1ec CommitChargePeak : 8
+         +0x1f0 AweInfo          : (null) 
+         +0x1f4 SeAuditProcessCreationInfo : _SE_AUDIT_PROCESS_CREATION_INFO
+         +0x1f8 Vm               : _MMSUPPORT
+         +0x238 LastFaultCount   : 0
+         +0x23c ModifiedPageCount : 0
+         +0x240 NumberOfVads     : 2
+         +0x244 JobStatus        : 0
+         +0x248 Flags            : 0x50800
+         +0x248 CreateReported   : 0y0
+         +0x248 NoDebugInherit   : 0y0
+         +0x248 ProcessExiting   : 0y0
+         +0x248 ProcessDelete    : 0y0
+         +0x248 Wow64SplitPages  : 0y0
+         +0x248 VmDeleted        : 0y0
+         +0x248 OutswapEnabled   : 0y0
+         +0x248 Outswapped       : 0y0
+         +0x248 ForkFailed       : 0y0
+         +0x248 HasPhysicalVad   : 0y0
+         +0x248 AddressSpaceInitialized : 0y10
+         +0x248 SetTimerResolution : 0y0
+         +0x248 BreakOnTermination : 0y0
+         +0x248 SessionCreationUnderway : 0y0
+         +0x248 WriteWatch       : 0y0
+         +0x248 ProcessInSession : 0y1
+         +0x248 OverrideAddressSpace : 0y0
+         +0x248 HasAddressSpace  : 0y1
+         +0x248 LaunchPrefetched : 0y0
+         +0x248 InjectInpageErrors : 0y0
+         +0x248 VmTopDown        : 0y0
+         +0x248 Unused3          : 0y0
+         +0x248 Unused4          : 0y0
+         +0x248 VdmAllowed       : 0y0
+         +0x248 Unused           : 0y00000 (0)
+         +0x248 Unused1          : 0y0
+         +0x248 Unused2          : 0y0
+         +0x24c ExitStatus       : 0n259
+         +0x250 NextPageColor    : 0x5119
+         +0x252 SubSystemMinorVersion : 0 ''
+         +0x253 SubSystemMajorVersion : 0x4 ''
+         +0x252 SubSystemVersion : 0x400
+         +0x254 PriorityClass    : 0x2 ''
+         +0x255 WorkingSetAcquiredUnsafe : 0 ''
+         +0x258 Cookie           : 0
+      +0x008 UniqueProcessId  : 0x00000710 Void
+      +0x00c HandleTableLock  : [4] _EX_PUSH_LOCK
+         +0x000 Waiting          : 0y0
+         +0x000 Exclusive        : 0y0
+         +0x000 Shared           : 0y000000000000000000000000000000 (0)
+         +0x000 Value            : 0
+         +0x000 Ptr              : (null) 
+      +0x01c HandleTableList  : _LIST_ENTRY [ 0x805636c8 - 0xe1a924e4 ]
+         +0x000 Flink            : 0x805636c8 _LIST_ENTRY [ 0xe1000d2c - 0xe129fa14 ]
+         +0x004 Blink            : 0xe1a924e4 _LIST_ENTRY [ 0xe129fa14 - 0xe17da0e4 ]
+      +0x024 HandleContentionEvent : _EX_PUSH_LOCK
+         +0x000 Waiting          : 0y0
+         +0x000 Exclusive        : 0y0
+         +0x000 Shared           : 0y000000000000000000000000000000 (0)
+         +0x000 Value            : 0
+         +0x000 Ptr              : (null) 
+      +0x028 DebugInfo        : (null) 
+      +0x02c ExtraInfoPages   : 0n0
+      +0x030 FirstFree        : 4
+      +0x034 LastFree         : 0
+      +0x038 NextHandleNeedingPool : 0x800
+      +0x03c HandleCount      : 0n0
+      +0x040 Flags            : 0
+      +0x040 StrictFIFO       : 0y0
+   +0x0c8 Token            : _EX_FAST_REF
+      +0x000 Object           : 0xe107153f Void
+      +0x000 RefCnt           : 0y111
+      +0x000 Value            : 0xe107153f
+   +0x0cc WorkingSetLock   : _FAST_MUTEX
+      +0x000 Count            : 0n1
+      +0x004 Owner            : 0xb83c0ab8 _KTHREAD
+         +0x000 Header           : _DISPATCHER_HEADER
+         +0x010 MutantListHead   : _LIST_ENTRY [ 0xb83c0b28 - 0x0 ]
+         +0x018 InitialStack     : 0x00000001 Void
+         +0x01c StackLimit       : 0x80000003 Void
+         +0x020 Teb              : (null) 
+         +0x024 TlsArray         : (null) 
+         +0x028 KernelStack      : 0x805831d4 Void
+         +0x02c DebugActive      : 0x3 ''
+         +0x02d State            : 0 ''
+         +0x02e Alerted          : [2]  ""
+         +0x030 Iopl             : 0 ''
+         +0x031 NpxState         : 0 ''
+         +0x032 Saturation       : 0 ''
+         +0x033 Priority         : 0 ''
+         +0x034 ApcState         : _KAPC_STATE
+         +0x04c ContextSwitches  : 0xe1298c28
+         +0x050 IdleSwapBlock    : 0xff ''
+         +0x051 VdmSafe          : 0x5f '_'
+         +0x052 Spare0           : [2]  "??????"
+         +0x054 WaitStatus       : 0n1
+         +0x058 WaitIrql         : 0x97 ''
+         +0x059 WaitMode         : 2 ''
+         +0x05a WaitNext         : 0 ''
+         +0x05b WaitReason       : 0 ''
+         +0x05c WaitBlockList    : 0x00000202 _KWAIT_BLOCK
+         +0x060 WaitListEntry    : _LIST_ENTRY [ 0xb83c0b48 - 0x8057d01b ]
+         +0x060 SwapListEntry    : _SINGLE_LIST_ENTRY
+         +0x068 WaitTime         : 0xb83c0b28
+         +0x06c BasePriority     : 71 'G'
+         +0x06d DecrementCount   : 0x9 ''
+         +0x06e PriorityDecrement : 78 'N'
+         +0x06f Quantum          : -128 ''
+         +0x070 WaitBlock        : [4] _KWAIT_BLOCK
+         +0x0d0 LegoData         : 0xb83c0ce4 Void
+         +0x0d4 KernelApcDisable : 0
+         +0x0d8 UserAffinity     : 0x805831d5
+         +0x0dc SystemAffinityActive : 0x8 ''
+         +0x0dd PowerState       : 0 ''
+         +0x0de NpxIrql          : 0 ''
+         +0x0df InitialNode      : 0 ''
+         +0x0e0 ServiceTable     : 0x00000206 Void
+         +0x0e4 Queue            : 0x80582bdb _KQUEUE
+         +0x0e8 ApcQueueLock     : 0x89379748
+         +0x0f0 Timer            : _KTIMER
+         +0x118 QueueListEntry   : _LIST_ENTRY [ 0x894d8b94 - 0x0 ]
+         +0x120 SoftAffinity     : 0x12
+         +0x124 Affinity         : 0x894d8930
+         +0x128 Preempted        : 0x30 '0'
+         +0x129 ProcessReadyQueue : 0x89 ''
+         +0x12a KernelStackResident : 0x4d 'M'
+         +0x12b NextProcessor    : 0x89 ''
+         +0x12c CallbackStack    : 0x894fe290 Void
+         +0x130 Win32Thread      : 0x00000002 Void
+         +0x134 TrapFrame        : 0xba3debcf _KTRAP_FRAME
+         +0x138 ApcStatePointer  : [2] 0xba3debec _KAPC_STATE
+         +0x140 PreviousMode     : 70 'F'
+         +0x141 EnableStackSwap  : 0x2 ''
+         +0x142 LargeStack       : 0 ''
+         +0x143 ResourceIndex    : 0 ''
+         +0x144 KernelTime       : 0xba3f5e94
+         +0x148 UserTime         : 0xf7987d02
+         +0x14c SavedApcState    : _KAPC_STATE
+         +0x164 Alertable        : 0x38 '8'
+         +0x165 ApcStateIndex    : 0xc ''
+         +0x166 ApcQueueable     : 0x3c '<'
+         +0x167 AutoAlignment    : 0xb8 ''
+         +0x168 StackBase        : 0xf79878ae Void
+         +0x16c SuspendApc       : _KAPC
+         +0x19c SuspendSemaphore : _KSEMAPHORE
+         +0x1b0 ThreadListEntry  : _LIST_ENTRY [ 0x4021 - 0x892d4c18 ]
+         +0x1b8 FreezeCount      : -1 ''
+         +0x1b9 SuspendCount     : -1 ''
+         +0x1ba IdealProcessor   : 0xff ''
+         +0x1bb DisableBoost     : 0xff ''
+      +0x008 Contention       : 0
+      +0x00c Event            : _KEVENT
+         +0x000 Header           : _DISPATCHER_HEADER
+      +0x01c OldIrql          : 1
+   +0x0ec WorkingSetPage   : 0x1ba3d
+   +0x0f0 AddressCreationLock : _FAST_MUTEX
+      +0x000 Count            : 0n1
+      +0x004 Owner            : (null) 
+      +0x008 Contention       : 0
+      +0x00c Event            : _KEVENT
+         +0x000 Header           : _DISPATCHER_HEADER
+      +0x01c OldIrql          : 0
+   +0x110 HyperSpaceLock   : 0
+   +0x114 ForkInProgress   : (null) 
+   +0x118 HardwareTrigger  : 0
+   +0x11c VadRoot          : 0x8931be68 Void
+   +0x120 VadHint          : 0x8935e448 Void
+   +0x124 CloneRoot        : (null) 
+   +0x128 NumberOfPrivatePages : 1
+   +0x12c NumberOfLockedPages : 0
+   +0x130 Win32Process     : (null) 
+   +0x134 Job              : (null) 
+   +0x138 SectionObject    : 0xe18a6ed0 Void
+   +0x13c SectionBaseAddress : 0x00400000 Void
+   +0x140 QuotaBlock       : 0x89350cc0 _EPROCESS_QUOTA_BLOCK
+      +0x000 QuotaEntry       : [3] _EPROCESS_QUOTA_ENTRY
+         +0x000 Usage            : 0x151fc
+         +0x004 Limit            : 0x20000
+         +0x008 Peak             : 0x1617c
+         +0x00c Return           : 0
+      +0x030 QuotaList        : _LIST_ENTRY [ 0x892fdff0 - 0x89357d58 ]
+         +0x000 Flink            : 0x892fdff0 _LIST_ENTRY [ 0x891671c0 - 0x89350cf0 ]
+         +0x004 Blink            : 0x89357d58 _LIST_ENTRY [ 0x89350cf0 - 0x89325b30 ]
+      +0x038 ReferenceCount   : 0x232
+      +0x03c ProcessCount     : 5
+   +0x144 WorkingSetWatch  : (null) 
+   +0x148 Win32WindowStation : (null) 
+   +0x14c InheritedFromUniqueProcessId : 0x000005d8 Void
+   +0x150 LdtInformation   : (null) 
+   +0x154 VadFreeHint      : (null) 
+   +0x158 VdmObjects       : (null) 
+   +0x15c DeviceMap        : 0xe1737920 Void
+   +0x160 PhysicalVadList  : _LIST_ENTRY [ 0x893798a8 - 0x893798a8 ]
+      +0x000 Flink            : 0x893798a8 _LIST_ENTRY [ 0x893798a8 - 0x893798a8 ]
+         +0x000 Flink            : 0x893798a8 _LIST_ENTRY [ 0x893798a8 - 0x893798a8 ]
+         +0x004 Blink            : 0x893798a8 _LIST_ENTRY [ 0x893798a8 - 0x893798a8 ]
+      +0x004 Blink            : 0x893798a8 _LIST_ENTRY [ 0x893798a8 - 0x893798a8 ]
+         +0x000 Flink            : 0x893798a8 _LIST_ENTRY [ 0x893798a8 - 0x893798a8 ]
+         +0x004 Blink            : 0x893798a8 _LIST_ENTRY [ 0x893798a8 - 0x893798a8 ]
+   +0x168 PageDirectoryPte : _HARDWARE_PTE
+      +0x000 Valid            : 0y0
+      +0x000 Write            : 0y0
+      +0x000 Owner            : 0y0
+      +0x000 WriteThrough     : 0y0
+      +0x000 CacheDisable     : 0y0
+      +0x000 Accessed         : 0y0
+      +0x000 Dirty            : 0y0
+      +0x000 LargePage        : 0y0
+      +0x000 Global           : 0y0
+      +0x000 CopyOnWrite      : 0y0
+      +0x000 Prototype        : 0y0
+      +0x000 reserved         : 0y0
+      +0x000 PageFrameNumber  : 0y00000000000000000000 (0)
+   +0x168 Filler           : 0
+   +0x170 Session          : 0xf79bd000 Void
+   +0x174 ImageFileName    : [16]  "dosys.exe"
+   +0x184 JobLinks         : _LIST_ENTRY [ 0x0 - 0x0 ]
+      +0x000 Flink            : (null) 
+      +0x004 Blink            : (null) 
+   +0x18c LockedPagesList  : (null) 
+   +0x190 ThreadListHead   : _LIST_ENTRY [ 0x893798d8 - 0x893798d8 ]
+      +0x000 Flink            : 0x893798d8 _LIST_ENTRY [ 0x893798d8 - 0x893798d8 ]
+         +0x000 Flink            : 0x893798d8 _LIST_ENTRY [ 0x893798d8 - 0x893798d8 ]
+         +0x004 Blink            : 0x893798d8 _LIST_ENTRY [ 0x893798d8 - 0x893798d8 ]
+      +0x004 Blink            : 0x893798d8 _LIST_ENTRY [ 0x893798d8 - 0x893798d8 ]
+         +0x000 Flink            : 0x893798d8 _LIST_ENTRY [ 0x893798d8 - 0x893798d8 ]
+         +0x004 Blink            : 0x893798d8 _LIST_ENTRY [ 0x893798d8 - 0x893798d8 ]
+   +0x198 SecurityPort     : (null) 
+   +0x19c PaeTop           : (null) 
+   +0x1a0 ActiveThreads    : 0
+   +0x1a4 GrantedAccess    : 0
+   +0x1a8 DefaultHardErrorProcessing : 0
+   +0x1ac LastThreadExitStatus : 0n0
+   +0x1b0 Peb              : (null) 
+   +0x1b4 PrefetchTrace    : _EX_FAST_REF
+      +0x000 Object           : (null) 
+      +0x000 RefCnt           : 0y000
+      +0x000 Value            : 0
+   +0x1b8 ReadOperationCount : _LARGE_INTEGER 0x0
+      +0x000 LowPart          : 0
+      +0x004 HighPart         : 0n0
+      +0x000 u                : __unnamed
+         +0x000 LowPart          : 0
+         +0x004 HighPart         : 0n0
+      +0x000 QuadPart         : 0n0
+   +0x1c0 WriteOperationCount : _LARGE_INTEGER 0x0
+      +0x000 LowPart          : 0
+      +0x004 HighPart         : 0n0
+      +0x000 u                : __unnamed
+         +0x000 LowPart          : 0
+         +0x004 HighPart         : 0n0
+      +0x000 QuadPart         : 0n0
+   +0x1c8 OtherOperationCount : _LARGE_INTEGER 0x0
+      +0x000 LowPart          : 0
+      +0x004 HighPart         : 0n0
+      +0x000 u                : __unnamed
+         +0x000 LowPart          : 0
+         +0x004 HighPart         : 0n0
+      +0x000 QuadPart         : 0n0
+   +0x1d0 ReadTransferCount : _LARGE_INTEGER 0x0
+      +0x000 LowPart          : 0
+      +0x004 HighPart         : 0n0
+      +0x000 u                : __unnamed
+         +0x000 LowPart          : 0
+         +0x004 HighPart         : 0n0
+      +0x000 QuadPart         : 0n0
+   +0x1d8 WriteTransferCount : _LARGE_INTEGER 0x0
+      +0x000 LowPart          : 0
+      +0x004 HighPart         : 0n0
+      +0x000 u                : __unnamed
+         +0x000 LowPart          : 0
+         +0x004 HighPart         : 0n0
+      +0x000 QuadPart         : 0n0
+   +0x1e0 OtherTransferCount : _LARGE_INTEGER 0x0
+      +0x000 LowPart          : 0
+      +0x004 HighPart         : 0n0
+      +0x000 u                : __unnamed
+         +0x000 LowPart          : 0
+         +0x004 HighPart         : 0n0
+      +0x000 QuadPart         : 0n0
+   +0x1e8 CommitChargeLimit : 0
+   +0x1ec CommitChargePeak : 8
+   +0x1f0 AweInfo          : (null) 
+   +0x1f4 SeAuditProcessCreationInfo : _SE_AUDIT_PROCESS_CREATION_INFO
+      +0x000 ImageFileName    : (null) 
+   +0x1f8 Vm               : _MMSUPPORT
+      +0x000 LastTrimTime     : _LARGE_INTEGER 0x1d09891`1160a4ce
+         +0x000 LowPart          : 0x1160a4ce
+         +0x004 HighPart         : 0n30447761
+         +0x000 u                : __unnamed
+         +0x000 QuadPart         : 0n130772138022970574
+      +0x008 Flags            : _MMSUPPORT_FLAGS
+         +0x000 SessionSpace     : 0y0
+         +0x000 BeingTrimmed     : 0y0
+         +0x000 SessionLeader    : 0y0
+         +0x000 TrimHard         : 0y0
+         +0x000 WorkingSetHard   : 0y0
+         +0x000 AddressSpaceBeingDeleted : 0y0
+         +0x000 Available        : 0y0000000000 (0)
+         +0x000 AllowWorkingSetAdjustment : 0y00000000 (0)
+         +0x000 MemoryPriority   : 0y00000000 (0)
+      +0x00c PageFaultCount   : 2
+      +0x010 PeakWorkingSetSize : 6
+      +0x014 WorkingSetSize   : 6
+      +0x018 MinimumWorkingSetSize : 0x32
+      +0x01c MaximumWorkingSetSize : 0x159
+      +0x020 VmWorkingSetList : 0xc0503000 _MMWSL
+         +0x000 Quota            : 0
+         +0x004 FirstFree        : 0x101f
+         +0x008 FirstDynamic     : 0xe
+         +0x00c LastEntry        : 0x1169
+         +0x010 NextSlot         : 4
+         +0x014 Wsle             : 0xc050369c _MMWSLE
+         +0x018 LastInitializedWsle : 0x1258
+         +0x01c NonDirectCount   : 0x517
+         +0x020 HashTable        : 0xc0704000 _MMWSLE_HASH
+         +0x024 HashTableSize    : 0xc00
+         +0x028 NumberOfCommittedPageTables : 0x36
+         +0x02c HashTableStart   : 0xc0704000 Void
+         +0x030 HighestPermittedHashAddress : 0xc0c00000 Void
+         +0x034 NumberOfImageWaiters : 0
+         +0x038 VadBitMapHint    : 4
+         +0x03c UsedPageTableEntries : [768] 0x15d
+         +0x63c CommittedPageTables : [24] 0x7ff
+      +0x024 WorkingSetExpansionLinks : _LIST_ENTRY [ 0x0 - 0x0 ]
+         +0x000 Flink            : (null) 
+         +0x004 Blink            : (null) 
+      +0x02c Claim            : 0
+      +0x030 NextEstimationSlot : 0
+      +0x034 NextAgingSlot    : 0
+      +0x038 EstimatedAvailable : 0
+      +0x03c GrowthSinceLastEstimate : 2
+   +0x238 LastFaultCount   : 0
+   +0x23c ModifiedPageCount : 0
+   +0x240 NumberOfVads     : 2
+   +0x244 JobStatus        : 0
+   +0x248 Flags            : 0x50800
+   +0x248 CreateReported   : 0y0
+   +0x248 NoDebugInherit   : 0y0
+   +0x248 ProcessExiting   : 0y0
+   +0x248 ProcessDelete    : 0y0
+   +0x248 Wow64SplitPages  : 0y0
+   +0x248 VmDeleted        : 0y0
+   +0x248 OutswapEnabled   : 0y0
+   +0x248 Outswapped       : 0y0
+   +0x248 ForkFailed       : 0y0
+   +0x248 HasPhysicalVad   : 0y0
+   +0x248 AddressSpaceInitialized : 0y10
+   +0x248 SetTimerResolution : 0y0
+   +0x248 BreakOnTermination : 0y0
+   +0x248 SessionCreationUnderway : 0y0
+   +0x248 WriteWatch       : 0y0
+   +0x248 ProcessInSession : 0y1
+   +0x248 OverrideAddressSpace : 0y0
+   +0x248 HasAddressSpace  : 0y1
+   +0x248 LaunchPrefetched : 0y0
+   +0x248 InjectInpageErrors : 0y0
+   +0x248 VmTopDown        : 0y0
+   +0x248 Unused3          : 0y0
+   +0x248 Unused4          : 0y0
+   +0x248 VdmAllowed       : 0y0
+   +0x248 Unused           : 0y00000 (0)
+   +0x248 Unused1          : 0y0
+   +0x248 Unused2          : 0y0
+   +0x24c ExitStatus       : 0n259
+   +0x250 NextPageColor    : 0x5119
+   +0x252 SubSystemMinorVersion : 0 ''
+   +0x253 SubSystemMajorVersion : 0x4 ''
+   +0x252 SubSystemVersion : 0x400
+   +0x254 PriorityClass    : 0x2 ''
+   +0x255 WorkingSetAcquiredUnsafe : 0 ''
+   +0x258 Cookie           : 0
+
+ba w4 89379748+0x1b0
+
+
+8058345e e8e77df6ff      call    nt!KeDetachProcess (804eb24a)
+80583463 8b4510          mov     eax,dword ptr [ebp+10h]
+80583466 8b4de4          mov     ecx,dword ptr [ebp-1Ch]
+80583469 8908            mov     dword ptr [eax],ecx
+8058346b 33c0            xor     eax,eax
+kd> r eax
+eax=892d5f50
+kd> bl
+ 0 e 805b2bea     0001 (0001) nt!NtCreateProcess
+ 1 e 8058224c     0001 (0001) nt!NtCreateProcessEx
+ 2 e 805831d4     0001 (0001) nt!MmCreatePeb
+ 3 e 892d5f50 w 4 0001 (0001) 

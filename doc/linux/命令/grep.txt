@@ -1,0 +1,2 @@
+grep -R 'struct rlimit'  /usr/include/*
+搜索目录下所有文件 找字符串

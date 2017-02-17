@@ -1,0 +1,6 @@
+make linux MALLOC_STATICLIB= SKYNET_DEFINES=-DNOUSE_JEMALLOC
+https://github.com/cloudwu/skynet/wiki/Build
+
+https://github.com/cloudwu/skynet
+
+https://github.com/cloudwu/skynet_sample

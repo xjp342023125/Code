@@ -1,0 +1,29 @@
+1
+new
+普通版本(抛异常)：反汇编是_Znaj@plt
+nothrow版本:_ZnajRKSt9nothrow_t@plt
+
+void test_new_big()
+{
+	int *p = new (nothrow) int[-1];
+	int *q = new  int[-1];
+}
+
+push   ebp                                        
+mov    ebp,esp                                    
+sub    esp,0x18                                   
+mov    DWORD PTR [esp+0x4],0x8049c74              
+mov    DWORD PTR [esp],0xfffffffc                 
+call   0x8048630 <_ZnajRKSt9nothrow_t@plt>        
+mov    DWORD PTR [ebp-0x8],eax                    
+mov    DWORD PTR [esp],0xfffffffc                 
+call   0x80485f0 <_Znaj@plt>                      
+mov    DWORD PTR [ebp-0x4],eax                    
+leave                                             
+ret                                               
+
+
+
+2
+函数调用参数前，参数放在esp里面
+

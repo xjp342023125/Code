@@ -1,0 +1,30 @@
+关联性容器::(map)
+   erase迭代器只是被删元素的迭代器失效，但是返回值为void，  所以要采用erase(iter++)的方式删除迭代器，
+ 
+  正确方法为::
+    for( iter = c.begin(); iter != c.end(); ) 
+
+                c.erase(iter++);
+                
+删除操作会使it乱掉，再使用it++就出错了。正确的做法是：
+for ( map<int, string>::iterator it = str_map.begin(); it!=str_map.end();  ) {
+ if ( some_condition ) {
+ str_map.erase(it++);
+ } else {
+ it++;
+ }
+}
+
+
+临时变量
+	for (pingtimemap_t::iterator it = ping_map.begin();it != ping_map.end();)
+	{
+		pingtimemap_t::iterator ittmp = it;
+		++it;
+		
+		if (ittmp->second + 60 < tNow)
+		{
+			LERROR<<"realm ping timeout,id="<<ittmp->first<<",last="<<ittmp->second<<",now = "<<tNow;
+			ping_map.erase(ittmp);
+		}
+	}

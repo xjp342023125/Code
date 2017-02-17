@@ -1,0 +1,274 @@
+1.  建一个新表
+
+void lua_createtable (lua_State *L, int narr, int nrec)
+创建一个新的table, 并把它放在栈顶. narr和nrec分别指定该table的array部分和hash部分的预分配元素数量
+无返回值
+栈高度+1, 栈顶元素是新table
+#define lua_newtable(L) lua_createtable(L, 0, 0) 常用这个
+ 
+2. 取表中的元素
+void lua_getfield (lua_State *L, int index, const char *k)
+操作:   arr = Stack[index]    // arr肯定是表
+        Stack.push( arr[k] )
+取表中键为k的元素, 这里的表是由index指向的栈上的一个表
+无返回值
+栈高度+1, 栈顶元素是(Stack[index])[k]
+注意, 该操作将触发 __index 元方法
+ 
+3. 给表中的元素赋值
+void lua_setfield (lua_State *L, int index, const char *k)
+操作:   arr = Stack[index]
+        arr[k] = Stack.top()
+        Stack.pop()
+给表中键为k的元素赋值value(value就是栈顶元素), 这里的表是由index指向的栈上的一个表
+无返回值
+栈高度-1, 被弹出的是value
+注意, 该操作将触发 __newindex 元方法
+ 
+4. 取表元素 和 表元素赋值
+void lua_gettable (lua_State *L, int index)
+操作:     ele  = Stack[index]
+
+            key = Stack.top()
+
+            Stack.pop()
+
+            value = ele[key]
+
+            Stack.push(value)
+
+根据index指定取到相应的表; 取栈顶元素为key, 并弹出栈; 获取表中key的值压入栈顶.
+
+无返回值
+
+栈高度不变, 但是发生了一次弹出和压入的操作, 弹出的是key, 压入的是value
+
+注意, 该操作将触发 __index 元方法
+
+ 
+
+void lua_settable (lua_State *L, int index)
+操作:   ele    = Stack[index]
+        value  = Stack.top()
+        Stack.pop()
+        key    = Stack.top()
+        Stack.pop()
+        ele[key] = value
+根据index指定取到相应的表; 取栈顶元素做value, 弹出之; 再取当前栈顶元素做key, 亦弹出之; 然后将表的键为key的元素赋值为value
+无返回值
+栈高度-2, 第一次弹出value, 第二次弹出key
+注意, 该操作将触发 __newindex 元方法
+ 
+5. 对table的一些操作[不引发原方法]
+void lua_rawget (lua_State *L, int index)
+和lua_gettable操作一样
+
+但是不触发相应的元方法
+
+  
+
+void lua_rawgeti(lua_State *L, int index, int n)
+
+操作:   ele = Stack[index]
+
+        value = ele[n]
+
+        Stack.push(value)
+
+无返回值
+
+栈+1， 栈顶新增元素就是 value
+
+不触发相应的元方法
+
+  
+
+void lua_rawset (lua_State *L, int index) 
+和lua_settable操作一样
+
+ 但是不触发相应的原方法
+
+ 
+
+void lua_rawseti (lua_State *L, int index, int n) 
+操作:   ele = Stack[index]
+
+        value = Stack.top()
+
+        Stack.pop()
+
+        ele[n] = value
+
+无返回值
+
+栈-1, 栈顶将value弹出
+
+不触发相应的元方法
+
+ 
+
+ 
+
+6. 复制栈上元素并压入栈
+
+void lua_pushvalue (lua_State *L, int index)
+操作:   value = Stack[index]       
+
+       Stack.push(value)
+
+无返回值
+
+栈+1 
+
+ 
+
+ 
+
+7. 创建一个元表
+
+int luaL_newmetatable (lua_State *L, const char *tname)
+操作:   1. 在注册表中查找tname, 如果已经注册, 就返回0, 否者继续, 并平栈
+
+        lua_getfield(L, LUA_REGISTRYINDEX, tname)
+
+        if (!lua_isnil(L, -1))
+
+            return 0;
+
+        lua_pop(L, 1);
+
+        2. 创建一个表, 并注册, 返回1
+
+        lua_newtable(L)
+
+        lua_pushvalue(L, -1)
+
+        lua_setfield(L, LUA_REGISTRYINDEX, tname)
+
+        return 1
+
+有返回值
+栈+1, 栈顶元素是在注册表中注册过的新表
+ 
+8. 创建C值
+void *lua_newuserdata (lua_State *L, size_t size)
+该函数分配一块由size指定大小的内存块, 并放在栈顶
+
+返回值是新分配的块的地址
+
+栈+1， 栈顶是userdata
+
+userdata用来在lua中表示c中的值. 一个完整的userdata有自己的元表, 在垃圾回收时, 可以调用它的元表的__gc方法
+
+ 
+
+ 
+
+9. 注册c函数到lua中, 其实没有这回事, lua中只有c闭包
+
+void lua_pushcclosure (lua_State *L, lua_CFunction fn, int n)
+向栈上压一个C闭包
+
+当一个c函数被创建时, 可以绑定几个值在它上面, 从而形成一个闭包.  在任何时刻调用这个c函数时, 都可以访问这几个绑定值. 
+
+绑定的方法: 先一次压入要绑定的n个值到栈上, 然后调用lua_pushcclosure(L, fn, n)这样就形成的一个c闭包
+
+无返回值
+
+栈 –(n - 1) , 一共弹出n个元素(及那些绑定的值), 压入一个cclosure
+
+ 
+
+#define lua_pushcfunction(L, f) lua_pushcclosure(L, f, 0)
+
+#define lua_register(L, n, f) (lua_pushcfunction(L, f), lua_setglobal(L, n))
+
+没有返回值
+
+栈不变化
+
+这个是比较常用的, 以n为lua中的key压入一个0个绑定值的cclosure.
+--------------------------------------------------------------------------------------------------------
+这次主要记录lua函数调用的几个相关的api, 需要说明的是, 对于这几个api, lua手册上写的相当详细, 相当好, 可以直接看手册
+
+ 
+
+10. 调用一个lua函数
+
+void lua_call(lua_State* L, int nargs, int nresults)
+
+lua c api的特点就是"不是一个人在战斗" [我想表达的意思是, lua中的一句话, 在c api实现起来就是n句, 可能有人疑惑那为什么不直接用lua多好, c api这么麻烦, 答案是有的事只能用c api才能实现], 所以, 调用它之前, 需要布局一下栈, 第一, 要把要call的函数压入栈; 第二, call要用的参数正序压入栈中; 然后才能调用lua_call, 调用完了, 自己去取返回值, 它都给你压栈上了.
+
+操作:
+
+
+      argn = Stack.pop()
+
+      ... // 一共压入nargs个参数
+
+      arg2 = Stack.pop()
+
+      arg3 = Stack.pop()
+
+       func = Stack.pop() // 函数本身也弹出
+
+       res1， res2， ..., resj = func(arg1, arg2, ..., argn)
+
+       Stack.push(res1)
+
+       Stack.push(res2)
+
+       … // 压入nresults个返回值
+
+       Stack.push(resj)
+
+
+  
+
+无返回值
+
+调用结束后, 栈高度增加 nresults – (1 + nargs), 如果将nresults参数设置为LUA_MULTRET, 那么lua返回几个值, 栈上就压入几个值, 否者强制压入nresults个值, 不足的是空值, 多余的抛弃掉
+
+注意, 这个函数是有危险的, 如果在其中发生了错误, 会直接退出程序
+
+ 
+
+ 
+
+这个函数的用途: 尚未发现, 除非你能接受出错立马退出, 反正我是做游戏的, 我受不起, 呵呵, 顺便一说, lauxlib.h中的luaL_check*一族函数也是这样的, 不符合预期的话, 直接退出, 这些函数都要小心, 有类似于断言的效果.
+
+ 
+
+11. 保护下调用一个lua函数
+
+int lua_pcall(lua_State* L, int nargs, int nresults, int errfunc)
+
+参数, 行为和lua_call都一样, 如果在调用中没有发生任何错误, lua_pcall == lua_call; 但是如果有错误发生时, lua_pcall会捕获它
+
+errfunc指出了Stack上的一个元素, 这个元素应该是一个函数, 当发生错误的时候
+
+    ef = Stack[errfunc]
+
+    value = ef(errmsg)
+
+    Stack.push(value)
+
+也就是说, 在错误的时候, errfunc指定的错误处理函数会被调用, 该处理函数的返回值被压到栈上.
+
+默认情况下, 可以给errfunc传值0, 实际的效果是指定了这样一个函数做出错处理 function defaulterr(errmsg) return errmsg end.
+
+本函数有返回值 LUA_ERRRUN运行时错误  LUA_ERRMEM内存分配错误[注意, 这种错会导致lua调用不了错误处理函数]  LUA_ERRERR运行错误处理函数时出错了, 写程序的时候必须检查返回值:)
+
+强烈推荐该函数, 不过事实上大家也都用的这个函数:)
+
+ 
+12. 保护下调用一个c函数
+
+int lua_cpcall (lua_State *L, lua_CFunction func, void *ud)
+以保护模式调用c函数, func中可以且只能从堆栈上拿到一个参数, 就是ud, 当有错误时, 和lua_pcall返回相同的错误代码, 并在堆栈顶部留下errmsg字符串, 调用成功的话它返回零, 并且不会修改堆栈, 所有从func中返回的值都被扔掉.
+
+这里注意的问题是:
+
+1. "当有错误时", 这个错误的意思是lua的错误, 而不是c/c++的错误. 在func中使用lua_call和lua_check*族函数, 并不会导致程序退出了, 而是表现的像lua_pcall那样.
+
+2. 调用成功的时候func中的返回值都被扔掉了.

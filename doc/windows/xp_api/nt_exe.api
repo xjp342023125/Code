@@ -1,0 +1,1499 @@
+		按下 "ESC" 键关闭这窗口         
+
+模块名称:ntoskrnl.exe  
+更多
+	TimeDateStamp: 50EA22A5
+	版本: 0.00   
+	序数基址: 00000001    
+	函数编号: 000005D1           
+	编号名称: 000005D1       
+	
+  ExAcquireFastMutexUnsafe rva: 00004E15 ord:   1
+  ExAcquireRundownProtection rva: 00098F59 ord:   2
+  ExAcquireRundownProtectionEx rva: 00176324 ord:   3
+  ExInitializeRundownProtection rva: 001762F7 ord:   4
+  ExInterlockedAddLargeStatistic rva: 0000E5B0 ord:   5
+  ExInterlockedCompareExchange64 rva: 0000E750 ord:   6
+  ExInterlockedFlushSList rva: 0000A2FF ord:   7
+  ExInterlockedPopEntrySList rva: 0000A31F ord:   8
+  ExInterlockedPushEntrySList rva: 0000A33F ord:   9
+  ExReInitializeRundownProtection rva: 00176307 ord:  10
+  ExReleaseFastMutexUnsafe rva: 00004E35 ord:  11
+  ExReleaseResourceLite rva: 00005599 ord:  12
+  ExReleaseRundownProtection rva: 00098F35 ord:  13
+  ExReleaseRundownProtectionEx rva: 0017635F ord:  14
+  ExRundownCompleted rva: 000B73F6 ord:  15
+  ExWaitForRundownProtectionRelease rva: 0009EBD8 ord:  16
+  ExfAcquirePushLockExclusive rva: 00098374 ord:  17
+  ExfAcquirePushLockShared rva: 0009840A ord:  18
+  ExfInterlockedAddUlong rva: 0000E5BC ord:  19
+  ExfInterlockedCompareExchange64 rva: 0000E734 ord:  20
+  ExfInterlockedInsertHeadList rva: 0000E5E8 ord:  21
+  ExfInterlockedInsertTailList rva: 0000E620 ord:  22
+  ExfInterlockedPopEntryList rva: 0000E68C ord:  23
+  ExfInterlockedPushEntryList rva: 0000E6BC ord:  24
+  ExfInterlockedRemoveHeadList rva: 0000E658 ord:  25
+  ExfReleasePushLock rva: 000982D4 ord:  26
+  Exfi386InterlockedDecrementLong rva: 0000E6FC ord:  27
+  Exfi386InterlockedExchangeUlong rva: 0000E708 ord:  28
+  Exfi386InterlockedIncrementLong rva: 0000E6F0 ord:  29
+  HalExamineMBR rva: 00036483 ord:  30
+  InterlockedCompareExchange rva: 0000E728 ord:  31
+  InterlockedDecrement rva: 0000E71C ord:  32
+  InterlockedExchange rva: 0000E708 ord:  33
+  InterlockedExchangeAdd rva: 0000E76C ord:  34
+  InterlockedIncrement rva: 0000E710 ord:  35
+  InterlockedPopEntrySList rva: 0000A31F ord:  36
+  InterlockedPushEntrySList rva: 0000A343 ord:  37
+  IoAssignDriveLetters rva: 000EB05D ord:  38
+  IoReadPartitionTable rva: 000E92EE ord:  39
+  IoSetPartitionInformation rva: 001475E3 ord:  40
+  IoWritePartitionTable rva: 00147857 ord:  41
+  IofCallDriver rva: 0000A3B9 ord:  42
+  IofCompleteRequest rva: 0000A7CF ord:  43
+  KeAcquireInStackQueuedSpinLockAtDpcLevel rva: 0000B518 ord:  44
+  KeReleaseInStackQueuedSpinLockFromDpcLevel rva: 0000B550 ord:  45
+  KeSetTimeUpdateNotifyRoutine rva: 001534E3 ord:  46
+  KefAcquireSpinLockAtDpcLevel rva: 0000B427 ord:  47
+  KefReleaseSpinLockFromDpcLevel rva: 0000B468 ord:  48
+  KiAcquireSpinLock rva: 0000B478 ord:  49
+  KiReleaseSpinLock rva: 0000B498 ord:  50
+  ObfDereferenceObject rva: 0000A930 ord:  51
+  ObfReferenceObject rva: 0000306B ord:  52
+  RtlPrefetchMemoryNonTemporal rva: 0000E531 ord:  53
+  RtlUlongByteSwap rva: 00004BAC ord:  54
+  RtlUlonglongByteSwap rva: 00004BBC ord:  55
+  RtlUshortByteSwap rva: 00004B9C ord:  56
+  WmiGetClock rva: 00072104 ord:  57
+  Kei386EoiHelper rva: 00007229 ord:  58
+  Kii386SpinOnSpinLock rva: 0000461F ord:  59
+  CcCanIWrite rva: 000211B6 ord:  60
+  CcCopyRead rva: 000A41E2 ord:  61
+  CcCopyWrite rva: 00021490 ord:  62
+  CcDeferWrite rva: 00058815 ord:  63
+  CcFastCopyRead rva: 000AC80B ord:  64
+  CcFastCopyWrite rva: 0003D489 ord:  65
+  CcFastMdlReadWait rva: 000885C4 ord:  66  [主体缺失 - 加壳的 ?]   
+  CcFastReadNotPossible rva: 000885CC ord:  67  [主体缺失 - 加壳的 ?]   
+  CcFastReadWait rva: 000885D4 ord:  68  [主体缺失 - 加壳的 ?]   
+  CcFlushCache rva: 00015DA7 ord:  69
+  CcGetDirtyPages rva: 00018ED4 ord:  70
+  CcGetFileObjectFromBcb rva: 00058E07 ord:  71
+  CcGetFileObjectFromSectionPtrs rva: 00058DC9 ord:  72
+  CcGetFlushedValidData rva: 000206E2 ord:  73
+  CcGetLsnForFileObject rva: 00058C50 ord:  74
+  CcInitializeCacheMap rva: 0001F390 ord:  75
+  CcIsThereDirtyData rva: 00058BA7 ord:  76
+  CcMapData rva: 000A5D89 ord:  77
+  CcMdlRead rva: 00144F49 ord:  78
+  CcMdlReadComplete rva: 001451FC ord:  79
+  CcMdlWriteAbort rva: 00058F7F ord:  80
+  CcMdlWriteComplete rva: 00145241 ord:  81
+  CcPinMappedData rva: 000A5F73 ord:  82
+  CcPinRead rva: 000ACBDA ord:  83
+  CcPrepareMdlWrite rva: 00059033 ord:  84
+  CcPreparePinWrite rva: 0009B491 ord:  85
+  CcPurgeCacheSection rva: 00020BC9 ord:  86
+  CcRemapBcb rva: 0001BC79 ord:  87
+  CcRepinBcb rva: 00058915 ord:  88
+  CcScheduleReadAhead rva: 0002B307 ord:  89
+  CcSetAdditionalCacheAttributes rva: 0002B482 ord:  90
+  CcSetBcbOwnerPointer rva: 0009B572 ord:  91
+  CcSetDirtyPageThreshold rva: 00058D90 ord:  92
+  CcSetDirtyPinnedData rva: 00018308 ord:  93
+  CcSetFileSizes rva: 000203D5 ord:  94
+  CcSetLogHandleForFile rva: 000A9B39 ord:  95
+  CcSetReadAheadGranularity rva: 0001F6EC ord:  96
+  CcUninitializeCacheMap rva: 0001F7C0 ord:  97
+  CcUnpinData rva: 000A5D3B ord:  98
+  CcUnpinDataForThread rva: 0009B59C ord:  99
+  CcUnpinRepinnedBcb rva: 00058AB4 ord: 100
+  CcWaitForCurrentLazyWriterActivity rva: 00059361 ord: 101
+  CcZeroData rva: 00110628 ord: 102
+  CmRegisterCallback rva: 00145353 ord: 103
+  CmUnRegisterCallback rva: 00145297 ord: 104
+  DbgBreakPoint rva: 0000BA66 ord: 105
+  DbgBreakPointWithStatus rva: 0000BA6E ord: 106
+  DbgLoadImageSymbols rva: 0002F349 ord: 107
+  DbgPrint rva: 0002AF41 ord: 108
+  DbgPrintEx rva: 0006BF5D ord: 109
+  DbgPrintReturnControlC rva: 0006BE6C ord: 110
+  DbgPrompt rva: 0006BEDF ord: 111
+  DbgQueryDebugFilterState rva: 0006BF37 ord: 112
+  DbgSetDebugFilterState rva: 0006BF4C ord: 113
+  ExAcquireResourceExclusiveLite rva: 000033A4 ord: 114
+  ExAcquireResourceSharedLite rva: 0000A980 ord: 115
+  ExAcquireSharedStarveExclusive rva: 00018238 ord: 116
+  ExAcquireSharedWaitForExclusive rva: 0001BCC3 ord: 117
+  ExAllocateFromPagedLookasideList rva: 00012217 ord: 118
+  ExAllocatePool rva: 000365B2 ord: 119
+  ExAllocatePoolWithQuota rva: 000739FF ord: 120
+  ExAllocatePoolWithQuotaTag rva: 00011762 ord: 121
+  ExAllocatePoolWithTag rva: 0007A005 ord: 122
+  ExAllocatePoolWithTagPriority rva: 0001C9B6 ord: 123
+  ExConvertExclusiveToSharedLite rva: 000248D5 ord: 124
+  ExCreateCallback rva: 000E6683 ord: 125
+  ExDeleteNPagedLookasideList rva: 00073ACD ord: 126
+  ExDeletePagedLookasideList rva: 00073B22 ord: 127
+  ExDeleteResourceLite rva: 00012E72 ord: 128
+  ExDesktopObjectType rva: 000939BC ord: 129  [主体缺失 - 加壳的 ?]   
+  ExDisableResourceBoostLite rva: 0001828A ord: 130
+  ExEnumHandleTable rva: 0010A48B ord: 131
+  ExEventObjectType rva: 00093940 ord: 132  [主体缺失 - 加壳的 ?]   
+  ExExtendZone rva: 0004159A ord: 133
+  ExFreePool rva: 0007A3D4 ord: 134
+  ExFreePoolWithTag rva: 0007A1E6 ord: 135
+  ExFreeToPagedLookasideList rva: 000121ED ord: 136
+  ExGetCurrentProcessorCounts rva: 00073E71 ord: 137
+  ExGetCurrentProcessorCpuUsage rva: 00073E2A ord: 138
+  ExGetExclusiveWaiterCount rva: 00072DCC ord: 139
+  ExGetPreviousMode rva: 00042195 ord: 140
+  ExGetSharedWaiterCount rva: 00072DE7 ord: 141
+  ExInitializeNPagedLookasideList rva: 00031A58 ord: 142
+  ExInitializePagedLookasideList rva: 000E123B ord: 143
+  ExInitializeResourceLite rva: 00012ECF ord: 144
+  ExInitializeZone rva: 00032C98 ord: 145
+  ExInterlockedAddLargeInteger rva: 00004E49 ord: 146
+  ExInterlockedAddUlong rva: 00004E9A ord: 147
+  ExInterlockedDecrementLong rva: 00005026 ord: 148
+  ExInterlockedExchangeUlong rva: 0000503A ord: 149
+  ExInterlockedExtendZone rva: 00073B87 ord: 150
+  ExInterlockedIncrementLong rva: 00005012 ord: 151
+  ExInterlockedInsertHeadList rva: 00004ECE ord: 152
+  ExInterlockedInsertTailList rva: 00004F12 ord: 153
+  ExInterlockedPopEntryList rva: 00004FA2 ord: 154
+  ExInterlockedPushEntryList rva: 00004FDA ord: 155
+  ExInterlockedRemoveHeadList rva: 00004F56 ord: 156
+  ExIsProcessorFeaturePresent rva: 00034AE9 ord: 157
+  ExIsResourceAcquiredExclusiveLite rva: 0001BA6A ord: 158
+  ExIsResourceAcquiredSharedLite rva: 00013FF2 ord: 159
+  ExLocalTimeToSystemTime rva: 000248AB ord: 160
+  ExNotifyCallback rva: 00042138 ord: 161
+  ExQueryPoolBlockSize rva: 00073153 ord: 162
+  ExQueueWorkItem rva: 000033FC ord: 163
+  ExRaiseAccessViolation rva: 00178EF0 ord: 164
+  ExRaiseDatatypeMisalignment rva: 00178F05 ord: 165
+  ExRaiseException rva: 0000C10E ord: 166
+  ExRaiseHardError rva: 000DCED6 ord: 167
+  ExRaiseStatus rva: 0000C1CC ord: 168
+  ExRegisterCallback rva: 000360EC ord: 169
+  ExReinitializeResourceLite rva: 0003E2CF ord: 170
+  ExReleaseResourceForThreadLite rva: 00018DE4 ord: 171
+  ExSemaphoreObjectType rva: 00093520 ord: 172  [主体缺失 - 加壳的 ?]   
+  ExSetResourceOwnerPointer rva: 00018AD4 ord: 173
+  ExSetTimerResolution rva: 001785C9 ord: 174
+  ExSystemExceptionFilter rva: 0010F839 ord: 175
+  ExSystemTimeToLocalTime rva: 000263FE ord: 176
+  ExUnregisterCallback rva: 00073A30 ord: 177
+  ExUuidCreate rva: 00112A60 ord: 178
+  ExVerifySuite rva: 00037120 ord: 179
+  ExWindowStationObjectType rva: 000939C0 ord: 180  [主体缺失 - 加壳的 ?]   
+  Exi386InterlockedDecrementLong rva: 0000505E ord: 181
+  Exi386InterlockedExchangeUlong rva: 00005072 ord: 182
+  Exi386InterlockedIncrementLong rva: 0000504A ord: 183
+  FsRtlAcquireFileExclusive rva: 000A6420 ord: 184
+  FsRtlAddLargeMcbEntry rva: 00020CF6 ord: 185
+  FsRtlAddMcbEntry rva: 00059A57 ord: 186
+  FsRtlAddToTunnelCache rva: 000C0DB2 ord: 187
+  FsRtlAllocateFileLock rva: 0003F7E1 ord: 188
+  FsRtlAllocatePool rva: 00059FDB ord: 189
+  FsRtlAllocatePoolWithQuota rva: 0005A012 ord: 190
+  FsRtlAllocatePoolWithQuotaTag rva: 0005A07E ord: 191
+  FsRtlAllocatePoolWithTag rva: 0005A049 ord: 192
+  FsRtlAllocateResource rva: 001467D5 ord: 193
+  FsRtlAreNamesEqual rva: 000A283D ord: 194
+  FsRtlBalanceReads rva: 000E68E2 ord: 195
+  FsRtlCheckLockForReadAccess rva: 00022B24 ord: 196
+  FsRtlCheckLockForWriteAccess rva: 00020CAD ord: 197
+  FsRtlCheckOplock rva: 0001240F ord: 198
+  FsRtlCopyRead rva: 00145CFD ord: 199
+  FsRtlCopyWrite rva: 00146003 ord: 200
+  FsRtlCreateSectionForDataScan rva: 0005A92B ord: 201
+  FsRtlCurrentBatchOplock rva: 000A28BD ord: 202
+  FsRtlDeleteKeyFromTunnelCache rva: 0010D601 ord: 203
+  FsRtlDeleteTunnelCache rva: 000FD7A5 ord: 204
+  FsRtlDeregisterUncProvider rva: 00146A6F ord: 205
+  FsRtlDissectDbcs rva: 00146B04 ord: 206
+  FsRtlDissectName rva: 000A5307 ord: 207
+  FsRtlDoesDbcsContainWildCards rva: 00146BAD ord: 208
+  FsRtlDoesNameContainWildCards rva: 000A5819 ord: 209
+  FsRtlFastCheckLockForRead rva: 0002038A ord: 210
+  FsRtlFastCheckLockForWrite rva: 0003F592 ord: 211
+  FsRtlFastUnlockAll rva: 0001F941 ord: 212
+  FsRtlFastUnlockAllByKey rva: 00059F9F ord: 213
+  FsRtlFastUnlockSingle rva: 0003F206 ord: 214
+  FsRtlFindInTunnelCache rva: 000BB098 ord: 215
+  FsRtlFreeFileLock rva: 000279C1 ord: 216
+  FsRtlGetFileSize rva: 000A643A ord: 217
+  FsRtlGetNextFileLock rva: 0002A093 ord: 218
+  FsRtlGetNextLargeMcbEntry rva: 0001B82B ord: 219
+  FsRtlGetNextMcbEntry rva: 0005983C ord: 220
+  FsRtlIncrementCcFastReadNoWait rva: 00059642 ord: 221
+  FsRtlIncrementCcFastReadNotPossible rva: 00145CE1 ord: 222
+  FsRtlIncrementCcFastReadResourceMiss rva: 00059659 ord: 223
+  FsRtlIncrementCcFastReadWait rva: 0009DB0D ord: 224
+  FsRtlInitializeFileLock rva: 00020CD2 ord: 225
+  FsRtlInitializeLargeMcb rva: 0003DCBF ord: 226
+  FsRtlInitializeMcb rva: 001467AB ord: 227
+  FsRtlInitializeOplock rva: 0009CE48 ord: 228
+  FsRtlInitializeTunnelCache rva: 000FD730 ord: 229
+  FsRtlInsertPerFileObjectContext rva: 0005AC5A ord: 230
+  FsRtlInsertPerStreamContext rva: 0003DD74 ord: 231
+  FsRtlIsDbcsInExpression rva: 00146C1F ord: 232
+  FsRtlIsFatDbcsLegal rva: 000C12F3 ord: 233
+  FsRtlIsHpfsDbcsLegal rva: 00147080 ord: 234
+  FsRtlIsNameInExpression rva: 000A5852 ord: 235
+  FsRtlIsNtstatusExpected rva: 000333DA ord: 236
+  FsRtlIsPagingFile rva: 0005AC3B ord: 237
+  FsRtlIsTotalDeviceFailure rva: 0002C948 ord: 238
+  FsRtlLegalAnsiCharacterArray rva: 00001168 ord: 239
+  FsRtlLookupLargeMcbEntry rva: 00015BD8 ord: 240
+  FsRtlLookupLastLargeMcbEntry rva: 00021F56 ord: 241
+  FsRtlLookupLastLargeMcbEntryAndIndex rva: 000596EF ord: 242
+  FsRtlLookupLastMcbEntry rva: 000597E1 ord: 243
+  FsRtlLookupMcbEntry rva: 00059AE6 ord: 244
+  FsRtlLookupPerFileObjectContext rva: 0005AAF7 ord: 245
+  FsRtlLookupPerStreamContextInternal rva: 0001C574 ord: 246
+  FsRtlMdlRead rva: 0014577D ord: 247
+  FsRtlMdlReadComplete rva: 0005966A ord: 248
+  FsRtlMdlReadCompleteDev rva: 00059612 ord: 249
+  FsRtlMdlReadDev rva: 00145589 ord: 250
+  FsRtlMdlWriteComplete rva: 00146727 ord: 251
+  FsRtlMdlWriteCompleteDev rva: 00145C8F ord: 252
+  FsRtlNormalizeNtstatus rva: 0003340D ord: 253
+  FsRtlNotifyChangeDirectory rva: 00147207 ord: 254
+  FsRtlNotifyCleanup rva: 0011222F ord: 255
+  FsRtlNotifyFilterChangeDirectory rva: 000BF32A ord: 256
+  FsRtlNotifyFilterReportChange rva: 000A6079 ord: 257
+  FsRtlNotifyFullChangeDirectory rva: 0014723F ord: 258
+  FsRtlNotifyFullReportChange rva: 001472B7 ord: 259
+  FsRtlNotifyInitializeSync rva: 000CA2E2 ord: 260
+  FsRtlNotifyReportChange rva: 0014727B ord: 261
+  FsRtlNotifyUninitializeSync rva: 000BBBD6 ord: 262
+  FsRtlNotifyVolumeEvent rva: 000D5D54 ord: 263
+  FsRtlNumberOfRunsInLargeMcb rva: 00022009 ord: 264
+  FsRtlNumberOfRunsInMcb rva: 00059827 ord: 265
+  FsRtlOplockFsctrl rva: 001079DC ord: 266
+  FsRtlOplockIsFastIoPossible rva: 00098E85 ord: 267
+  FsRtlPostPagingFileStackOverflow rva: 0005AE3B ord: 268
+  FsRtlPostStackOverflow rva: 0005AE18 ord: 269
+  FsRtlPrepareMdlWrite rva: 00145C07 ord: 270
+  FsRtlPrepareMdlWriteDev rva: 00145807 ord: 271
+  FsRtlPrivateLock rva: 0003EDD2 ord: 272
+  FsRtlProcessFileLock rva: 00029AFD ord: 273
+  FsRtlRegisterFileSystemFilterCallbacks rva: 00039759 ord: 274
+  FsRtlRegisterUncProvider rva: 0010425A ord: 275
+  FsRtlReleaseFile rva: 000A62E7 ord: 276
+  FsRtlRemoveLargeMcbEntry rva: 00025A58 ord: 277
+  FsRtlRemoveMcbEntry rva: 00059A80 ord: 278
+  FsRtlRemovePerFileObjectContext rva: 0005AB90 ord: 279
+  FsRtlRemovePerStreamContext rva: 0003EB86 ord: 280
+  FsRtlResetLargeMcb rva: 0001B938 ord: 281
+  FsRtlSplitLargeMcb rva: 000598AB ord: 282
+  FsRtlSyncVolumes rva: 00146817 ord: 283
+  FsRtlTeardownPerStreamContexts rva: 000A6707 ord: 284
+  FsRtlTruncateLargeMcb rva: 00021E13 ord: 285
+  FsRtlTruncateMcb rva: 00059A34 ord: 286
+  FsRtlUninitializeFileLock rva: 000247E6 ord: 287
+  FsRtlUninitializeLargeMcb rva: 0003E331 ord: 288
+  FsRtlUninitializeMcb rva: 001467C0 ord: 289
+  FsRtlUninitializeOplock rva: 0003E289 ord: 290
+  HalDispatchTable rva: 0007C038 ord: 291
+  HalPrivateDispatchTable rva: 0007C090 ord: 292
+  HeadlessDispatch rva: 00036330 ord: 293
+  InbvAcquireDisplayOwnership rva: 0005B24F ord: 294
+  InbvCheckDisplayOwnership rva: 00034540 ord: 295
+  InbvDisplayString rva: 00036388 ord: 296
+  InbvEnableBootDriver rva: 0003624A ord: 297
+  InbvEnableDisplayString rva: 0003655F ord: 298
+  InbvInstallDisplayStringFilter rva: 00039924 ord: 299
+  InbvIsBootDriverInstalled rva: 0005B072 ord: 300
+  InbvNotifyDisplayOwnershipLost rva: 0003525A ord: 301
+  InbvResetDisplay rva: 0005B083 ord: 302
+  InbvSetScrollRegion rva: 0005B2AF ord: 303
+  InbvSetTextColor rva: 0005B193 ord: 304
+  InbvSolidColorFill rva: 0005B107 ord: 305
+  InitSafeBootMode rva: 00089880 ord: 306  [主体缺失 - 加壳的 ?]   
+  IoAcquireCancelSpinLock rva: 000111B7 ord: 307
+  IoAcquireRemoveLockEx rva: 00013D06 ord: 308
+  IoAcquireVpbSpinLock rva: 0002E908 ord: 309
+  IoAdapterObjectType rva: 00089D70 ord: 310  [主体缺失 - 加壳的 ?]   
+  IoAllocateAdapterChannel rva: 00041C2E ord: 311
+  IoAllocateController rva: 00032268 ord: 312
+  IoAllocateDriverObjectExtension rva: 000329D3 ord: 313
+  IoAllocateErrorLogEntry rva: 00034BA5 ord: 314
+  IoAllocateIrp rva: 00013F9D ord: 315
+  IoAllocateMdl rva: 00016C71 ord: 316
+  IoAllocateWorkItem rva: 00027BF5 ord: 317
+  IoAssignResources rva: 0014DC1F ord: 318
+  IoAttachDevice rva: 0014A1CB ord: 319
+  IoAttachDeviceByPointer rva: 0005BD20 ord: 320
+  IoAttachDeviceToDeviceStack rva: 0002FC2E ord: 321
+  IoAttachDeviceToDeviceStackSafe rva: 00031EDB ord: 322
+  IoBuildAsynchronousFsdRequest rva: 0003E5C4 ord: 323
+  IoBuildDeviceIoControlRequest rva: 0004168C ord: 324
+  IoBuildPartialMdl rva: 00016FF2 ord: 325
+  IoBuildSynchronousFsdRequest rva: 00041DD1 ord: 326
+  IoCallDriver rva: 0005B8B2 ord: 327
+  IoCancelFileOpen rva: 00149EC5 ord: 328
+  IoCancelIrp rva: 000414D9 ord: 329
+  IoCheckDesiredAccess rva: 0014904F ord: 330
+  IoCheckEaBufferValidity rva: 000CA28A ord: 331
+  IoCheckFunctionAccess rva: 00114226 ord: 332
+  IoCheckQuerySetFileInformation rva: 0005B3C9 ord: 333
+  IoCheckQuerySetVolumeInformation rva: 0005B413 ord: 334
+  IoCheckQuotaBufferValidity rva: 00149090 ord: 335
+  IoCheckShareAccess rva: 000A51BD ord: 336
+  IoCompleteRequest rva: 0005B8D1 ord: 337
+  IoConnectInterrupt rva: 000DB0C5 ord: 338
+  IoCreateController rva: 000F05C1 ord: 339
+  IoCreateDevice rva: 000CBC90 ord: 340
+  IoCreateDisk rva: 00148D9F ord: 341
+  IoCreateDriver rva: 000DF9FE ord: 342
+  IoCreateFile rva: 000A2D2E ord: 343
+  IoCreateFileSpecifyDeviceObjectHint rva: 000ACEFE ord: 344
+  IoCreateNotificationEvent rva: 000E14D3 ord: 345
+  IoCreateStreamFileObject rva: 000FD7DC ord: 346
+  IoCreateStreamFileObjectEx rva: 00033535 ord: 347
+  IoCreateStreamFileObjectLite rva: 000A5B02 ord: 348
+  IoCreateSymbolicLink rva: 000FD9DF ord: 349
+  IoCreateSynchronizationEvent rva: 000F1369 ord: 350
+  IoCreateUnprotectedSymbolicLink rva: 00101BF4 ord: 351
+  IoCsqInitialize rva: 00032A74 ord: 352
+  IoCsqInsertIrp rva: 00041C99 ord: 353
+  IoCsqRemoveIrp rva: 00041CFE ord: 354
+  IoCsqRemoveNextIrp rva: 0000F12C ord: 355
+  IoDeleteController rva: 000B708C ord: 356
+  IoDeleteDevice rva: 0002E798 ord: 357
+  IoDeleteDriver rva: 000B708C ord: 358
+  IoDeleteSymbolicLink rva: 0010292C ord: 359
+  IoDetachDevice rva: 00030FFC ord: 360
+  IoDeviceHandlerObjectSize rva: 00089D54 ord: 361  [主体缺失 - 加壳的 ?]   
+  IoDeviceHandlerObjectType rva: 00089D5C ord: 362  [主体缺失 - 加壳的 ?]   
+  IoDeviceObjectType rva: 00089D64 ord: 363  [主体缺失 - 加壳的 ?]   
+  IoDisconnectInterrupt rva: 000D9CFD ord: 364
+  IoDriverObjectType rva: 00089D60 ord: 365  [主体缺失 - 加壳的 ?]   
+  IoEnqueueIrp rva: 00149384 ord: 366
+  IoEnumerateDeviceObjectList rva: 000332D6 ord: 367
+  IoEnumerateRegisteredFiltersList rva: 0014A04D ord: 368
+  IoFastQueryNetworkAttributes rva: 001493C7 ord: 369
+  IoFileObjectType rva: 00089D58 ord: 370  [主体缺失 - 加壳的 ?]   
+  IoForwardAndCatchIrp rva: 000F00EE ord: 371
+  IoForwardIrpSynchronously rva: 000F00EE ord: 372
+  IoFreeController rva: 0003223B ord: 373
+  IoFreeErrorLogEntry rva: 0005B365 ord: 374
+  IoFreeIrp rva: 00013F42 ord: 375
+  IoFreeMdl rva: 00016D26 ord: 376
+  IoFreeWorkItem rva: 00027BDD ord: 377
+  IoGetAttachedDevice rva: 00011457 ord: 378
+  IoGetAttachedDeviceReference rva: 0002657F ord: 379
+  IoGetBaseFileSystemDeviceObject rva: 000161DD ord: 380
+  IoGetBootDiskInformation rva: 000F720D ord: 381
+  IoGetConfigurationInformation rva: 00101BE9 ord: 382
+  IoGetCurrentProcess rva: 0000EE36 ord: 383
+  IoGetDeviceAttachmentBaseRef rva: 00031E92 ord: 384
+  IoGetDeviceInterfaceAlias rva: 001031AF ord: 385
+  IoGetDeviceInterfaces rva: 000C9EEC ord: 386
+  IoGetDeviceObjectPointer rva: 0010E11E ord: 387
+  IoGetDeviceProperty rva: 000C47FD ord: 388
+  IoGetDeviceToVerify rva: 000333A9 ord: 389
+  IoGetDiskDeviceObject rva: 00033354 ord: 390
+  IoGetDmaAdapter rva: 000EE70F ord: 391
+  IoGetDriverObjectExtension rva: 0002E862 ord: 392
+  IoGetFileObjectGenericMapping rva: 000A2820 ord: 393
+  IoGetInitialStack rva: 0005B4AE ord: 394
+  IoGetLowerDeviceObject rva: 00031DFE ord: 395
+  IoGetRelatedDeviceObject rva: 00011410 ord: 396
+  IoGetRequestorProcess rva: 0001CD79 ord: 397
+  IoGetRequestorProcessId rva: 00024969 ord: 398
+  IoGetRequestorSessionId rva: 00026666 ord: 399
+  IoGetStackLimits rva: 00005214 ord: 400
+  IoGetTopLevelIrp rva: 00011492 ord: 401
+  IoInitializeCrashDump rva: 000E4DCB ord: 402
+  IoInitializeIrp rva: 00042814 ord: 403
+  IoInitializeRemoveLockEx rva: 000E0FA5 ord: 404
+  IoInitializeTimer rva: 0010299E ord: 405
+  IoInvalidateDeviceRelations rva: 0002EE15 ord: 406
+  IoInvalidateDeviceState rva: 00034B17 ord: 407
+  IoIsFileOriginRemote rva: 0002119D ord: 408
+  IoIsOperationSynchronous rva: 00013FAE ord: 409
+  IoIsSystemThread rva: 0002616B ord: 410
+  IoIsValidNameGraftingBuffer rva: 001494CC ord: 411
+  IoIsWdmVersionAvailable rva: 000C9D49 ord: 412
+  IoMakeAssociatedIrp rva: 0003CBB8 ord: 413
+  IoOpenDeviceInterfaceRegistryKey rva: 000C6B07 ord: 414
+  IoOpenDeviceRegistryKey rva: 000C9AA2 ord: 415
+  IoPageRead rva: 0002323C ord: 416
+  IoPnPDeliverServicePowerNotification rva: 0014E70E ord: 417
+  IoQueryDeviceDescription rva: 000DEB8F ord: 418
+  IoQueryFileDosDeviceName rva: 00149FD7 ord: 419
+  IoQueryFileInformation rva: 000B3442 ord: 420
+  IoQueryVolumeInformation rva: 000E59FC ord: 421
+  IoQueueThreadIrp rva: 00027BA0 ord: 422
+  IoQueueWorkItem rva: 0000F27F ord: 423
+  IoRaiseHardError rva: 00033499 ord: 424
+  IoRaiseInformationalHardError rva: 0005B517 ord: 425
+  IoReadDiskSignature rva: 00039889 ord: 426
+  IoReadOperationCount rva: 00089D50 ord: 427  [主体缺失 - 加壳的 ?]   
+  IoReadPartitionTableEx rva: 000F71AD ord: 428
+  IoReadTransferCount rva: 00089D40 ord: 429  [主体缺失 - 加壳的 ?]   
+  IoRegisterBootDriverReinitialization rva: 000F13E1 ord: 430
+  IoRegisterDeviceInterface rva: 0010772C ord: 431
+  IoRegisterDriverReinitialization rva: 000F07D1 ord: 432
+  IoRegisterFileSystem rva: 000D9AC9 ord: 433
+  IoRegisterFsRegistrationChange rva: 000F94C2 ord: 434
+  IoRegisterLastChanceShutdownNotification rva: 001499FF ord: 435
+  IoRegisterPlugPlayNotification rva: 000C9D86 ord: 436
+  IoRegisterShutdownNotification rva: 000E6202 ord: 437
+  IoReleaseCancelSpinLock rva: 0001119D ord: 438
+  IoReleaseRemoveLockAndWaitEx rva: 0014DBC9 ord: 439
+  IoReleaseRemoveLockEx rva: 00013CD3 ord: 440
+  IoReleaseVpbSpinLock rva: 0002E924 ord: 441
+  IoRemoveShareAccess rva: 000A2D90 ord: 442
+  IoReportDetectedDevice rva: 000F8914 ord: 443
+  IoReportHalResourceUsage rva: 001DE8FB ord: 444
+  IoReportResourceForDetection rva: 000E85FD ord: 445
+  IoReportResourceUsage rva: 000E7C17 ord: 446
+  IoReportTargetDeviceChange rva: 0014E7F9 ord: 447
+  IoReportTargetDeviceChangeAsynchronous rva: 0002E511 ord: 448
+  IoRequestDeviceEject rva: 0005E86F ord: 449
+  IoReuseIrp rva: 00015D18 ord: 450
+  IoSetCompletionRoutineEx rva: 00036A20 ord: 451
+  IoSetDeviceInterfaceState rva: 0010232F ord: 452
+  IoSetDeviceToVerify rva: 000333C0 ord: 453
+  IoSetFileOrigin rva: 0004582A ord: 454
+  IoSetHardErrorOrVerifyDevice rva: 00031981 ord: 455
+  IoSetInformation rva: 00149A5B ord: 456
+  IoSetIoCompletion rva: 0009FD7E ord: 457
+  IoSetPartitionInformationEx rva: 00148DF6 ord: 458
+  IoSetShareAccess rva: 000A2DF0 ord: 459
+  IoSetStartIoAttributes rva: 00037396 ord: 460
+  IoSetSystemPartition rva: 0005B99B ord: 461
+  IoSetThreadHardErrorMode rva: 00012460 ord: 462
+  IoSetTopLevelIrp rva: 00011475 ord: 463
+  IoStartNextPacket rva: 0000EC3B ord: 464
+  IoStartNextPacketByKey rva: 0005B841 ord: 465
+  IoStartPacket rva: 0000F0A1 ord: 466
+  IoStartTimer rva: 00031AD8 ord: 467
+  IoStatisticsLock rva: 00082700 ord: 468
+  IoStopTimer rva: 00030D09 ord: 469
+  IoSynchronousInvalidateDeviceRelations rva: 000E1440 ord: 470
+  IoSynchronousPageWrite rva: 00017AD6 ord: 471
+  IoThreadToProcess rva: 000113E0 ord: 472
+  IoUnregisterFileSystem rva: 000DAEDD ord: 473
+  IoUnregisterFsRegistrationChange rva: 00149D10 ord: 474
+  IoUnregisterPlugPlayNotification rva: 000C9CD5 ord: 475
+  IoUnregisterShutdownNotification rva: 0018F347 ord: 476
+  IoUpdateShareAccess rva: 000A5A9F ord: 477
+  IoValidateDeviceIoControlAccess rva: 0005BB70 ord: 478
+  IoVerifyPartitionTable rva: 00148BAC ord: 479
+  IoVerifyVolume rva: 00149D80 ord: 480
+  IoVolumeDeviceToDosName rva: 0005DE34 ord: 481
+  IoWMIAllocateInstanceIds rva: 0017077C ord: 482
+  IoWMIDeviceObjectToInstanceName rva: 00072BF9 ord: 483
+  IoWMIExecuteMethod rva: 00170D73 ord: 484
+  IoWMIHandleToInstanceName rva: 000344C4 ord: 485
+  IoWMIOpenBlock rva: 000DB9DE ord: 486
+  IoWMIQueryAllData rva: 000DC263 ord: 487
+  IoWMIQueryAllDataMultiple rva: 00170AB4 ord: 488
+  IoWMIQuerySingleInstance rva: 000E00AA ord: 489
+  IoWMIQuerySingleInstanceMultiple rva: 00170B36 ord: 490
+  IoWMIRegistrationControl rva: 000CC985 ord: 491
+  IoWMISetNotificationCallback rva: 000DC50B ord: 492
+  IoWMISetSingleInstance rva: 00170BBB ord: 493
+  IoWMISetSingleItem rva: 00170C93 ord: 494
+  IoWMISuggestInstanceName rva: 00170863 ord: 495
+  IoWMIWriteEvent rva: 00032502 ord: 496
+  IoWriteErrorLogEntry rva: 00034E05 ord: 497
+  IoWriteOperationCount rva: 00089D4C ord: 498  [主体缺失 - 加壳的 ?]   
+  IoWritePartitionTableEx rva: 00148A92 ord: 499
+  IoWriteTransferCount rva: 00089D38 ord: 500  [主体缺失 - 加壳的 ?]   
+  KdDebuggerEnabled rva: 00084A41 ord: 501  [主体缺失 - 加壳的 ?]   
+  KdDebuggerNotPresent rva: 00084A40 ord: 502  [主体缺失 - 加壳的 ?]   
+  KdDisableDebugger rva: 0005EFB7 ord: 503
+  KdEnableDebugger rva: 0005F030 ord: 504
+  KdEnteredDebugger rva: 00084A44 ord: 505  [主体缺失 - 加壳的 ?]   
+  KdPollBreakIn rva: 0000B5AB ord: 506
+  KdPowerTransition rva: 0005F08D ord: 507
+  Ke386CallBios rva: 000DDC5E ord: 508
+  Ke386IoSetAccessProcess rva: 00036CB9 ord: 509
+  Ke386QueryIoAccessMap rva: 00036C5D ord: 510
+  Ke386SetIoAccessMap rva: 00036D57 ord: 511
+  KeAcquireInterruptSpinLock rva: 0005F48D ord: 512
+  KeAcquireSpinLockAtDpcLevel rva: 0000B43B ord: 513
+  KeAddSystemServiceTable rva: 000E36D5 ord: 514
+  KeAreApcsDisabled rva: 00043EC4 ord: 515
+  KeAttachProcess rva: 0001A485 ord: 516
+  KeBugCheck rva: 000606CB ord: 517
+  KeBugCheckEx rva: 000606EF ord: 518
+  KeCancelTimer rva: 0000F1C5 ord: 519
+  KeCapturePersistentThreadState rva: 0005C7AF ord: 520
+  KeClearEvent rva: 0000EAA4 ord: 521
+  KeConnectInterrupt rva: 00033152 ord: 522
+  KeDcacheFlushCount rva: 00084A54 ord: 523  [主体缺失 - 加壳的 ?]   
+  KeDelayExecutionThread rva: 0000A4F6 ord: 524
+  KeDeregisterBugCheckCallback rva: 0005F903 ord: 525
+  KeDeregisterBugCheckReasonCallback rva: 0005FA2F ord: 526
+  KeDetachProcess rva: 0001A4DE ord: 527
+  KeDisconnectInterrupt rva: 00033030 ord: 528
+  KeEnterCriticalRegion rva: 000025F2 ord: 529
+  KeEnterKernelDebugger rva: 0005F8B9 ord: 530
+  KeFindConfigurationEntry rva: 001DEDD9 ord: 531
+  KeFindConfigurationNextEntry rva: 001E4287 ord: 532
+  KeFlushEntireTb rva: 00012BD5 ord: 533
+  KeFlushQueuedDpcs rva: 000D7D7C ord: 534
+  KeGetCurrentThread rva: 00004622 ord: 535
+  KeGetPreviousMode rva: 0000462A ord: 536
+  KeGetRecommendedSharedDataAlignment rva: 00031969 ord: 537
+  KeI386AbiosCall rva: 00060D5F ord: 538
+  KeI386AllocateGdtSelectors rva: 00039E34 ord: 539
+  KeI386Call16BitCStyleFunction rva: 00002A3C ord: 540
+  KeI386Call16BitFunction rva: 00002898 ord: 541
+  KeI386FlatToGdtSelector rva: 00060E6A ord: 542
+  KeI386GetLid rva: 00060B5F ord: 543
+  KeI386MachineType rva: 00084A84 ord: 544  [主体缺失 - 加壳的 ?]   
+  KeI386ReleaseGdtSelectors rva: 00060DFF ord: 545
+  KeI386ReleaseLid rva: 00060CDB ord: 546
+  KeI386SetGdtSelector rva: 001904DA ord: 547
+  KeIcacheFlushCount rva: 00084A58 ord: 548  [主体缺失 - 加壳的 ?]   
+  KeInitializeApc rva: 0000EC99 ord: 549
+  KeInitializeDeviceQueue rva: 0002F6A9 ord: 550
+  KeInitializeDpc rva: 00010D98 ord: 551
+  KeInitializeEvent rva: 00010DC6 ord: 552
+  KeInitializeInterrupt rva: 000330BA ord: 553
+  KeInitializeMutant rva: 0001DB39 ord: 554
+  KeInitializeMutex rva: 00041BFB ord: 555
+  KeInitializeQueue rva: 000278C8 ord: 556
+  KeInitializeSemaphore rva: 000118D1 ord: 557
+  KeInitializeSpinLock rva: 0000B417 ord: 558
+  KeInitializeTimer rva: 000155BC ord: 559
+  KeInitializeTimerEx rva: 000155D4 ord: 560
+  KeInsertByKeyDeviceQueue rva: 0000EF99 ord: 561
+  KeInsertDeviceQueue rva: 0000F05E ord: 562
+  KeInsertHeadQueue rva: 00043FBB ord: 563
+  KeInsertQueue rva: 0000EAB9 ord: 564
+  KeInsertQueueApc rva: 0000ECEF ord: 565
+  KeInsertQueueDpc rva: 0000268D ord: 566
+  KeIsAttachedProcess rva: 00032D11 ord: 567
+  KeIsExecutingDpc rva: 0000463A ord: 568
+  KeLeaveCriticalRegion rva: 00002604 ord: 569
+  KeLoaderBlock rva: 00084A5C ord: 570  [主体缺失 - 加壳的 ?]   
+  KeNumberProcessors rva: 00084A60 ord: 571  [主体缺失 - 加壳的 ?]   
+  KeProfileInterrupt rva: 0000B8EE ord: 572
+  KeProfileInterruptWithSource rva: 0000B8F6 ord: 573
+  KePulseEvent rva: 0003ECCB ord: 574
+  KeQueryActiveProcessors rva: 000E0B74 ord: 575
+  KeQueryInterruptTime rva: 0000EC65 ord: 576
+  KeQueryPriorityThread rva: 000610E4 ord: 577
+  KeQueryRuntimeThread rva: 000263DC ord: 578
+  KeQuerySystemTime rva: 000025AF ord: 579
+  KeQueryTickCount rva: 00016855 ord: 580
+  KeQueryTimeIncrement rva: 0000EA3E ord: 581
+  KeRaiseUserException rva: 00061424 ord: 582
+  KeReadStateEvent rva: 0000EDBB ord: 583
+  KeReadStateMutant rva: 0000EDBB ord: 584
+  KeReadStateMutex rva: 0000EDBB ord: 585
+  KeReadStateQueue rva: 0000EDBB ord: 586
+  KeReadStateSemaphore rva: 0000EDBB ord: 587
+  KeReadStateTimer rva: 0000FC09 ord: 588
+  KeRegisterBugCheckCallback rva: 00036B62 ord: 589
+  KeRegisterBugCheckReasonCallback rva: 00037151 ord: 590
+  KeReleaseInterruptSpinLock rva: 0005F4BC ord: 591
+  KeReleaseMutant rva: 00002B4C ord: 592
+  KeReleaseMutex rva: 000114E8 ord: 593
+  KeReleaseSemaphore rva: 000120AE ord: 594
+  KeReleaseSpinLockFromDpcLevel rva: 0000B46C ord: 595
+  KeRemoveByKeyDeviceQueue rva: 0000F020 ord: 596
+  KeRemoveByKeyDeviceQueueIfBusy rva: 00060F6F ord: 597
+  KeRemoveDeviceQueue rva: 0000EFE4 ord: 598
+  KeRemoveEntryDeviceQueue rva: 00060FE4 ord: 599
+  KeRemoveQueue rva: 0000B1B4 ord: 600
+  KeRemoveQueueDpc rva: 00026293 ord: 601
+  KeRemoveSystemServiceTable rva: 00153476 ord: 602
+  KeResetEvent rva: 00011505 ord: 603
+  KeRestoreFloatingPointState rva: 00022A13 ord: 604
+  KeRevertToUserAffinityThread rva: 0002FDF7 ord: 605
+  KeRundownQueue rva: 000279E4 ord: 606
+  KeSaveFloatingPointState rva: 000228F6 ord: 607
+  KeSaveStateForHibernate rva: 000614FF ord: 608
+  KeServiceDescriptorTable rva: 0008B520 ord: 609  [主体缺失 - 加壳的 ?]   
+  KeSetAffinityThread rva: 000418DB ord: 610
+  KeSetBasePriorityThread rva: 000262D4 ord: 611
+  KeSetDmaIoCoherency rva: 0005F3B1 ord: 612
+  KeSetEvent rva: 0000B0A9 ord: 613
+  KeSetEventBoostPriority rva: 0000F8AC ord: 614
+  KeSetIdealProcessorThread rva: 0004288C ord: 615
+  KeSetImportanceDpc rva: 000158EB ord: 616
+  KeSetKernelStackSwapEnable rva: 00022B4D ord: 617
+  KeSetPriorityThread rva: 000152D4 ord: 618
+  KeSetProfileIrql rva: 001DED76 ord: 619
+  KeSetSystemAffinityThread rva: 0002FD90 ord: 620
+  KeSetTargetProcessorDpc rva: 000326CB ord: 621
+  KeSetTimeIncrement rva: 00039DF7 ord: 622
+  KeSetTimer rva: 0000B16F ord: 623
+  KeSetTimerEx rva: 0000B10E ord: 624
+  KeStackAttachProcess rva: 0001CA0B ord: 625
+  KeSynchronizeExecution rva: 0000468A ord: 626
+  KeTerminateThread rva: 000153E2 ord: 627
+  KeTickCount rva: 00083000 ord: 628
+  KeUnstackDetachProcess rva: 0001CA6F ord: 629
+  KeUpdateRunTime rva: 0000B794 ord: 630
+  KeUpdateSystemTime rva: 0000B608 ord: 631
+  KeUserModeCallback rva: 00098133 ord: 632
+  KeWaitForMultipleObjects rva: 0000AA33 ord: 633
+  KeWaitForMutexObject rva: 00005400 ord: 634
+  KeWaitForSingleObject rva: 00005400 ord: 635
+  KiBugCheckData rva: 0008BEC0 ord: 636  [主体缺失 - 加壳的 ?]   
+  KiCoprocessorError rva: 0000A14B ord: 637
+  KiDeliverApc rva: 00005E01 ord: 638
+  KiDispatchInterrupt rva: 00005862 ord: 639
+  KiEnableTimerWatchdog rva: 00084A78 ord: 640  [主体缺失 - 加壳的 ?]   
+  KiIpiServiceRoutine rva: 00002D1E ord: 641
+  KiUnexpectedInterrupt rva: 00004AF4 ord: 642
+  LdrAccessResource rva: 00108D69 ord: 643
+  LdrEnumResources rva: 00161C54 ord: 644
+  LdrFindResourceDirectory_U rva: 000E03A7 ord: 645
+  LdrFindResource_U rva: 000E2F70 ord: 646
+  LpcPortObjectType rva: 0008BF08 ord: 647  [主体缺失 - 加壳的 ?]   
+  LpcRequestPort rva: 000ABAEC ord: 648
+  LpcRequestWaitReplyPort rva: 000CA241 ord: 649
+  LsaCallAuthenticationPackage rva: 0017B7C4 ord: 650
+  LsaDeregisterLogonProcess rva: 0017B867 ord: 651
+  LsaFreeReturnBuffer rva: 00114275 ord: 652
+  LsaLogonUser rva: 0017B6CA ord: 653
+  LsaLookupAuthenticationPackage rva: 0017B61C ord: 654
+  LsaRegisterLogonProcess rva: 0017B483 ord: 655
+  Mm64BitPhysicalAddress rva: 00090944 ord: 656  [主体缺失 - 加壳的 ?]   
+  MmAddPhysicalMemory rva: 00194C0B ord: 657
+  MmAddVerifierThunks rva: 00154BEE ord: 658
+  MmAdjustWorkingSetSize rva: 00194C3B ord: 659
+  MmAdvanceMdl rva: 00063B73 ord: 660
+  MmAllocateContiguousMemory rva: 0003541A ord: 661
+  MmAllocateContiguousMemorySpecifyCache rva: 0002DE0A ord: 662
+  MmAllocateMappingAddress rva: 000F04B9 ord: 663
+  MmAllocateNonCachedMemory rva: 00155D88 ord: 664
+  MmAllocatePagesForMdl rva: 0018F86D ord: 665
+  MmBuildMdlForNonPagedPool rva: 00016D7C ord: 666
+  MmCanFileBeTruncated rva: 00020295 ord: 667
+  MmCommitSessionMappedView rva: 0002E420 ord: 668
+  MmCreateMdl rva: 0001DD70 ord: 669
+  MmCreateSection rva: 0000ACC0 ord: 670
+  MmDisableModifiedWriteOfSection rva: 000245D9 ord: 671
+  MmFlushImageSection rva: 00020206 ord: 672
+  MmForceSectionClosed rva: 00029F80 ord: 673
+  MmFreeContiguousMemory rva: 0002DF51 ord: 674
+  MmFreeContiguousMemorySpecifyCache rva: 00064128 ord: 675
+  MmFreeMappingAddress rva: 001559D7 ord: 676
+  MmFreeNonCachedMemory rva: 00155EB9 ord: 677
+  MmFreePagesFromMdl rva: 001950FF ord: 678
+  MmGetPhysicalAddress rva: 0002E0BE ord: 679
+  MmGetPhysicalMemoryRanges rva: 00193CF7 ord: 680
+  MmGetSystemRoutineAddress rva: 000EB718 ord: 681
+  MmGetVirtualForPhysical rva: 00064148 ord: 682
+  MmGrowKernelStack rva: 00023F31 ord: 683
+  MmHighestUserAddress rva: 00090EDC ord: 684  [主体缺失 - 加壳的 ?]   
+  MmIsAddressValid rva: 0000AF76 ord: 685
+  MmIsDriverVerifying rva: 0003725D ord: 686
+  MmIsNonPagedSystemAddressValid rva: 00065FB7 ord: 687
+  MmIsRecursiveIoFault rva: 000641F5 ord: 688
+  MmIsThisAnNtAsSystem rva: 000326AD ord: 689
+  MmIsVerifierEnabled rva: 000E2DF9 ord: 690
+  MmLockPagableDataSection rva: 00109DF1 ord: 691
+  MmLockPagableImageSection rva: 00109DF1 ord: 692
+  MmLockPagableSectionByHandle rva: 0010D94A ord: 693
+  MmMapIoSpace rva: 00034602 ord: 694
+  MmMapLockedPages rva: 000227F7 ord: 695
+  MmMapLockedPagesSpecifyCache rva: 00016E0C ord: 696
+  MmMapLockedPagesWithReservedMapping rva: 00063749 ord: 697
+  MmMapMemoryDumpMdl rva: 0006421B ord: 698
+  MmMapUserAddressesToPage rva: 00195226 ord: 699
+  MmMapVideoDisplay rva: 000F0461 ord: 700
+  MmMapViewInSessionSpace rva: 001121D4 ord: 701
+  MmMapViewInSystemSpace rva: 00156787 ord: 702
+  MmMapViewOfSection rva: 000A3608 ord: 703
+  MmMarkPhysicalMemoryAsBad rva: 00154AA1 ord: 704
+  MmMarkPhysicalMemoryAsGood rva: 00193B6D ord: 705
+  MmPageEntireDriver rva: 00107234 ord: 706
+  MmPrefetchPages rva: 0010C2BE ord: 707
+  MmProbeAndLockPages rva: 0001FCF7 ord: 708
+  MmProbeAndLockProcessPages rva: 00155F14 ord: 709
+  MmProbeAndLockSelectedPages rva: 00031676 ord: 710
+  MmProtectMdlSystemAddress rva: 00063DAF ord: 711
+  MmQuerySystemSize rva: 000319A2 ord: 712
+  MmRemovePhysicalMemory rva: 00154AC7 ord: 713
+  MmResetDriverPaging rva: 00107307 ord: 714
+  MmSectionObjectType rva: 00090C40 ord: 715  [主体缺失 - 加壳的 ?]   
+  MmSecureVirtualMemory rva: 0009ADB6 ord: 716
+  MmSetAddressRangeModified rva: 00017EFB ord: 717
+  MmSetBankedSection rva: 00155A89 ord: 718
+  MmSizeOfMdl rva: 00024669 ord: 719
+  MmSystemRangeStart rva: 00090ED8 ord: 720  [主体缺失 - 加壳的 ?]   
+  MmTrimAllSystemPagableMemory rva: 00066C0F ord: 721
+  MmUnlockPagableImageSection rva: 000431C3 ord: 722
+  MmUnlockPages rva: 0001FFAD ord: 723
+  MmUnmapIoSpace rva: 00034759 ord: 724
+  MmUnmapLockedPages rva: 00016F78 ord: 725
+  MmUnmapReservedMapping rva: 00063A16 ord: 726
+  MmUnmapVideoDisplay rva: 000F0480 ord: 727
+  MmUnmapViewInSessionSpace rva: 00111F1D ord: 728
+  MmUnmapViewInSystemSpace rva: 001567B4 ord: 729
+  MmUnmapViewOfSection rva: 000A6616 ord: 730
+  MmUnsecureVirtualMemory rva: 0009AD9E ord: 731
+  MmUserProbeAddress rva: 00090ED4 ord: 732  [主体缺失 - 加壳的 ?]   
+  NlsAnsiCodePage rva: 001C44F0 ord: 733
+  NlsLeadByteInfo rva: 000954BC ord: 734
+  NlsMbCodePageTag rva: 001C4508 ord: 735
+  NlsMbOemCodePageTag rva: 001C4720 ord: 736
+  NlsOemCodePage rva: 001C44F4 ord: 737
+  NlsOemLeadByteInfo rva: 000954C0 ord: 738
+  NtAddAtom rva: 000A5022 ord: 739
+  NtAdjustPrivilegesToken rva: 000C0423 ord: 740
+  NtAllocateLocallyUniqueId rva: 000BAD3E ord: 741
+  NtAllocateUuids rva: 001090D1 ord: 742
+  NtAllocateVirtualMemory rva: 00099BC5 ord: 743
+  NtBuildNumber rva: 0007C0E8 ord: 744
+  NtClose rva: 000988D7 ord: 745
+  NtConnectPort rva: 000B9C5B ord: 746
+  NtCreateEvent rva: 0009D4F6 ord: 747
+  NtCreateFile rva: 0009CDFB ord: 748
+  NtCreateSection rva: 00096B66 ord: 749
+  NtDeleteAtom rva: 000BD9AA ord: 750
+  NtDeleteFile rva: 00105E04 ord: 751
+  NtDeviceIoControlFile rva: 000B1ABD ord: 752
+  NtDuplicateObject rva: 000A6DAF ord: 753
+  NtDuplicateToken rva: 000AEA99 ord: 754
+  NtFindAtom rva: 0010E1A7 ord: 755
+  NtFreeVirtualMemory rva: 0009A0BF ord: 756
+  NtFsControlFile rva: 000AB287 ord: 757
+  NtGlobalFlag rva: 000897EC ord: 758  [主体缺失 - 加壳的 ?]   
+  NtLockFile rva: 000BDD77 ord: 759
+  NtMakePermanentObject rva: 00109B2A ord: 760
+  NtMapViewOfSection rva: 000A3A19 ord: 761
+  NtNotifyChangeDirectoryFile rva: 000BF19B ord: 762
+  NtOpenFile rva: 000A2E8D ord: 763
+  NtOpenProcess rva: 000A4B80 ord: 764
+  NtOpenProcessToken rva: 000A14F6 ord: 765
+  NtOpenProcessTokenEx rva: 000A144D ord: 766
+  NtOpenThread rva: 000BFA0F ord: 767
+  NtOpenThreadToken rva: 0009D6D2 ord: 768
+  NtOpenThreadTokenEx rva: 0009D5CF ord: 769
+  NtQueryDirectoryFile rva: 000A5793 ord: 770
+  NtQueryEaFile rva: 0014A71C ord: 771
+  NtQueryInformationAtom rva: 000DAF72 ord: 772
+  NtQueryInformationFile rva: 000A3D38 ord: 773
+  NtQueryInformationProcess rva: 0009D7B6 ord: 774
+  NtQueryInformationThread rva: 0009F86A ord: 775
+  NtQueryInformationToken rva: 000A02E4 ord: 776
+  NtQueryQuotaInformationFile rva: 0014AFD3 ord: 777
+  NtQuerySecurityObject rva: 000C7E28 ord: 778
+  NtQuerySystemInformation rva: 000ADB3D ord: 779
+  NtQueryVolumeInformationFile rva: 000A31D8 ord: 780
+  NtReadFile rva: 0009D95D ord: 781
+  NtRequestPort rva: 0010FAD1 ord: 782
+  NtRequestWaitReplyPort rva: 000A689E ord: 783
+  NtSetEaFile rva: 0014AC63 ord: 784
+  NtSetEvent rva: 00099634 ord: 785
+  NtSetInformationFile rva: 000AC1AD ord: 786
+  NtSetInformationProcess rva: 0009DB1F ord: 787
+  NtSetInformationThread rva: 0009FABD ord: 788
+  NtSetQuotaInformationFile rva: 0014AFAB ord: 789
+  NtSetSecurityObject rva: 000C7C29 ord: 790
+  NtSetVolumeInformationFile rva: 0014B4E9 ord: 791
+  NtShutdownSystem rva: 00178327 ord: 792
+  NtTraceEvent rva: 00072A70 ord: 793
+  NtUnlockFile rva: 000BDED7 ord: 794
+  NtVdmControl rva: 000DDE66 ord: 795
+  NtWaitForSingleObject rva: 00096F62 ord: 796
+  NtWriteFile rva: 000AC42D ord: 797
+  ObAssignSecurity rva: 0009E777 ord: 798
+  ObCheckCreateObjectAccess rva: 000BE2F1 ord: 799
+  ObCheckObjectAccess rva: 00096D78 ord: 800
+  ObCloseHandle rva: 0009A730 ord: 801
+  ObCreateObject rva: 00096525 ord: 802
+  ObCreateObjectType rva: 000F672E ord: 803
+  ObDereferenceObject rva: 0006A0E9 ord: 804
+  ObDereferenceSecurityDescriptor rva: 00096963 ord: 805
+  ObFindHandleForObject rva: 0010A546 ord: 806
+  ObGetObjectSecurity rva: 00095287 ord: 807
+  ObInsertObject rva: 00096A64 ord: 808
+  ObIsDosDeviceLocallyMapped rva: 0006A181 ord: 809
+  ObLogSecurityDescriptor rva: 0009E5A8 ord: 810
+  ObMakeTemporaryObject rva: 0010952E ord: 811
+  ObOpenObjectByName rva: 0009910D ord: 812
+  ObOpenObjectByPointer rva: 000A133E ord: 813
+  ObQueryNameString rva: 000B3731 ord: 814
+  ObQueryObjectAuditingByHandle rva: 000C0E63 ord: 815
+  ObReferenceObjectByHandle rva: 00095559 ord: 816
+  ObReferenceObjectByName rva: 000B182F ord: 817
+  ObReferenceObjectByPointer rva: 00013581 ord: 818
+  ObReferenceSecurityDescriptor rva: 00111BFB ord: 819
+  ObReleaseObjectSecurity rva: 00095241 ord: 820
+  ObSetHandleAttributes rva: 000AC030 ord: 821
+  ObSetSecurityDescriptorInfo rva: 000C803F ord: 822
+  ObSetSecurityObjectByPointer rva: 000C7CD9 ord: 823
+  PfxFindPrefix rva: 00162F1F ord: 824
+  PfxInitialize rva: 00162B18 ord: 825
+  PfxInsertPrefix rva: 00162E35 ord: 826
+  PfxRemovePrefix rva: 00162B3B ord: 827
+  PoCallDriver rva: 000302DB ord: 828
+  PoCancelDeviceNotify rva: 0006A200 ord: 829
+  PoQueueShutdownWorkItem rva: 000F0681 ord: 830
+  PoRegisterDeviceForIdleDetection rva: 0002E695 ord: 831
+  PoRegisterDeviceNotify rva: 0006A6FB ord: 832
+  PoRegisterSystemState rva: 000422F9 ord: 833
+  PoRequestPowerIrp rva: 0003038D ord: 834
+  PoRequestShutdownEvent rva: 000DE68A ord: 835
+  PoSetHiberRange rva: 00197F9A ord: 836
+  PoSetPowerState rva: 00030E5D ord: 837
+  PoSetSystemState rva: 000434BD ord: 838
+  PoShutdownBugCheck rva: 0015BF7F ord: 839
+  PoStartNextPowerIrp rva: 000301A1 ord: 840
+  PoUnregisterSystemState rva: 00041BD6 ord: 841
+  ProbeForRead rva: 000BBE58 ord: 842
+  ProbeForWrite rva: 0009789F ord: 843
+  PsAssignImpersonationToken rva: 000A7529 ord: 844
+  PsChargePoolQuota rva: 00022CFC ord: 845
+  PsChargeProcessNonPagedPoolQuota rva: 000196AB ord: 846
+  PsChargeProcessPagedPoolQuota rva: 0001E287 ord: 847
+  PsChargeProcessPoolQuota rva: 00011827 ord: 848
+  PsCreateSystemProcess rva: 0015E8E7 ord: 849
+  PsCreateSystemThread rva: 0009F2B0 ord: 850
+  PsDereferenceImpersonationToken rva: 0015E4FB ord: 851
+  PsDereferenceKernelStack rva: 0015E947 ord: 852
+  PsDereferencePrimaryToken rva: 000B708C ord: 853
+  PsDisableImpersonation rva: 000B9E32 ord: 854
+  PsEstablishWin32Callouts rva: 000E3C27 ord: 855
+  PsGetContextThread rva: 0015EE41 ord: 856
+  PsGetCurrentProcess rva: 0000EE36 ord: 857
+  PsGetCurrentProcessId rva: 0000F987 ord: 858
+  PsGetCurrentProcessSessionId rva: 00013469 ord: 859
+  PsGetCurrentThread rva: 0000EDA7 ord: 860
+  PsGetCurrentThreadId rva: 000113CE ord: 861
+  PsGetCurrentThreadPreviousMode rva: 00042195 ord: 862
+  PsGetCurrentThreadStackBase rva: 0006BD85 ord: 863
+  PsGetCurrentThreadStackLimit rva: 0006BD9C ord: 864
+  PsGetJobLock rva: 0006BC8F ord: 865
+  PsGetJobSessionId rva: 0006BCA8 ord: 866
+  PsGetJobUIRestrictionsClass rva: 0003265F ord: 867
+  PsGetProcessCreateTimeQuadPart rva: 0003C3E4 ord: 868
+  PsGetProcessDebugPort rva: 0002C978 ord: 869
+  PsGetProcessExitProcessCalled rva: 0015F321 ord: 870
+  PsGetProcessExitStatus rva: 0006BCDF ord: 871
+  PsGetProcessExitTime rva: 00111C40 ord: 872
+  PsGetProcessId rva: 0001DC49 ord: 873
+  PsGetProcessImageFileName rva: 0003C3FB ord: 874
+  PsGetProcessInheritedFromUniqueProcessId rva: 000287C6 ord: 875
+  PsGetProcessJob rva: 0001CC3B ord: 876
+  PsGetProcessPeb rva: 000134A8 ord: 877
+  PsGetProcessPriorityClass rva: 0006BD2B ord: 878
+  PsGetProcessSectionBaseAddress rva: 00024216 ord: 879
+  PsGetProcessSecurityPort rva: 000CA25F ord: 880
+  PsGetProcessSessionId rva: 00027296 ord: 881
+  PsGetProcessWin32Process rva: 0000FBBA ord: 882
+  PsGetProcessWin32WindowStation rva: 0001CC24 ord: 883
+  PsGetThreadFreezeCount rva: 00013160 ord: 884
+  PsGetThreadHardErrorsAreDisabled rva: 00031C12 ord: 885
+  PsGetThreadId rva: 00010D3F ord: 886
+  PsGetThreadProcess rva: 000113E0 ord: 887
+  PsGetThreadProcessId rva: 00010D28 ord: 888
+  PsGetThreadSessionId rva: 000A898C ord: 889
+  PsGetThreadTeb rva: 00019900 ord: 890
+  PsGetThreadWin32Thread rva: 0000FBBA ord: 891
+  PsGetVersion rva: 0006BC12 ord: 892
+  PsImpersonateClient rva: 000A7656 ord: 893
+  PsInitialSystemProcess rva: 00092754 ord: 894  [主体缺失 - 加壳的 ?]   
+  PsIsProcessBeingDebugged rva: 0015F2FF ord: 895
+  PsIsSystemThread rva: 0002616B ord: 896
+  PsIsThreadImpersonating rva: 0015F39C ord: 897
+  PsIsThreadTerminating rva: 0001A5E5 ord: 898
+  PsJobType rva: 000926E0 ord: 899  [主体缺失 - 加壳的 ?]   
+  PsLookupProcessByProcessId rva: 000A4AFD ord: 900
+  PsLookupProcessThreadByCid rva: 000A675F ord: 901
+  PsLookupThreadByThreadId rva: 000A89A8 ord: 902
+  PsProcessType rva: 00092758 ord: 903  [主体缺失 - 加壳的 ?]   
+  PsReferenceImpersonationToken rva: 000952A5 ord: 904
+  PsReferenceKernelStack rva: 0015E923 ord: 905
+  PsReferencePrimaryToken rva: 00095967 ord: 906
+  PsRemoveCreateThreadNotifyRoutine rva: 0015E6CE ord: 907
+  PsRemoveLoadImageNotifyRoutine rva: 0015E7F3 ord: 908
+  PsRestoreImpersonation rva: 000B9F07 ord: 909
+  PsReturnPoolQuota rva: 000116D5 ord: 910
+  PsReturnProcessNonPagedPoolQuota rva: 0001A2E9 ord: 911
+  PsReturnProcessPagedPoolQuota rva: 0001E019 ord: 912
+  PsRevertThreadToSelf rva: 000A75C5 ord: 913
+  PsRevertToSelf rva: 000DBD7B ord: 914
+  PsSetContextThread rva: 0015F0D9 ord: 915
+  PsSetCreateProcessNotifyRoutine rva: 0015E58F ord: 916
+  PsSetCreateThreadNotifyRoutine rva: 0015E665 ord: 917
+  PsSetJobUIRestrictionsClass rva: 0015F347 ord: 918
+  PsSetLegoNotifyRoutine rva: 000E3D3E ord: 919
+  PsSetLoadImageNotifyRoutine rva: 0015E781 ord: 920
+  PsSetProcessPriorityByClass rva: 0009AE63 ord: 921
+  PsSetProcessPriorityClass rva: 0015F366 ord: 922
+  PsSetProcessSecurityPort rva: 00111809 ord: 923
+  PsSetProcessWin32Process rva: 000B6A96 ord: 924
+  PsSetProcessWindowStation rva: 000B7049 ord: 925
+  PsSetThreadHardErrorsAreDisabled rva: 00031C30 ord: 926
+  PsSetThreadWin32Thread rva: 000AC00C ord: 927
+  PsTerminateSystemThread rva: 000A9F02 ord: 928
+  PsThreadType rva: 0009275C ord: 929  [主体缺失 - 加壳的 ?]   
+  READ_REGISTER_BUFFER_UCHAR rva: 000030AA ord: 930
+  READ_REGISTER_BUFFER_ULONG rva: 000030E2 ord: 931
+  READ_REGISTER_BUFFER_USHORT rva: 000030C6 ord: 932
+  READ_REGISTER_UCHAR rva: 00003086 ord: 933
+  READ_REGISTER_ULONG rva: 0000309E ord: 934
+  READ_REGISTER_USHORT rva: 00003092 ord: 935
+  RtlAbsoluteToSelfRelativeSD rva: 000EBD34 ord: 936
+  RtlAddAccessAllowedAce rva: 000BA1A6 ord: 937
+  RtlAddAccessAllowedAceEx rva: 000DC4E7 ord: 938
+  RtlAddAce rva: 000FDE46 ord: 939
+  RtlAddAtomToAtomTable rva: 00099802 ord: 940
+  RtlAddRange rva: 000EC9E5 ord: 941
+  RtlAllocateHeap rva: 000A8AAD ord: 942
+  RtlAnsiCharToUnicodeChar rva: 000A9626 ord: 943
+  RtlAnsiStringToUnicodeSize rva: 00164A93 ord: 944
+  RtlAnsiStringToUnicodeString rva: 000B1F08 ord: 945
+  RtlAppendAsciizToString rva: 001651EB ord: 946
+  RtlAppendStringToString rva: 000FDB43 ord: 947
+  RtlAppendUnicodeStringToString rva: 00020A0F ord: 948
+  RtlAppendUnicodeToString rva: 0001D2F3 ord: 949
+  RtlAreAllAccessesGranted rva: 00097F85 ord: 950
+  RtlAreAnyAccessesGranted rva: 000BABA2 ord: 951
+  RtlAreBitsClear rva: 00021D89 ord: 952
+  RtlAreBitsSet rva: 00021E9E ord: 953
+  RtlAssert rva: 0006C714 ord: 954
+  RtlCaptureContext rva: 00005152 ord: 955
+  RtlCaptureStackBackTrace rva: 0006C741 ord: 956
+  RtlCharToInteger rva: 00165A4F ord: 957
+  RtlCheckRegistryKey rva: 000E0EBF ord: 958
+  RtlClearAllBits rva: 0003CF21 ord: 959
+  RtlClearBit rva: 0006C04D ord: 960
+  RtlClearBits rva: 00013985 ord: 961
+  RtlCompareMemory rva: 0000E080 ord: 962
+  RtlCompareMemoryUlong rva: 0000E0D0 ord: 963
+  RtlCompareString rva: 00165137 ord: 964
+  RtlCompareUnicodeString rva: 0009D887 ord: 965
+  RtlCompressBuffer rva: 0019B217 ord: 966
+  RtlCompressChunks rva: 00166CE7 ord: 967
+  RtlConvertLongToLargeInteger rva: 00004E04 ord: 968
+  RtlConvertSidToUnicodeString rva: 000B268D ord: 969
+  RtlConvertUlongToLargeInteger rva: 00004E0C ord: 970
+  RtlCopyLuid rva: 000D6D9E ord: 971
+  RtlCopyRangeList rva: 000E6D74 ord: 972
+  RtlCopySid rva: 00098E2C ord: 973
+  RtlCopyString rva: 000366F9 ord: 974
+  RtlCopyUnicodeString rva: 0001BF51 ord: 975
+  RtlCreateAcl rva: 0009E45D ord: 976
+  RtlCreateAtomTable rva: 000FDC82 ord: 977
+  RtlCreateHeap rva: 000D60A6 ord: 978
+  RtlCreateRegistryKey rva: 000E1007 ord: 979
+  RtlCreateSecurityDescriptor rva: 00098C49 ord: 980
+  RtlCreateSystemVolumeInformationFolder rva: 001671E4 ord: 981
+  RtlCreateUnicodeString rva: 000FA1C5 ord: 982
+  RtlCustomCPToUnicodeN rva: 00161EE2 ord: 983
+  RtlDecompressBuffer rva: 001669C9 ord: 984
+  RtlDecompressChunks rva: 00166B1E ord: 985
+  RtlDecompressFragment rva: 00107D9E ord: 986
+  RtlDelete rva: 0001C161 ord: 987
+  RtlDeleteAce rva: 000F0772 ord: 988
+  RtlDeleteAtomFromAtomTable rva: 000A8A24 ord: 989
+  RtlDeleteElementGenericTable rva: 0003C7C7 ord: 990
+  RtlDeleteElementGenericTableAvl rva: 0003E20A ord: 991
+  RtlDeleteNoSplay rva: 0003D829 ord: 992
+  RtlDeleteOwnersRanges rva: 000E6F74 ord: 993
+  RtlDeleteRange rva: 0016358E ord: 994
+  RtlDeleteRegistryValue rva: 000ED82B ord: 995
+  RtlDescribeChunk rva: 00166A41 ord: 996
+  RtlDestroyAtomTable rva: 001631D3 ord: 997
+  RtlDestroyHeap rva: 0016394B ord: 998
+  RtlDowncaseUnicodeString rva: 00164913 ord: 999
+  RtlEmptyAtomTable rva: 00163295 ord:1000
+  RtlEnlargedIntegerMultiply rva: 00004BE3 ord:1001
+  RtlEnlargedUnsignedDivide rva: 00004BFB ord:1002
+  RtlEnlargedUnsignedMultiply rva: 00004BEF ord:1003
+  RtlEnumerateGenericTable rva: 0006CA7B ord:1004
+  RtlEnumerateGenericTableAvl rva: 00029ABB ord:1005
+  RtlEnumerateGenericTableLikeADirectory rva: 0006CC4F ord:1006
+  RtlEnumerateGenericTableWithoutSplaying rva: 00023AAD ord:1007
+  RtlEnumerateGenericTableWithoutSplayingAvl rva: 00029AE0 ord:1008
+  RtlEqualLuid rva: 0016529D ord:1009
+  RtlEqualSid rva: 0009C938 ord:1010
+  RtlEqualString rva: 0002C762 ord:1011
+  RtlEqualUnicodeString rva: 00095684 ord:1012
+  RtlExtendedIntegerMultiply rva: 00004D08 ord:1013
+  RtlExtendedLargeIntegerDivide rva: 00004C1B ord:1014
+  RtlExtendedMagicDivide rva: 00004C78 ord:1015
+  RtlFillMemory rva: 0000E100 ord:1016
+  RtlFillMemoryUlong rva: 0000E170 ord:1017
+  RtlFindClearBits rva: 0001930D ord:1018
+  RtlFindClearBitsAndSet rva: 00019968 ord:1019
+  RtlFindClearRuns rva: 0002CA7A ord:1020
+  RtlFindFirstRunClear rva: 0006C4E5 ord:1021
+  RtlFindLastBackwardRunClear rva: 0002C5E9 ord:1022
+  RtlFindLeastSignificantBit rva: 0003A4A7 ord:1023
+  RtlFindLongestRunClear rva: 0006C38D ord:1024
+  RtlFindMessage rva: 00108D81 ord:1025
+  RtlFindMostSignificantBit rva: 0006C3EC ord:1026
+  RtlFindNextForwardRunClear rva: 0003C4E4 ord:1027
+  RtlFindRange rva: 000ECE22 ord:1028
+  RtlFindSetBits rva: 0006C0C3 ord:1029
+  RtlFindSetBitsAndClear rva: 0006C4AB ord:1030
+  RtlFindUnicodePrefix rva: 000B0887 ord:1031
+  RtlFormatCurrentUserKeyPath rva: 000B27FB ord:1032
+  RtlFreeAnsiString rva: 000A9A2A ord:1033
+  RtlFreeHeap rva: 000A8675 ord:1034
+  RtlFreeOemString rva: 000C8B67 ord:1035
+  RtlFreeRangeList rva: 000E6C92 ord:1036
+  RtlFreeUnicodeString rva: 000A9A2A ord:1037
+  RtlGUIDFromString rva: 000C675A ord:1038
+  RtlGenerate8dot3Name rva: 000BE8EC ord:1039
+  RtlGetAce rva: 000D98AE ord:1040
+  RtlGetCallersAddress rva: 00003198 ord:1041
+  RtlGetCompressionWorkSpaceSize rva: 0018F146 ord:1042
+  RtlGetDaclSecurityDescriptor rva: 000DC077 ord:1043
+  RtlGetDefaultCodePage rva: 000BADDF ord:1044
+  RtlGetElementGenericTable rva: 0006C9C4 ord:1045
+  RtlGetElementGenericTableAvl rva: 0006CB3F ord:1046
+  RtlGetFirstRange rva: 00111AD4 ord:1047
+  RtlGetGroupSecurityDescriptor rva: 000E6877 ord:1048
+  RtlGetNextRange rva: 00111A6A ord:1049
+  RtlGetNtGlobalFlags rva: 0010D43B ord:1050
+  RtlGetOwnerSecurityDescriptor rva: 000E6835 ord:1051
+  RtlGetSaclSecurityDescriptor rva: 000E6800 ord:1052
+  RtlGetSetBootStatusData rva: 00167831 ord:1053
+  RtlGetVersion rva: 00102A2F ord:1054
+  RtlHashUnicodeString rva: 000C0F74 ord:1055
+  RtlImageDirectoryEntryToData rva: 000272CB ord:1056
+  RtlImageNtHeader rva: 00024196 ord:1057
+  RtlInitAnsiString rva: 0000326D ord:1058
+  RtlInitCodePageTable rva: 000F7B67 ord:1059
+  RtlInitString rva: 00003235 ord:1060
+  RtlInitUnicodeString rva: 000032A5 ord:1061
+  RtlInitializeBitMap rva: 000A5ECD ord:1062
+  RtlInitializeGenericTable rva: 0003274E ord:1063
+  RtlInitializeGenericTableAvl rva: 000287DD ord:1064
+  RtlInitializeRangeList rva: 000FA577 ord:1065
+  RtlInitializeSid rva: 000BE6D8 ord:1066
+  RtlInitializeUnicodePrefix rva: 000E84E1 ord:1067
+  RtlInsertElementGenericTable rva: 00023B84 ord:1068
+  RtlInsertElementGenericTableAvl rva: 0004243F ord:1069
+  RtlInsertElementGenericTableFull rva: 00023B45 ord:1070
+  RtlInsertElementGenericTableFullAvl rva: 0003DC30 ord:1071
+  RtlInsertUnicodePrefix rva: 000B7EA2 ord:1072
+  RtlInt64ToUnicodeString rva: 00165F59 ord:1073
+  RtlIntegerToChar rva: 000B3645 ord:1074
+  RtlIntegerToUnicode rva: 000B2936 ord:1075
+  RtlIntegerToUnicodeString rva: 000B202B ord:1076
+  RtlInvertRangeList rva: 001636CC ord:1077
+  RtlIpv4AddressToStringA rva: 0006D1CD ord:1078
+  RtlIpv4AddressToStringExA rva: 0006D21B ord:1079
+  RtlIpv4AddressToStringExW rva: 0006D680 ord:1080
+  RtlIpv4AddressToStringW rva: 0006D622 ord:1081
+  RtlIpv4StringToAddressA rva: 0006DC93 ord:1082
+  RtlIpv4StringToAddressExA rva: 0006DEA7 ord:1083
+  RtlIpv4StringToAddressExW rva: 0006E5BB ord:1084
+  RtlIpv4StringToAddressW rva: 00034C88 ord:1085
+  RtlIpv6AddressToStringA rva: 0006CEB9 ord:1086
+  RtlIpv6AddressToStringExA rva: 0006D0E8 ord:1087
+  RtlIpv6AddressToStringExW rva: 0006D52D ord:1088
+  RtlIpv6AddressToStringW rva: 0006D2C2 ord:1089
+  RtlIpv6StringToAddressA rva: 0006D728 ord:1090
+  RtlIpv6StringToAddressExA rva: 0006DA4E ord:1091
+  RtlIpv6StringToAddressExW rva: 0006E34A ord:1092
+  RtlIpv6StringToAddressW rva: 0006E047 ord:1093
+  RtlIsGenericTableEmpty rva: 0006C9A7 ord:1094
+  RtlIsGenericTableEmptyAvl rva: 0002F690 ord:1095
+  RtlIsNameLegalDOS8Dot3 rva: 0016753E ord:1096
+  RtlIsRangeAvailable rva: 000F2B2C ord:1097
+  RtlIsValidOemCharacter rva: 001673FA ord:1098
+  RtlLargeIntegerAdd rva: 00004BCF ord:1099
+  RtlLargeIntegerArithmeticShift rva: 00004DB0 ord:1100
+  RtlLargeIntegerDivide rva: 0006E73F ord:1101
+  RtlLargeIntegerNegate rva: 00004DDC ord:1102
+  RtlLargeIntegerShiftLeft rva: 00004D60 ord:1103
+  RtlLargeIntegerShiftRight rva: 00004D88 ord:1104
+  RtlLargeIntegerSubtract rva: 00004DF0 ord:1105
+  RtlLengthRequiredSid rva: 000A9095 ord:1106
+  RtlLengthSecurityDescriptor rva: 0009E3C9 ord:1107
+  RtlLengthSid rva: 000C76B4 ord:1108
+  RtlLockBootStatusData rva: 001676C8 ord:1109
+  RtlLookupAtomInAtomTable rva: 000A88DF ord:1110
+  RtlLookupElementGenericTable rva: 0003C864 ord:1111
+  RtlLookupElementGenericTableAvl rva: 000265BA ord:1112
+  RtlLookupElementGenericTableFull rva: 0003C81F ord:1113
+  RtlLookupElementGenericTableFullAvl rva: 0001D7FB ord:1114
+  RtlMapGenericMask rva: 00098DCA ord:1115
+  RtlMapSecurityErrorToNtStatus rva: 000421EA ord:1116
+  RtlMergeRangeLists rva: 0016349E ord:1117
+  RtlMoveMemory rva: 0000E1C0 ord:1118
+  RtlMultiByteToUnicodeN rva: 0009AF11 ord:1119
+  RtlMultiByteToUnicodeSize rva: 001128E0 ord:1120
+  RtlNextUnicodePrefix rva: 00162D9E ord:1121
+  RtlNtStatusToDosError rva: 000A021D ord:1122
+  RtlNtStatusToDosErrorNoTeb rva: 000403BD ord:1123
+  RtlNumberGenericTableElements rva: 00023AEF ord:1124
+  RtlNumberGenericTableElementsAvl rva: 0002F659 ord:1125
+  RtlNumberOfClearBits rva: 0002C69C ord:1126
+  RtlNumberOfSetBits rva: 0003CDED ord:1127
+  RtlOemStringToCountedUnicodeString rva: 00164ECF ord:1128
+  RtlOemStringToUnicodeSize rva: 00164A93 ord:1129
+  RtlOemStringToUnicodeString rva: 0010D132 ord:1130
+  RtlOemToUnicodeN rva: 0010D020 ord:1131
+  RtlPinAtomInAtomTable rva: 000FDBD5 ord:1132
+  RtlPrefixString rva: 000E0C5E ord:1133
+  RtlPrefixUnicodeString rva: 00110928 ord:1134
+  RtlQueryAtomInAtomTable rva: 0009B08F ord:1135
+  RtlQueryRegistryValues rva: 00132E9F ord:1136
+  RtlQueryTimeZoneInformation rva: 000FAF43 ord:1137
+  RtlRaiseException rva: 000032E1 ord:1138
+  RtlRandom rva: 000B5B99 ord:1139
+  RtlRandomEx rva: 0006E7CF ord:1140
+  RtlRealPredecessor rva: 0006C943 ord:1141
+  RtlRealSuccessor rva: 0001A5FE ord:1142
+  RtlRemoveUnicodePrefix rva: 000B7FA3 ord:1143
+  RtlReserveChunk rva: 00166AAE ord:1144
+  RtlSecondsSince1970ToTime rva: 00029F04 ord:1145
+  RtlSecondsSince1980ToTime rva: 0006E88C ord:1146
+  RtlSelfRelativeToAbsoluteSD2 rva: 00162FD7 ord:1147
+  RtlSelfRelativeToAbsoluteSD rva: 000E9583 ord:1148
+  RtlSetAllBits rva: 00034AB5 ord:1149
+  RtlSetBit rva: 00019A85 ord:1150
+  RtlSetBits rva: 000192BD ord:1151
+  RtlSetDaclSecurityDescriptor rva: 000B9F3A ord:1152
+  RtlSetGroupSecurityDescriptor rva: 000FDF48 ord:1153
+  RtlSetOwnerSecurityDescriptor rva: 000C7D20 ord:1154
+  RtlSetSaclSecurityDescriptor rva: 000FDF92 ord:1155
+  RtlSetTimeZoneInformation rva: 001668AB ord:1156
+  RtlSizeHeap rva: 00163A2E ord:1157
+  RtlSplay rva: 0001C19A ord:1158
+  RtlStringFromGUID rva: 000C9445 ord:1159
+  RtlSubAuthorityCountSid rva: 00165270 ord:1160
+  RtlSubAuthoritySid rva: 001072DE ord:1161
+  RtlSubtreePredecessor rva: 0003E4CE ord:1162
+  RtlSubtreeSuccessor rva: 0006C909 ord:1163
+  RtlTestBit rva: 0006C083 ord:1164
+  RtlTimeFieldsToTime rva: 0002FFB1 ord:1165
+  RtlTimeToElapsedTimeFields rva: 00167941 ord:1166
+  RtlTimeToSecondsSince1970 rva: 0006E8CB ord:1167
+  RtlTimeToSecondsSince1980 rva: 0006E841 ord:1168
+  RtlTimeToTimeFields rva: 0003396B ord:1169
+  RtlTraceDatabaseAdd rva: 0006EF57 ord:1170
+  RtlTraceDatabaseCreate rva: 0006EB7A ord:1171
+  RtlTraceDatabaseDestroy rva: 0006EC6B ord:1172
+  RtlTraceDatabaseEnumerate rva: 0006EAEB ord:1173
+  RtlTraceDatabaseFind rva: 0006ED53 ord:1174
+  RtlTraceDatabaseLock rva: 0006EF2D ord:1175
+  RtlTraceDatabaseUnlock rva: 0006EF42 ord:1176
+  RtlTraceDatabaseValidate rva: 0006ED04 ord:1177
+  RtlUnicodeStringToAnsiSize rva: 00164A67 ord:1178
+  RtlUnicodeStringToAnsiString rva: 000AEDF3 ord:1179
+  RtlUnicodeStringToCountedOemString rva: 000C13E4 ord:1180
+  RtlUnicodeStringToInteger rva: 0010FF74 ord:1181
+  RtlUnicodeStringToOemSize rva: 00164A67 ord:1182
+  RtlUnicodeStringToOemString rva: 00112340 ord:1183
+  RtlUnicodeToCustomCPN rva: 001620CD ord:1184
+  RtlUnicodeToMultiByteN rva: 000AEC49 ord:1185
+  RtlUnicodeToMultiByteSize rva: 00112805 ord:1186
+  RtlUnicodeToOemN rva: 000C1169 ord:1187
+  RtlUnlockBootStatusData rva: 001677E6 ord:1188
+  RtlUnwind rva: 00025751 ord:1189
+  RtlUpcaseUnicodeChar rva: 00097FB0 ord:1190
+  RtlUpcaseUnicodeString rva: 00099494 ord:1191
+  RtlUpcaseUnicodeStringToAnsiString rva: 00164E05 ord:1192
+  RtlUpcaseUnicodeStringToCountedOemString rva: 00164F98 ord:1193
+  RtlUpcaseUnicodeStringToOemString rva: 000C8ABD ord:1194
+  RtlUpcaseUnicodeToCustomCPN rva: 00162283 ord:1195
+  RtlUpcaseUnicodeToMultiByteN rva: 000FCCE1 ord:1196
+  RtlUpcaseUnicodeToOemN rva: 000C8490 ord:1197
+  RtlUpperChar rva: 000CE5D5 ord:1198
+  RtlUpperString rva: 000F2BC6 ord:1199
+  RtlValidRelativeSecurityDescriptor rva: 000DC574 ord:1200
+  RtlValidSecurityDescriptor rva: 00107C6B ord:1201
+  RtlValidSid rva: 0009E37B ord:1202
+  RtlVerifyVersionInfo rva: 00032B24 ord:1203
+  RtlVolumeDeviceToDosName rva: 0005DE34 ord:1204
+  RtlWalkFrameChain rva: 00042660 ord:1205
+  RtlWriteRegistryValue rva: 000E0B0C ord:1206
+  RtlZeroHeap rva: 0016376D ord:1207
+  RtlZeroMemory rva: 0000E190 ord:1208
+  RtlxAnsiStringToUnicodeSize rva: 00164A93 ord:1209
+  RtlxOemStringToUnicodeSize rva: 00164A93 ord:1210
+  RtlxUnicodeStringToAnsiSize rva: 00164A67 ord:1211
+  RtlxUnicodeStringToOemSize rva: 00164A67 ord:1212
+  SeAccessCheck rva: 000952C7 ord:1213
+  SeAppendPrivileges rva: 000ACE1E ord:1214
+  SeAssignSecurity rva: 0009E1E4 ord:1215
+  SeAssignSecurityEx rva: 00169900 ord:1216
+  SeAuditHardLinkCreation rva: 0016A24B ord:1217
+  SeAuditingFileEvents rva: 0016B8F1 ord:1218
+  SeAuditingFileEventsWithContext rva: 000A2A12 ord:1219
+  SeAuditingFileOrGlobalEvents rva: 0016B86C ord:1220
+  SeAuditingHardLinkEvents rva: 0016B949 ord:1221
+  SeAuditingHardLinkEventsWithContext rva: 0016B9B2 ord:1222
+  SeCaptureSecurityDescriptor rva: 000A9152 ord:1223
+  SeCaptureSubjectContext rva: 0009C991 ord:1224
+  SeCloseObjectAuditAlarm rva: 0016B306 ord:1225
+  SeCreateAccessState rva: 00095A6B ord:1226
+  SeCreateClientSecurity rva: 000A7D5B ord:1227
+  SeCreateClientSecurityFromSubjectContext rva: 00111867 ord:1228
+  SeDeassignSecurity rva: 000BE23A ord:1229
+  SeDeleteAccessState rva: 00095AC8 ord:1230
+  SeDeleteObjectAuditAlarm rva: 0016B353 ord:1231
+  SeExports rva: 001C4D50 ord:1232
+  SeFilterToken rva: 0016945C ord:1233
+  SeFreePrivileges rva: 000A90C1 ord:1234
+  SeImpersonateClient rva: 0016C1C6 ord:1235
+  SeImpersonateClientEx rva: 000A7E32 ord:1236
+  SeLockSubjectContext rva: 0009539C ord:1237
+  SeMarkLogonSessionForTerminationNotification rva: 0016C627 ord:1238
+  SeOpenObjectAuditAlarm rva: 00096CB2 ord:1239
+  SeOpenObjectForDeleteAuditAlarm rva: 0016BC0F ord:1240
+  SePrivilegeCheck rva: 0009C8F5 ord:1241
+  SePrivilegeObjectAuditAlarm rva: 000ACD3D ord:1242
+  SePublicDefaultDacl rva: 001C4C50 ord:1243
+  SeQueryAuthenticationIdToken rva: 000A9A91 ord:1244
+  SeQueryInformationToken rva: 000B3DE8 ord:1245
+  SeQuerySecurityDescriptorInfo rva: 0009C4CB ord:1246
+  SeQuerySessionIdToken rva: 000A9D8C ord:1247
+  SeRegisterLogonSessionTerminatedRoutine rva: 001044D5 ord:1248
+  SeReleaseSecurityDescriptor rva: 0009E533 ord:1249
+  SeReleaseSubjectContext rva: 00095A9C ord:1250
+  SeSetAccessStateGenericMapping rva: 000A27EE ord:1251
+  SeSetSecurityDescriptorInfo rva: 000C7BC1 ord:1252
+  SeSetSecurityDescriptorInfoEx rva: 0016C92F ord:1253
+  SeSinglePrivilegeCheck rva: 000A7227 ord:1254
+  SeSystemDefaultDacl rva: 001C4C60 ord:1255
+  SeTokenImpersonationLevel rva: 000A7BBD ord:1256
+  SeTokenIsAdmin rva: 0016C97F ord:1257
+  SeTokenIsRestricted rva: 00098D90 ord:1258
+  SeTokenIsWriteRestricted rva: 000B7218 ord:1259
+  SeTokenObjectType rva: 001C4EE0 ord:1260
+  SeTokenType rva: 0009CA3F ord:1261
+  SeUnlockSubjectContext rva: 000953D1 ord:1262
+  SeUnregisterLogonSessionTerminatedRoutine rva: 0016C560 ord:1263
+  SeValidSecurityDescriptor rva: 000BAEDE ord:1264
+  VerSetConditionMask rva: 00032AB5 ord:1265
+  VfFailDeviceNode rva: 00070833 ord:1266
+  VfFailDriver rva: 000708B7 ord:1267
+  VfFailSystemBIOS rva: 00070874 ord:1268
+  VfIsVerificationEnabled rva: 0003A696 ord:1269
+  WRITE_REGISTER_BUFFER_UCHAR rva: 0000313A ord:1270
+  WRITE_REGISTER_BUFFER_ULONG rva: 0000317A ord:1271
+  WRITE_REGISTER_BUFFER_USHORT rva: 0000315A ord:1272
+  WRITE_REGISTER_UCHAR rva: 000030FE ord:1273
+  WRITE_REGISTER_ULONG rva: 00003126 ord:1274
+  WRITE_REGISTER_USHORT rva: 00003112 ord:1275
+  WmiFlushTrace rva: 001701C7 ord:1276
+  WmiQueryTrace rva: 0016F8FB ord:1277
+  WmiQueryTraceInformation rva: 00170254 ord:1278
+  WmiStartTrace rva: 001706E3 ord:1279
+  WmiStopTrace rva: 0016F927 ord:1280
+  WmiTraceMessage rva: 00072A47 ord:1281
+  WmiTraceMessageVa rva: 0007273B ord:1282
+  WmiUpdateTrace rva: 0016FB44 ord:1283
+  XIPDispatch rva: 00074017 ord:1284
+  ZwAccessCheckAndAuditAlarm rva: 0000C2CA ord:1285
+  ZwAddBootEntry rva: 0000C356 ord:1286
+  ZwAdjustPrivilegesToken rva: 0000C37E ord:1287
+  ZwAlertThread rva: 0000C3A6 ord:1288
+  ZwAllocateVirtualMemory rva: 0000C3F6 ord:1289
+  ZwAssignProcessToJobObject rva: 0000C41E ord:1290
+  ZwCancelIoFile rva: 0000C45A ord:1291
+  ZwCancelTimer rva: 0000C46E ord:1292
+  ZwClearEvent rva: 0000C482 ord:1293
+  ZwClose rva: 0000C496 ord:1294
+  ZwCloseObjectAuditAlarm rva: 0000C4AA ord:1295
+  ZwConnectPort rva: 0000C50E ord:1296
+  ZwCreateDirectoryObject rva: 0000C54A ord:1297
+  ZwCreateEvent rva: 0000C55E ord:1298
+  ZwCreateFile rva: 0000C586 ord:1299
+  ZwCreateJobObject rva: 0000C5AE ord:1300
+  ZwCreateKey rva: 0000C5D6 ord:1301
+  ZwCreateSection rva: 0000C68A ord:1302
+  ZwCreateSymbolicLinkObject rva: 0000C6B2 ord:1303
+  ZwCreateTimer rva: 0000C6DA ord:1304
+  ZwDeleteBootEntry rva: 0000C766 ord:1305
+  ZwDeleteFile rva: 0000C77A ord:1306
+  ZwDeleteKey rva: 0000C78E ord:1307
+  ZwDeleteValueKey rva: 0000C7B6 ord:1308
+  ZwDeviceIoControlFile rva: 0000C7CA ord:1309
+  ZwDisplayString rva: 0000C7DE ord:1310
+  ZwDuplicateObject rva: 0000C7F2 ord:1311
+  ZwDuplicateToken rva: 0000C806 ord:1312
+  ZwEnumerateBootEntries rva: 0000C81A ord:1313
+  ZwEnumerateKey rva: 0000C82E ord:1314
+  ZwEnumerateValueKey rva: 0000C856 ord:1315
+  ZwFlushInstructionCache rva: 0000C8BA ord:1316
+  ZwFlushKey rva: 0000C8CE ord:1317
+  ZwFlushVirtualMemory rva: 0000C8E2 ord:1318
+  ZwFreeVirtualMemory rva: 0000C91E ord:1319
+  ZwFsControlFile rva: 0000C932 ord:1320
+  ZwInitiatePowerAction rva: 0000C9E6 ord:1321
+  ZwIsProcessInJob rva: 0000C9FA ord:1322
+  ZwLoadDriver rva: 0000CA36 ord:1323
+  ZwLoadKey rva: 0000CA4A ord:1324
+  ZwMakeTemporaryObject rva: 0000CAD6 ord:1325
+  ZwMapViewOfSection rva: 0000CB12 ord:1326
+  ZwNotifyChangeKey rva: 0000CB4E ord:1327
+  ZwOpenDirectoryObject rva: 0000CB76 ord:1328
+  ZwOpenEvent rva: 0000CB8A ord:1329
+  ZwOpenFile rva: 0000CBB2 ord:1330
+  ZwOpenJobObject rva: 0000CBDA ord:1331
+  ZwOpenKey rva: 0000CBEE ord:1332
+  ZwOpenProcess rva: 0000CC2A ord:1333
+  ZwOpenProcessToken rva: 0000CC3E ord:1334
+  ZwOpenProcessTokenEx rva: 0000CC52 ord:1335
+  ZwOpenSection rva: 0000CC66 ord:1336
+  ZwOpenSymbolicLinkObject rva: 0000CC8E ord:1337
+  ZwOpenThread rva: 0000CCA2 ord:1338
+  ZwOpenThreadToken rva: 0000CCB6 ord:1339
+  ZwOpenThreadTokenEx rva: 0000CCCA ord:1340
+  ZwOpenTimer rva: 0000CCDE ord:1341
+  ZwPowerInformation rva: 0000CD06 ord:1342
+  ZwPulseEvent rva: 0000CD6A ord:1343
+  ZwQueryBootEntryOrder rva: 0000CD92 ord:1344
+  ZwQueryBootOptions rva: 0000CDA6 ord:1345
+  ZwQueryDefaultLocale rva: 0000CDCE ord:1346
+  ZwQueryDefaultUILanguage rva: 0000CDE2 ord:1347
+  ZwQueryDirectoryFile rva: 0000CDF6 ord:1348
+  ZwQueryDirectoryObject rva: 0000CE0A ord:1349
+  ZwQueryEaFile rva: 0000CE1E ord:1350
+  ZwQueryFullAttributesFile rva: 0000CE46 ord:1351
+  ZwQueryInformationFile rva: 0000CE6E ord:1352
+  ZwQueryInformationJobObject rva: 0000CE82 ord:1353
+  ZwQueryInformationProcess rva: 0000CEAA ord:1354
+  ZwQueryInformationThread rva: 0000CEBE ord:1355
+  ZwQueryInformationToken rva: 0000CED2 ord:1356
+  ZwQueryInstallUILanguage rva: 0000CEE6 ord:1357
+  ZwQueryKey rva: 0000CF22 ord:1358
+  ZwQueryObject rva: 0000CF5E ord:1359
+  ZwQuerySection rva: 0000CFAE ord:1360
+  ZwQuerySecurityObject rva: 0000CFC2 ord:1361
+  ZwQuerySymbolicLinkObject rva: 0000CFEA ord:1362
+  ZwQuerySystemInformation rva: 0000D026 ord:1363
+  ZwQueryValueKey rva: 0000D076 ord:1364
+  ZwQueryVolumeInformationFile rva: 0000D09E ord:1365
+  ZwReadFile rva: 0000D0EE ord:1366
+  ZwReplaceKey rva: 0000D1B6 ord:1367
+  ZwRequestWaitReplyPort rva: 0000D242 ord:1368
+  ZwResetEvent rva: 0000D26A ord:1369
+  ZwRestoreKey rva: 0000D292 ord:1370
+  ZwSaveKey rva: 0000D2CE ord:1371
+  ZwSaveKeyEx rva: 0000D2E2 ord:1372
+  ZwSetBootEntryOrder rva: 0000D31E ord:1373
+  ZwSetBootOptions rva: 0000D332 ord:1374
+  ZwSetDefaultLocale rva: 0000D382 ord:1375
+  ZwSetDefaultUILanguage rva: 0000D396 ord:1376
+  ZwSetEaFile rva: 0000D3AA ord:1377
+  ZwSetEvent rva: 0000D3BE ord:1378
+  ZwSetInformationFile rva: 0000D422 ord:1379
+  ZwSetInformationJobObject rva: 0000D436 ord:1380
+  ZwSetInformationObject rva: 0000D45E ord:1381
+  ZwSetInformationProcess rva: 0000D472 ord:1382
+  ZwSetInformationThread rva: 0000D486 ord:1383
+  ZwSetSecurityObject rva: 0000D526 ord:1384
+  ZwSetSystemInformation rva: 0000D562 ord:1385
+  ZwSetSystemTime rva: 0000D58A ord:1386
+  ZwSetTimer rva: 0000D5B2 ord:1387
+  ZwSetValueKey rva: 0000D5EE ord:1388
+  ZwSetVolumeInformationFile rva: 0000D602 ord:1389
+  ZwTerminateJobObject rva: 0000D6A2 ord:1390
+  ZwTerminateProcess rva: 0000D6B6 ord:1391
+  ZwTranslateFilePath rva: 0000D706 ord:1392
+  ZwUnloadDriver rva: 0000D71A ord:1393
+  ZwUnloadKey rva: 0000D72E ord:1394
+  ZwUnmapViewOfSection rva: 0000D77E ord:1395
+  ZwWaitForMultipleObjects rva: 0000D7BA ord:1396
+  ZwWaitForSingleObject rva: 0000D7CE ord:1397
+  ZwWriteFile rva: 0000D80A ord:1398
+  ZwYieldExecution rva: 0000D85A ord:1399
+  _CIcos rva: 0000E773 ord:1400
+  _CIsin rva: 0000E82C ord:1401
+  _CIsqrt rva: 0000BBCC ord:1402
+  _abnormal_termination rva: 0000C0C4 ord:1403
+  _alldiv rva: 0000342D ord:1404
+  _alldvrm rva: 000034D7 ord:1405
+  _allmul rva: 000035B6 ord:1406
+  _alloca_probe rva: 000035EA ord:1407
+  _allrem rva: 00003627 ord:1408
+  _allshl rva: 000036DB ord:1409
+  _allshr rva: 000036FA ord:1410
+  _aulldiv rva: 0000371B ord:1411
+  _aulldvrm rva: 00003783 ord:1412
+  _aullrem rva: 00003818 ord:1413
+  _aullshr rva: 0000388D ord:1414
+  _except_handler2 rva: 000038B4 ord:1415
+  _except_handler3 rva: 0000BEF8 ord:1416
+  _global_unwind2 rva: 0000BFF9 ord:1417
+  _itoa rva: 000741BA ord:1418
+  _itow rva: 0007424A ord:1419
+  _local_unwind2 rva: 0000C054 ord:1420
+  _purecall rva: 00073F9F ord:1421
+  _snprintf rva: 0003389E ord:1422
+  _snwprintf rva: 00026605 ord:1423
+  _stricmp rva: 00042901 ord:1424
+  _strlwr rva: 00074292 ord:1425
+  _strnicmp rva: 00023A3E ord:1426
+  _strnset rva: 00003962 ord:1427
+  _strrev rva: 0000398B ord:1428
+  _strset rva: 000039BB ord:1429
+  _strupr rva: 0003A756 ord:1430
+  _vsnprintf rva: 0002AAF0 ord:1431
+  _vsnwprintf rva: 000742F4 ord:1432
+  _wcsicmp rva: 00011100 ord:1433
+  _wcslwr rva: 0007437A ord:1434
+  _wcsnicmp rva: 0003E562 ord:1435
+  _wcsnset rva: 000743BC ord:1436
+  _wcsrev rva: 000743F2 ord:1437
+  _wcsupr rva: 000345D4 ord:1438
+  atoi rva: 0003AA24 ord:1439
+  atol rva: 0003AA31 ord:1440
+  isdigit rva: 0003B547 ord:1441
+  islower rva: 00074541 ord:1442
+  isprint rva: 000745C2 ord:1443
+  isspace rva: 0003B570 ord:1444
+  isupper rva: 0003B51E ord:1445
+  isxdigit rva: 0007457F ord:1446
+  mbstowcs rva: 0007461C ord:1447
+  mbtowc rva: 0002547F ord:1448
+  memchr rva: 000039DB ord:1449
+  memcpy rva: 00003A82 ord:1450
+  memmove rva: 00003DC5 ord:1451
+  memset rva: 00004105 ord:1452
+  qsort rva: 000341EC ord:1453
+  rand rva: 0007470A ord:1454
+  sprintf rva: 0002F256 ord:1455
+  srand rva: 000746F1 ord:1456
+  strcat rva: 0000416D ord:1457
+  strchr rva: 0000E96B ord:1458
+  strcmp rva: 00004253 ord:1459
+  strcpy rva: 0000415D ord:1460
+  strlen rva: 000042D8 ord:1461
+  strncat rva: 00004353 ord:1462
+  strncmp rva: 00004478 ord:1463
+  strncpy rva: 000044B0 ord:1464
+  strrchr rva: 000045B0 ord:1465
+  strspn rva: 000045D7 ord:1466
+  strstr rva: 0000E8DC ord:1467
+  swprintf rva: 00024F21 ord:1468
+  tolower rva: 0003B599 ord:1469
+  toupper rva: 00030CBD ord:1470
+  towlower rva: 000747DA ord:1471
+  towupper rva: 00074802 ord:1472
+  vDbgPrintEx rva: 0006BF87 ord:1473
+  vDbgPrintExWithPrefix rva: 0002AE48 ord:1474
+  vsprintf rva: 00034902 ord:1475
+  wcscat rva: 00041D54 ord:1476
+  wcschr rva: 00027272 ord:1477
+  wcscmp rva: 000130DD ord:1478
+  wcscpy rva: 0001C421 ord:1479
+  wcscspn rva: 00074838 ord:1480
+  wcslen rva: 00013489 ord:1481
+  wcsncat rva: 00032199 ord:1482
+  wcsncmp rva: 0002A324 ord:1483
+  wcsncpy rva: 0003E6BB ord:1484
+  wcsrchr rva: 0002F2FE ord:1485
+  wcsspn rva: 000748A8 ord:1486
+  wcsstr rva: 0002873E ord:1487
+  wcstombs rva: 00074904 ord:1488
+  wctomb rva: 0002F2AA ord:1489
