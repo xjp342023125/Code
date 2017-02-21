@@ -1,0 +1,12 @@
+ulimit -a:查看系统的一些限制
+ulimit -c unlimited 不限制core文件大小
+
+
+signal 11:崩溃时，空指针和数组越界都是
+Program terminated with signal 11, Segmentation fault.
+
+signal 8:除0是 
+Program terminated with signal 8, Arithmetic exception.
+
+signal 6:new 很大的内存
+Program terminated with signal 6, Aborted.

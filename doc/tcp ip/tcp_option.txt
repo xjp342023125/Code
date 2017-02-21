@@ -1,0 +1,2 @@
+1 mss
+MSS option. With this option, the TCP sending the SYN announces its maximum segment size, the maximum amount of data that it is willing to accept in each TCP segment, on this connection. 

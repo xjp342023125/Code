@@ -1,0 +1,47 @@
+1 派生类中虚函数的声明（第 7.4 节）必须与基类中的定义方式完全匹配，但有一个例外：返回对基类型的引用（或指针）的虚函数。派生类中的虚函数可以返回基类函数所返回类型的派生类的引用（或指针）。
+
+2C++ 中的函数调用默认不使用动态绑定。要触发动态绑定，满足两个条件：
+第一，只有指定为虚函数的成员函数才能进行动态绑定，成员函数默认为非虚函
+数，非虚函数不进行动态绑定；第二，必须通过基类类型的引用或指针进行函数
+调用。要理解这一要求，需要理解在使用继承层次中某一类型的对象的引用或指
+针时会发生什么。 
+
+3像其他任何函数一样，虚函数也可以有默认实参。通常，如果有用在给定调
+用中的默认实参值，该值将在编译时确定。如果一个调用省略了具有默认值的实
+参，则所用的值由调用该函数的类型定义，与对象的动态类型无关。通过基类的
+引用或指针调用虚函数时，默认实参为在基类虚函数声明中指定的值，如果通过
+派生类的指针或引用调用虚函数，则默认实参是在派生类的版本中声明的值。
+
+4? 如果是公用继承， 基类成员保持自己的访问级别： 基类的 public 成员为
+派生类的 public 成员，基类的 protected 成员为派生类的 protected 
+成员。 
+? 如果是受保护继承，基类的 public 和 protected 成员在派生类中为 
+protected 成员。 
+? 如果是私有继承，基类的的所有成员在派生类中为 private 成员。
+
+5
+友元关系不能继承。基类的友元对派生类的成员没有特殊访问
+权限。如果基类被授予友元关系，则只有基类具有特殊访问权
+限，该基类的派生类不能访问授予友元关系的类。 
+class Base { 
+         friend class Frnd; 
+     protected: 
+         int i; 
+     }; 
+     // Frnd has no access to members in D1 
+     class D1 : public Base { 
+     protected: 
+         int j; 
+     }; 
+     class Frnd { 
+     public: 
+        int mem(Base b) { return b.i; }  // ok: Frnd is friend to Base 
+        int mem(D1 d) { return d.i; }    // error: friendship doesn't 
+inherit 
+     }; 
+     // D2 has no access to members in Base 
+     class D2 : public Frnd { 
+     public: 
+        int mem(Base b) { return b.i; } // error: friendship doesn't 
+inherit 
+     }; 

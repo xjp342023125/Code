@@ -1,0 +1,10 @@
+	for(con_set_t::iterator it = m_connection_set.begin(); it != m_connection_set.end(); )
+	{
+		if(0 == ret && WSAGetLastError() != 10035)
+		{
+			m_connection_set.erase(it++);
+		}else
+		{
+			++it;
+		}
+	}

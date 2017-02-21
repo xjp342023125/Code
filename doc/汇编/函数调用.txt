@@ -1,0 +1,34 @@
+push A
+1 esp = esp-4
+2 [esp]=A
+
+pop A
+1 A=[esp]
+2 esp=esp+4
+
+call A1
+1 push ret_addr
+2 jmp A
+ret
+1 pop ret_addr
+2 jmp ret_addr
+
+func
+{
+现在
+[esp]＝返回地址
+[esp+4]=一些参数
+
+ push        ebp  
+ mov         ebp,esp 
+ sub         esp,8 局部变量
+ 
+现在
+[ebp]=call 之前ebp
+[ebp+4]返回地址
+[ebp+8]一些参数
+[ebp-4]局部变量.........
+ 
+ pop         ebp  
+ ret
+}

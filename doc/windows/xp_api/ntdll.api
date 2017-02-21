@@ -1,0 +1,1326 @@
+		按 "ESC" 键关闭该窗口：）       
+
+模块名称：ntdll.dll 
+更多
+	TimeDateStamp: 4D00DBBF
+	版本： 0.00  
+	原始基址： 00000001   
+	函数编号： 00000524          
+	名称编号： 00000524      
+	
+  PropertyLengthAsVariant rva: 0005A293 ord:   1
+  RtlConvertPropertyToVariant rva: 0005A1FB ord:   2
+  RtlConvertVariantToProperty rva: 0005A15D ord:   3
+  RtlInterlockedPushListSList rva: 00002AD0 ord:   4
+  RtlUlongByteSwap rva: 00002B30 ord:   5
+  RtlUlonglongByteSwap rva: 00002B40 ord:   6
+  RtlUshortByteSwap rva: 00002B20 ord:   7
+  CsrAllocateCaptureBuffer rva: 0001D5A0 ord:   8
+  CsrAllocateMessagePointer rva: 0001D601 ord:   9
+  CsrCaptureMessageBuffer rva: 00024D47 ord:  10
+  CsrCaptureMessageMultiUnicodeStringsInPlace rva: 0001F075 ord:  11
+  CsrCaptureMessageString rva: 0001F136 ord:  12
+  CsrCaptureTimeout rva: 00051F43 ord:  13
+  CsrClientCallServer rva: 00012241 ord:  14
+  CsrClientConnectToServer rva: 0001FC2F ord:  15
+  CsrFreeCaptureBuffer rva: 0001D547 ord:  16
+  CsrGetProcessId rva: 00051F38 ord:  17
+  CsrIdentifyAlertableThread rva: 00051EB3 ord:  18
+  CsrNewThread rva: 00019982 ord:  19
+  CsrProbeForRead rva: 00051FC4 ord:  20
+  CsrProbeForWrite rva: 00051F76 ord:  21
+  CsrSetPriorityClass rva: 00051EEF ord:  22
+  DbgBreakPoint rva: 0000120E ord:  23
+  DbgPrint rva: 00031076 ord:  24
+  DbgPrintEx rva: 0001D51D ord:  25
+  DbgPrintReturnControlC rva: 0005A41A ord:  26
+  DbgPrompt rva: 0005A509 ord:  27
+  DbgQueryDebugFilterState rva: 0005A54F ord:  28
+  DbgSetDebugFilterState rva: 0005A55F ord:  29
+  DbgUiConnectToDbg rva: 00051FFA ord:  30
+  DbgUiContinue rva: 000520A5 ord:  31
+  DbgUiConvertStateChangeStructure rva: 000521CC ord:  32
+  DbgUiDebugActiveProcess rva: 0005218A ord:  33
+  DbgUiGetThreadDebugObject rva: 0005204F ord:  34
+  DbgUiIssueRemoteBreakin rva: 00052149 ord:  35
+  DbgUiRemoteBreakin rva: 000520EC ord:  36
+  DbgUiSetThreadDebugObject rva: 00052061 ord:  37
+  DbgUiStopDebugging rva: 000520CA ord:  38
+  DbgUiWaitStateChange rva: 0005207E ord:  39
+  DbgUserBreakPoint rva: 00001212 ord:  40
+  KiFastSystemCall rva: 0000E510 ord:  41
+  KiFastSystemCallRet rva: 0000E514 ord:  42
+  KiIntSystemCall rva: 0000E520 ord:  43
+  KiRaiseUserExceptionDispatcher rva: 0000E4C8 ord:  44
+  KiUserApcDispatcher rva: 0000E450 ord:  45
+  KiUserCallbackDispatcher rva: 0000E460 ord:  46
+  KiUserExceptionDispatcher rva: 0000E47C ord:  47
+  LdrAccessOutOfProcessResource rva: 0001F3E0 ord:  48
+  LdrAccessResource rva: 00011DC0 ord:  49
+  LdrAddRefDll rva: 0002B0BD ord:  50
+  LdrAlternateResourcesEnabled rva: 0004873F ord:  51
+  LdrCreateOutOfProcessImage rva: 0001EBEB ord:  52
+  LdrDestroyOutOfProcessImage rva: 0001ED05 ord:  53
+  LdrDisableThreadCalloutsForDll rva: 0001C7B2 ord:  54
+  LdrEnumResources rva: 0005A678 ord:  55
+  LdrEnumerateLoadedModules rva: 0001FE2E ord:  56
+  LdrFindCreateProcessManifest rva: 0001E84D ord:  57
+  LdrFindEntryForAddress rva: 0005A5E3 ord:  58
+  LdrFindResourceDirectory_U rva: 0001B345 ord:  59
+  LdrFindResourceEx_U rva: 0005B3A6 ord:  60
+  LdrFindResource_U rva: 00011D9F ord:  61
+  LdrFlushAlternateResourceModules rva: 000301E4 ord:  62
+  LdrGetDllHandle rva: 00016A02 ord:  63
+  LdrGetDllHandleEx rva: 00016A23 ord:  64
+  LdrGetProcedureAddress rva: 00017CF0 ord:  65
+  LdrHotPatchRoutine rva: 000524B6 ord:  66
+  LdrInitShimEngineDynamic rva: 00052F9A ord:  67
+  LdrInitializeThunk rva: 00001166 ord:  68
+  LdrLoadAlternateResourceModule rva: 00011E20 ord:  69
+  LdrLoadDll rva: 0001632D ord:  70
+  LdrLockLoaderLock rva: 00012113 ord:  71
+  LdrProcessRelocationBlock rva: 0005BA94 ord:  72
+  LdrQueryImageFileExecutionOptions rva: 0001BD83 ord:  73
+  LdrQueryProcessModuleInformation rva: 00052D09 ord:  74
+  LdrSetAppCompatDllRedirectionCallback rva: 00052D29 ord:  75
+  LdrSetDllManifestProber rva: 000204B3 ord:  76
+  LdrShutdownProcess rva: 000225C8 ord:  77
+  LdrShutdownThread rva: 0001388E ord:  78
+  LdrUnloadAlternateResourceModule rva: 00026A39 ord:  79
+  LdrUnloadDll rva: 000171CD ord:  80
+  LdrUnlockLoaderLock rva: 000121C9 ord:  81
+  LdrVerifyImageMatchesChecksum rva: 00031F74 ord:  82
+  NlsAnsiCodePage rva: 0007E098 ord:  83
+  NlsMbCodePageTag rva: 0007E0A0 ord:  84
+  NlsMbOemCodePageTag rva: 0007E0A8 ord:  85
+  NtAcceptConnectPort rva: 0000CE5E ord:  86
+  NtAccessCheck rva: 0000CE6E ord:  87
+  NtAccessCheckAndAuditAlarm rva: 0000CE7E ord:  88
+  NtAccessCheckByType rva: 0000CE8E ord:  89
+  NtAccessCheckByTypeAndAuditAlarm rva: 0000CE9E ord:  90
+  NtAccessCheckByTypeResultList rva: 0000CEAE ord:  91
+  NtAccessCheckByTypeResultListAndAuditAlarm rva: 0000CEBE ord:  92
+  NtAccessCheckByTypeResultListAndAuditAlarmByHandle rva: 0000CECE ord:  93
+  NtAddAtom rva: 0000CEDE ord:  94
+  NtAddBootEntry rva: 0000CEEE ord:  95
+  NtAdjustGroupsToken rva: 0000CEFE ord:  96
+  NtAdjustPrivilegesToken rva: 0000CF0E ord:  97
+  NtAlertResumeThread rva: 0000CF1E ord:  98
+  NtAlertThread rva: 0000CF2E ord:  99
+  NtAllocateLocallyUniqueId rva: 0000CF3E ord: 100
+  NtAllocateUserPhysicalPages rva: 0000CF4E ord: 101
+  NtAllocateUuids rva: 0000CF5E ord: 102
+  NtAllocateVirtualMemory rva: 0000CF6E ord: 103
+  NtAreMappedFilesTheSame rva: 0000CF7E ord: 104
+  NtAssignProcessToJobObject rva: 0000CF8E ord: 105
+  NtCallbackReturn rva: 0000CF9E ord: 106
+  NtCancelDeviceWakeupRequest rva: 0000CFAE ord: 107
+  NtCancelIoFile rva: 0000CFBE ord: 108
+  NtCancelTimer rva: 0000CFCE ord: 109
+  NtClearEvent rva: 0000CFDE ord: 110
+  NtClose rva: 0000CFEE ord: 111
+  NtCloseObjectAuditAlarm rva: 0000CFFE ord: 112
+  NtCompactKeys rva: 0000D00E ord: 113
+  NtCompareTokens rva: 0000D01E ord: 114
+  NtCompleteConnectPort rva: 0000D02E ord: 115
+  NtCompressKey rva: 0000D03E ord: 116
+  NtConnectPort rva: 0000D04E ord: 117
+  NtContinue rva: 0000D05E ord: 118
+  NtCreateDebugObject rva: 0000D06E ord: 119
+  NtCreateDirectoryObject rva: 0000D07E ord: 120
+  NtCreateEvent rva: 0000D08E ord: 121
+  NtCreateEventPair rva: 0000D09E ord: 122
+  NtCreateFile rva: 0000D0AE ord: 123
+  NtCreateIoCompletion rva: 0000D0BE ord: 124
+  NtCreateJobObject rva: 0000D0CE ord: 125
+  NtCreateJobSet rva: 0000D0DE ord: 126
+  NtCreateKey rva: 0000D0EE ord: 127
+  NtCreateKeyedEvent rva: 0000DFCE ord: 128
+  NtCreateMailslotFile rva: 0000D0FE ord: 129
+  NtCreateMutant rva: 0000D10E ord: 130
+  NtCreateNamedPipeFile rva: 0000D11E ord: 131
+  NtCreatePagingFile rva: 0000D12E ord: 132
+  NtCreatePort rva: 0000D13E ord: 133
+  NtCreateProcess rva: 0000D14E ord: 134
+  NtCreateProcessEx rva: 0000D15E ord: 135
+  NtCreateProfile rva: 0000D16E ord: 136
+  NtCreateSection rva: 0000D17E ord: 137
+  NtCreateSemaphore rva: 0000D18E ord: 138
+  NtCreateSymbolicLinkObject rva: 0000D19E ord: 139
+  NtCreateThread rva: 0000D1AE ord: 140
+  NtCreateTimer rva: 0000D1BE ord: 141
+  NtCreateToken rva: 0000D1CE ord: 142
+  NtCreateWaitablePort rva: 0000D1DE ord: 143
+  NtCurrentTeb rva: 0000121E ord: 144
+  NtDebugActiveProcess rva: 0000D1EE ord: 145
+  NtDebugContinue rva: 0000D1FE ord: 146
+  NtDelayExecution rva: 0000D20E ord: 147
+  NtDeleteAtom rva: 0000D21E ord: 148
+  NtDeleteBootEntry rva: 0000D22E ord: 149
+  NtDeleteFile rva: 0000D23E ord: 150
+  NtDeleteKey rva: 0000D24E ord: 151
+  NtDeleteObjectAuditAlarm rva: 0000D25E ord: 152
+  NtDeleteValueKey rva: 0000D26E ord: 153
+  NtDeviceIoControlFile rva: 0000D27E ord: 154
+  NtDisplayString rva: 0000D28E ord: 155
+  NtDuplicateObject rva: 0000D29E ord: 156
+  NtDuplicateToken rva: 0000D2AE ord: 157
+  NtEnumerateBootEntries rva: 0000D2BE ord: 158
+  NtEnumerateKey rva: 0000D2CE ord: 159
+  NtEnumerateSystemEnvironmentValuesEx rva: 0000D2DE ord: 160
+  NtEnumerateValueKey rva: 0000D2EE ord: 161
+  NtExtendSection rva: 0000D2FE ord: 162
+  NtFilterToken rva: 0000D30E ord: 163
+  NtFindAtom rva: 0000D31E ord: 164
+  NtFlushBuffersFile rva: 0000D32E ord: 165
+  NtFlushInstructionCache rva: 0000D33E ord: 166
+  NtFlushKey rva: 0000D34E ord: 167
+  NtFlushVirtualMemory rva: 0000D35E ord: 168
+  NtFlushWriteBuffer rva: 0000D36E ord: 169
+  NtFreeUserPhysicalPages rva: 0000D37E ord: 170
+  NtFreeVirtualMemory rva: 0000D38E ord: 171
+  NtFsControlFile rva: 0000D39E ord: 172
+  NtGetContextThread rva: 0000D3AE ord: 173
+  NtGetDevicePowerState rva: 0000D3BE ord: 174
+  NtGetPlugPlayEvent rva: 0000D3CE ord: 175
+  NtGetWriteWatch rva: 0000D3DE ord: 176
+  NtImpersonateAnonymousToken rva: 0000D3EE ord: 177
+  NtImpersonateClientOfPort rva: 0000D3FE ord: 178
+  NtImpersonateThread rva: 0000D40E ord: 179
+  NtInitializeRegistry rva: 0000D41E ord: 180
+  NtInitiatePowerAction rva: 0000D42E ord: 181
+  NtIsProcessInJob rva: 0000D43E ord: 182
+  NtIsSystemResumeAutomatic rva: 0000D44E ord: 183
+  NtListenPort rva: 0000D45E ord: 184
+  NtLoadDriver rva: 0000D46E ord: 185
+  NtLoadKey2 rva: 0000D48E ord: 186
+  NtLoadKey rva: 0000D47E ord: 187
+  NtLockFile rva: 0000D49E ord: 188
+  NtLockProductActivationKeys rva: 0000D4AE ord: 189
+  NtLockRegistryKey rva: 0000D4BE ord: 190
+  NtLockVirtualMemory rva: 0000D4CE ord: 191
+  NtMakePermanentObject rva: 0000D4DE ord: 192
+  NtMakeTemporaryObject rva: 0000D4EE ord: 193
+  NtMapUserPhysicalPages rva: 0000D4FE ord: 194
+  NtMapUserPhysicalPagesScatter rva: 0000D50E ord: 195
+  NtMapViewOfSection rva: 0000D51E ord: 196
+  NtModifyBootEntry rva: 0000D52E ord: 197
+  NtNotifyChangeDirectoryFile rva: 0000D53E ord: 198
+  NtNotifyChangeKey rva: 0000D54E ord: 199
+  NtNotifyChangeMultipleKeys rva: 0000D55E ord: 200
+  NtOpenDirectoryObject rva: 0000D56E ord: 201
+  NtOpenEvent rva: 0000D57E ord: 202
+  NtOpenEventPair rva: 0000D58E ord: 203
+  NtOpenFile rva: 0000D59E ord: 204
+  NtOpenIoCompletion rva: 0000D5AE ord: 205
+  NtOpenJobObject rva: 0000D5BE ord: 206
+  NtOpenKey rva: 0000D5CE ord: 207
+  NtOpenKeyedEvent rva: 0000DFDE ord: 208
+  NtOpenMutant rva: 0000D5DE ord: 209
+  NtOpenObjectAuditAlarm rva: 0000D5EE ord: 210
+  NtOpenProcess rva: 0000D5FE ord: 211
+  NtOpenProcessToken rva: 0000D60E ord: 212
+  NtOpenProcessTokenEx rva: 0000D61E ord: 213
+  NtOpenSection rva: 0000D62E ord: 214
+  NtOpenSemaphore rva: 0000D63E ord: 215
+  NtOpenSymbolicLinkObject rva: 0000D64E ord: 216
+  NtOpenThread rva: 0000D65E ord: 217
+  NtOpenThreadToken rva: 0000D66E ord: 218
+  NtOpenThreadTokenEx rva: 0000D67E ord: 219
+  NtOpenTimer rva: 0000D68E ord: 220
+  NtPlugPlayControl rva: 0000D69E ord: 221
+  NtPowerInformation rva: 0000D6AE ord: 222
+  NtPrivilegeCheck rva: 0000D6BE ord: 223
+  NtPrivilegeObjectAuditAlarm rva: 0000D6CE ord: 224
+  NtPrivilegedServiceAuditAlarm rva: 0000D6DE ord: 225
+  NtProtectVirtualMemory rva: 0000D6EE ord: 226
+  NtPulseEvent rva: 0000D6FE ord: 227
+  NtQueryAttributesFile rva: 0000D70E ord: 228
+  NtQueryBootEntryOrder rva: 0000D71E ord: 229
+  NtQueryBootOptions rva: 0000D72E ord: 230
+  NtQueryDebugFilterState rva: 0000D73E ord: 231
+  NtQueryDefaultLocale rva: 0000D74E ord: 232
+  NtQueryDefaultUILanguage rva: 0000D75E ord: 233
+  NtQueryDirectoryFile rva: 0000D76E ord: 234
+  NtQueryDirectoryObject rva: 0000D77E ord: 235
+  NtQueryEaFile rva: 0000D78E ord: 236
+  NtQueryEvent rva: 0000D79E ord: 237
+  NtQueryFullAttributesFile rva: 0000D7AE ord: 238
+  NtQueryInformationAtom rva: 0000D7BE ord: 239
+  NtQueryInformationFile rva: 0000D7CE ord: 240
+  NtQueryInformationJobObject rva: 0000D7DE ord: 241
+  NtQueryInformationPort rva: 0000D7EE ord: 242
+  NtQueryInformationProcess rva: 0000D7FE ord: 243
+  NtQueryInformationThread rva: 0000D80E ord: 244
+  NtQueryInformationToken rva: 0000D81E ord: 245
+  NtQueryInstallUILanguage rva: 0000D82E ord: 246
+  NtQueryIntervalProfile rva: 0000D83E ord: 247
+  NtQueryIoCompletion rva: 0000D84E ord: 248
+  NtQueryKey rva: 0000D85E ord: 249
+  NtQueryMultipleValueKey rva: 0000D86E ord: 250
+  NtQueryMutant rva: 0000D87E ord: 251
+  NtQueryObject rva: 0000D88E ord: 252
+  NtQueryOpenSubKeys rva: 0000D89E ord: 253
+  NtQueryPerformanceCounter rva: 0000D8AE ord: 254
+  NtQueryPortInformationProcess rva: 0000E00E ord: 255
+  NtQueryQuotaInformationFile rva: 0000D8BE ord: 256
+  NtQuerySection rva: 0000D8CE ord: 257
+  NtQuerySecurityObject rva: 0000D8DE ord: 258
+  NtQuerySemaphore rva: 0000D8EE ord: 259
+  NtQuerySymbolicLinkObject rva: 0000D8FE ord: 260
+  NtQuerySystemEnvironmentValue rva: 0000D90E ord: 261
+  NtQuerySystemEnvironmentValueEx rva: 0000D91E ord: 262
+  NtQuerySystemInformation rva: 0000D92E ord: 263
+  NtQuerySystemTime rva: 0000D93E ord: 264
+  NtQueryTimer rva: 0000D94E ord: 265
+  NtQueryTimerResolution rva: 0000D95E ord: 266
+  NtQueryValueKey rva: 0000D96E ord: 267
+  NtQueryVirtualMemory rva: 0000D97E ord: 268
+  NtQueryVolumeInformationFile rva: 0000D98E ord: 269
+  NtQueueApcThread rva: 0000D99E ord: 270
+  NtRaiseException rva: 0000D9AE ord: 271
+  NtRaiseHardError rva: 0000D9BE ord: 272
+  NtReadFile rva: 0000D9CE ord: 273
+  NtReadFileScatter rva: 0000D9DE ord: 274
+  NtReadRequestData rva: 0000D9EE ord: 275
+  NtReadVirtualMemory rva: 0000D9FE ord: 276
+  NtRegisterThreadTerminatePort rva: 0000DA0E ord: 277
+  NtReleaseKeyedEvent rva: 0000DFEE ord: 278
+  NtReleaseMutant rva: 0000DA1E ord: 279
+  NtReleaseSemaphore rva: 0000DA2E ord: 280
+  NtRemoveIoCompletion rva: 0000DA3E ord: 281
+  NtRemoveProcessDebug rva: 0000DA4E ord: 282
+  NtRenameKey rva: 0000DA5E ord: 283
+  NtReplaceKey rva: 0000DA6E ord: 284
+  NtReplyPort rva: 0000DA7E ord: 285
+  NtReplyWaitReceivePort rva: 0000DA8E ord: 286
+  NtReplyWaitReceivePortEx rva: 0000DA9E ord: 287
+  NtReplyWaitReplyPort rva: 0000DAAE ord: 288
+  NtRequestDeviceWakeup rva: 0000DABE ord: 289
+  NtRequestPort rva: 0000DACE ord: 290
+  NtRequestWaitReplyPort rva: 0000DADE ord: 291
+  NtRequestWakeupLatency rva: 0000DAEE ord: 292
+  NtResetEvent rva: 0000DAFE ord: 293
+  NtResetWriteWatch rva: 0000DB0E ord: 294
+  NtRestoreKey rva: 0000DB1E ord: 295
+  NtResumeProcess rva: 0000DB2E ord: 296
+  NtResumeThread rva: 0000DB3E ord: 297
+  NtSaveKey rva: 0000DB4E ord: 298
+  NtSaveKeyEx rva: 0000DB5E ord: 299
+  NtSaveMergedKeys rva: 0000DB6E ord: 300
+  NtSecureConnectPort rva: 0000DB7E ord: 301
+  NtSetBootEntryOrder rva: 0000DB8E ord: 302
+  NtSetBootOptions rva: 0000DB9E ord: 303
+  NtSetContextThread rva: 0000DBAE ord: 304
+  NtSetDebugFilterState rva: 0000DBBE ord: 305
+  NtSetDefaultHardErrorPort rva: 0000DBCE ord: 306
+  NtSetDefaultLocale rva: 0000DBDE ord: 307
+  NtSetDefaultUILanguage rva: 0000DBEE ord: 308
+  NtSetEaFile rva: 0000DBFE ord: 309
+  NtSetEvent rva: 0000DC0E ord: 310
+  NtSetEventBoostPriority rva: 0000DC1E ord: 311
+  NtSetHighEventPair rva: 0000DC2E ord: 312
+  NtSetHighWaitLowEventPair rva: 0000DC3E ord: 313
+  NtSetInformationDebugObject rva: 0000DC4E ord: 314
+  NtSetInformationFile rva: 0000DC5E ord: 315
+  NtSetInformationJobObject rva: 0000DC6E ord: 316
+  NtSetInformationKey rva: 0000DC7E ord: 317
+  NtSetInformationObject rva: 0000DC8E ord: 318
+  NtSetInformationProcess rva: 0000DC9E ord: 319
+  NtSetInformationThread rva: 0000DCAE ord: 320
+  NtSetInformationToken rva: 0000DCBE ord: 321
+  NtSetIntervalProfile rva: 0000DCCE ord: 322
+  NtSetIoCompletion rva: 0000DCDE ord: 323
+  NtSetLdtEntries rva: 0000DCEE ord: 324
+  NtSetLowEventPair rva: 0000DCFE ord: 325
+  NtSetLowWaitHighEventPair rva: 0000DD0E ord: 326
+  NtSetQuotaInformationFile rva: 0000DD1E ord: 327
+  NtSetSecurityObject rva: 0000DD2E ord: 328
+  NtSetSystemEnvironmentValue rva: 0000DD3E ord: 329
+  NtSetSystemEnvironmentValueEx rva: 0000DD4E ord: 330
+  NtSetSystemInformation rva: 0000DD5E ord: 331
+  NtSetSystemPowerState rva: 0000DD6E ord: 332
+  NtSetSystemTime rva: 0000DD7E ord: 333
+  NtSetThreadExecutionState rva: 0000DD8E ord: 334
+  NtSetTimer rva: 0000DD9E ord: 335
+  NtSetTimerResolution rva: 0000DDAE ord: 336
+  NtSetUuidSeed rva: 0000DDBE ord: 337
+  NtSetValueKey rva: 0000DDCE ord: 338
+  NtSetVolumeInformationFile rva: 0000DDDE ord: 339
+  NtShutdownSystem rva: 0000DDEE ord: 340
+  NtSignalAndWaitForSingleObject rva: 0000DDFE ord: 341
+  NtStartProfile rva: 0000DE0E ord: 342
+  NtStopProfile rva: 0000DE1E ord: 343
+  NtSuspendProcess rva: 0000DE2E ord: 344
+  NtSuspendThread rva: 0000DE3E ord: 345
+  NtSystemDebugControl rva: 0000DE4E ord: 346
+  NtTerminateJobObject rva: 0000DE5E ord: 347
+  NtTerminateProcess rva: 0000DE6E ord: 348
+  NtTerminateThread rva: 0000DE7E ord: 349
+  NtTestAlert rva: 0000DE8E ord: 350
+  NtTraceEvent rva: 0000DE9E ord: 351
+  NtTranslateFilePath rva: 0000DEAE ord: 352
+  NtUnloadDriver rva: 0000DEBE ord: 353
+  NtUnloadKey rva: 0000DECE ord: 354
+  NtUnloadKeyEx rva: 0000DEDE ord: 355
+  NtUnlockFile rva: 0000DEEE ord: 356
+  NtUnlockVirtualMemory rva: 0000DEFE ord: 357
+  NtUnmapViewOfSection rva: 0000DF0E ord: 358
+  NtVdmControl rva: 0000DF1E ord: 359
+  NtWaitForDebugEvent rva: 0000DF2E ord: 360
+  NtWaitForKeyedEvent rva: 0000DFFE ord: 361
+  NtWaitForMultipleObjects rva: 0000DF3E ord: 362
+  NtWaitForSingleObject rva: 0000DF4E ord: 363
+  NtWaitHighEventPair rva: 0000DF5E ord: 364
+  NtWaitLowEventPair rva: 0000DF6E ord: 365
+  NtWriteFile rva: 0000DF7E ord: 366
+  NtWriteFileGather rva: 0000DF8E ord: 367
+  NtWriteRequestData rva: 0000DF9E ord: 368
+  NtWriteVirtualMemory rva: 0000DFAE ord: 369
+  NtYieldExecution rva: 0000DFBE ord: 370
+  PfxFindPrefix rva: 0005CA01 ord: 371
+  PfxInitialize rva: 0005C6B9 ord: 372
+  PfxInsertPrefix rva: 0005C91E ord: 373
+  PfxRemovePrefix rva: 0005C6D7 ord: 374
+  RtlAbortRXact rva: 0002BF11 ord: 375
+  RtlAbsoluteToSelfRelativeSD rva: 0002A27D ord: 376
+  RtlAcquirePebLock rva: 0001040D ord: 377
+  RtlAcquireResourceExclusive rva: 000286AE ord: 378
+  RtlAcquireResourceShared rva: 000285D7 ord: 379
+  RtlActivateActivationContext rva: 0001764B ord: 380
+  RtlActivateActivationContextEx rva: 000174C5 ord: 381
+  RtlActivateActivationContextUnsafeFast rva: 00001198 ord: 382
+  RtlAddAccessAllowedAce rva: 00025E43 ord: 383
+  RtlAddAccessAllowedAceEx rva: 0002A2AD ord: 384
+  RtlAddAccessAllowedObjectAce rva: 0005CE0B ord: 385
+  RtlAddAccessDeniedAce rva: 0002F419 ord: 386
+  RtlAddAccessDeniedAceEx rva: 0005CDAF ord: 387
+  RtlAddAccessDeniedObjectAce rva: 0005CE58 ord: 388
+  RtlAddAce rva: 0002B531 ord: 389
+  RtlAddActionToRXact rva: 0002F8D5 ord: 390
+  RtlAddAtomToAtomTable rva: 000349D2 ord: 391
+  RtlAddAttributeActionToRXact rva: 0002F677 ord: 392
+  RtlAddAuditAccessAce rva: 00031533 ord: 393
+  RtlAddAuditAccessAceEx rva: 0005CDD3 ord: 394
+  RtlAddAuditAccessObjectAce rva: 0005CEA6 ord: 395
+  RtlAddCompoundAce rva: 0005CB6B ord: 396
+  RtlAddRange rva: 0005DDFE ord: 397
+  RtlAddRefActivationContext rva: 0000FBD2 ord: 398
+  RtlAddRefMemoryStream rva: 0001EFC9 ord: 399
+  RtlAddVectoredExceptionHandler rva: 00036A72 ord: 400
+  RtlAddressInSectionTable rva: 00012FC4 ord: 401
+  RtlAdjustPrivilege rva: 0002A2D1 ord: 402
+  RtlAllocateAndInitializeSid rva: 00025E93 ord: 403
+  RtlAllocateHandle rva: 0001826D ord: 404
+  RtlAllocateHeap rva: 000100C4 ord: 405
+  RtlAnsiCharToUnicodeChar rva: 00018031 ord: 406
+  RtlAnsiStringToUnicodeSize rva: 0005FA30 ord: 407
+  RtlAnsiStringToUnicodeString rva: 0000EB3B ord: 408
+  RtlAppendAsciizToString rva: 0005FD9A ord: 409
+  RtlAppendPathElement rva: 0001C5BD ord: 410
+  RtlAppendStringToString rva: 0005FDF5 ord: 411
+  RtlAppendUnicodeStringToString rva: 00014F0F ord: 412
+  RtlAppendUnicodeToString rva: 00014E9A ord: 413
+  RtlApplicationVerifierStop rva: 00056C4D ord: 414
+  RtlApplyRXact rva: 0002F852 ord: 415
+  RtlApplyRXactNoFlush rva: 00030280 ord: 416
+  RtlAreAllAccessesGranted rva: 00028663 ord: 417
+  RtlAreAnyAccessesGranted rva: 00037F6C ord: 418
+  RtlAreBitsClear rva: 0006041F ord: 419
+  RtlAreBitsSet rva: 00025AC7 ord: 420
+  RtlAssert2 rva: 000607F3 ord: 421
+  RtlAssert rva: 00060A01 ord: 422
+  RtlCancelTimer rva: 00060C49 ord: 423
+  RtlCaptureContext rva: 0000331A ord: 424
+  RtlCaptureStackBackTrace rva: 00060F09 ord: 425
+  RtlCaptureStackContext rva: 00060E09 ord: 426
+  RtlCharToInteger rva: 00033E6D ord: 427
+  RtlCheckForOrphanedCriticalSections rva: 000139EB ord: 428
+  RtlCheckProcessParameters rva: 000316CD ord: 429
+  RtlCheckRegistryKey rva: 00030FBA ord: 430
+  RtlClearAllBits rva: 0002C8F2 ord: 431
+  RtlClearBits rva: 00025A81 ord: 432
+  RtlCloneMemoryStream rva: 00053C73 ord: 433
+  RtlCommitMemoryStream rva: 00053C73 ord: 434
+  RtlCompactHeap rva: 0003601E ord: 435
+  RtlCompareMemory rva: 00002B53 ord: 436
+  RtlCompareMemoryUlong rva: 00002BA3 ord: 437
+  RtlCompareString rva: 0005FCBE ord: 438
+  RtlCompareUnicodeString rva: 000177F0 ord: 439
+  RtlCompressBuffer rva: 00063795 ord: 440
+  RtlComputeCrc32 rva: 000639D9 ord: 441
+  RtlComputeImportTableHash rva: 00059C37 ord: 442
+  RtlComputePrivatizedDllName_U rva: 00053861 ord: 443
+  RtlConsoleMultiByteToUnicodeN rva: 00023895 ord: 444
+  RtlConvertExclusiveToShared rva: 0002B1C8 ord: 445
+  RtlConvertLongToLargeInteger rva: 00003236 ord: 446
+  RtlConvertSharedToExclusive rva: 0002B186 ord: 447
+  RtlConvertSidToUnicodeString rva: 00014BB5 ord: 448
+  RtlConvertToAutoInheritSecurityObject rva: 00054226 ord: 449
+  RtlConvertUiListToApiList rva: 00054538 ord: 450
+  RtlConvertUlongToLargeInteger rva: 0000323E ord: 451
+  RtlCopyLuid rva: 00012F8E ord: 452
+  RtlCopyLuidAndAttributesArray rva: 0005E32B ord: 453
+  RtlCopyMemoryStreamTo rva: 00053BE5 ord: 454
+  RtlCopyOutOfProcessMemoryStreamTo rva: 00053C66 ord: 455
+  RtlCopyRangeList rva: 0005D615 ord: 456
+  RtlCopySecurityDescriptor rva: 0002CB0B ord: 457
+  RtlCopySid rva: 00017F7A ord: 458
+  RtlCopySidAndAttributesArray rva: 0005E169 ord: 459
+  RtlCopyString rva: 0002EC37 ord: 460
+  RtlCopyUnicodeString rva: 00014E39 ord: 461
+  RtlCreateAcl rva: 00025DF1 ord: 462
+  RtlCreateActivationContext rva: 0001F4FD ord: 463
+  RtlCreateAndSetSD rva: 00030379 ord: 464
+  RtlCreateAtomTable rva: 00034BC2 ord: 465
+  RtlCreateBootStatusDataFile rva: 00063E15 ord: 466
+  RtlCreateEnvironment rva: 0002B051 ord: 467
+  RtlCreateHeap rva: 00025045 ord: 468
+  RtlCreateProcessParameters rva: 0002188B ord: 469
+  RtlCreateQueryDebugBuffer rva: 00054AD8 ord: 470
+  RtlCreateRegistryKey rva: 00061BE1 ord: 471
+  RtlCreateSecurityDescriptor rva: 00025C59 ord: 472
+  RtlCreateServiceSid rva: 0005E1FD ord: 473
+  RtlCreateSystemVolumeInformationFolder rva: 000645E1 ord: 474
+  RtlCreateTagHeap rva: 000204E8 ord: 475
+  RtlCreateTimer rva: 0002E495 ord: 476
+  RtlCreateTimerQueue rva: 0002F331 ord: 477
+  RtlCreateUnicodeString rva: 000183BB ord: 478
+  RtlCreateUnicodeStringFromAsciiz rva: 00012F19 ord: 479
+  RtlCreateUserProcess rva: 00031AB1 ord: 480
+  RtlCreateUserSecurityObject rva: 00030301 ord: 481
+  RtlCreateUserThread rva: 0003232E ord: 482
+  RtlCustomCPToUnicodeN rva: 0005BAB6 ord: 483
+  RtlCutoverTimeToSystemTime rva: 00033A7F ord: 484
+  RtlDeNormalizeProcessParams rva: 000217DD ord: 485
+  RtlDeactivateActivationContext rva: 00017727 ord: 486
+  RtlDeactivateActivationContextUnsafeFast rva: 000011DD ord: 487
+  RtlDebugPrintTimes rva: 00060A64 ord: 488
+  RtlDecodePointer rva: 000132FF ord: 489
+  RtlDecodeSystemPointer rva: 000262A5 ord: 490
+  RtlDecompressBuffer rva: 00063811 ord: 491
+  RtlDecompressFragment rva: 0006387D ord: 492
+  RtlDefaultNpAcl rva: 00054236 ord: 493
+  RtlDelete rva: 000236D1 ord: 494
+  RtlDeleteAce rva: 00037F99 ord: 495
+  RtlDeleteAtomFromAtomTable rva: 00034326 ord: 496
+  RtlDeleteCriticalSection rva: 0001137A ord: 497
+  RtlDeleteElementGenericTable rva: 00023670 ord: 498
+  RtlDeleteElementGenericTableAvl rva: 00064F34 ord: 499
+  RtlDeleteNoSplay rva: 0006494C ord: 500
+  RtlDeleteOwnersRanges rva: 0005DFC6 ord: 501
+  RtlDeleteRange rva: 0005DE89 ord: 502
+  RtlDeleteRegistryValue rva: 0003293E ord: 503
+  RtlDeleteResource rva: 000226EB ord: 504
+  RtlDeleteSecurityObject rva: 000287FB ord: 505
+  RtlDeleteTimer rva: 00032C10 ord: 506
+  RtlDeleteTimerQueue rva: 00060C21 ord: 507
+  RtlDeleteTimerQueueEx rva: 00060B19 ord: 508
+  RtlDeregisterWait rva: 000335DC ord: 509
+  RtlDeregisterWaitEx rva: 000332B4 ord: 510
+  RtlDestroyAtomTable rva: 0005CF3A ord: 511
+  RtlDestroyEnvironment rva: 00022352 ord: 512
+  RtlDestroyHandleTable rva: 00022535 ord: 513
+  RtlDestroyHeap rva: 000258AE ord: 514
+  RtlDestroyProcessParameters rva: 000217B6 ord: 515
+  RtlDestroyQueryDebugBuffer rva: 00054BC0 ord: 516
+  RtlDetermineDosPathNameType_U rva: 00013AC2 ord: 517
+  RtlDllShutdownInProgress rva: 00013607 ord: 518
+  RtlDnsHostNameToComputerName rva: 0003282B ord: 519
+  RtlDoesFileExists_U rva: 00026AC0 ord: 520
+  RtlDosApplyFileIsolationRedirection_Ustr rva: 000158FB ord: 521
+  RtlDosPathNameToNtPathName_U rva: 00014225 ord: 522
+  RtlDosSearchPath_U rva: 000166DF ord: 523
+  RtlDosSearchPath_Ustr rva: 00026433 ord: 524
+  RtlDowncaseUnicodeChar rva: 0005F9AE ord: 525
+  RtlDowncaseUnicodeString rva: 0002A37E ord: 526
+  RtlDumpResource rva: 00053C8A ord: 527
+  RtlDuplicateUnicodeString rva: 0001F963 ord: 528
+  RtlEmptyAtomTable rva: 0005D011 ord: 529
+  RtlEnableEarlyCriticalSectionEventCreation rva: 00053D43 ord: 530
+  RtlEncodePointer rva: 000132D9 ord: 531
+  RtlEncodeSystemPointer rva: 000262A5 ord: 532
+  RtlEnlargedIntegerMultiply rva: 00003016 ord: 533
+  RtlEnlargedUnsignedDivide rva: 0000302E ord: 534
+  RtlEnlargedUnsignedMultiply rva: 00003022 ord: 535
+  RtlEnterCriticalSection rva: 00001000 ord: 536
+  RtlEnumProcessHeaps rva: 00062581 ord: 537
+  RtlEnumerateGenericTable rva: 00064A55 ord: 538
+  RtlEnumerateGenericTableAvl rva: 0003156A ord: 539
+  RtlEnumerateGenericTableLikeADirectory rva: 00064FBE ord: 540
+  RtlEnumerateGenericTableWithoutSplaying rva: 0001D413 ord: 541
+  RtlEnumerateGenericTableWithoutSplayingAvl rva: 0003158F ord: 542
+  RtlEqualComputerName rva: 0005FCAE ord: 543
+  RtlEqualDomainName rva: 0002B417 ord: 544
+  RtlEqualLuid rva: 0005E302 ord: 545
+  RtlEqualPrefixSid rva: 0002E1AC ord: 546
+  RtlEqualSid rva: 000180E4 ord: 547
+  RtlEqualString rva: 0001350D ord: 548
+  RtlEqualUnicodeString rva: 00012D59 ord: 549
+  RtlEraseUnicodeString rva: 000302BE ord: 550
+  RtlExitUserThread rva: 000640CB ord: 551
+  RtlExpandEnvironmentStrings_U rva: 0001462A ord: 552
+  RtlExtendHeap rva: 000622C1 ord: 553
+  RtlExtendedIntegerMultiply rva: 0000313A ord: 554
+  RtlExtendedLargeIntegerDivide rva: 0000304E ord: 555
+  RtlExtendedMagicDivide rva: 000030AA ord: 556
+  RtlFillMemory rva: 00002BD3 ord: 557
+  RtlFillMemoryUlong rva: 00002C43 ord: 558
+  RtlFinalReleaseOutOfProcessMemoryStream rva: 0001F866 ord: 559
+  RtlFindActivationContextSectionGuid rva: 00028A08 ord: 560
+  RtlFindActivationContextSectionString rva: 00015471 ord: 561
+  RtlFindCharInUnicodeString rva: 00015CC1 ord: 562
+  RtlFindClearBits rva: 0002571D ord: 563
+  RtlFindClearBitsAndSet rva: 000257E5 ord: 564
+  RtlFindClearRuns rva: 000600FA ord: 565
+  RtlFindLastBackwardRunClear rva: 0006059C ord: 566
+  RtlFindLeastSignificantBit rva: 00060717 ord: 567
+  RtlFindLongestRunClear rva: 00060341 ord: 568
+  RtlFindMessage rva: 00035769 ord: 569
+  RtlFindMostSignificantBit rva: 0006066C ord: 570
+  RtlFindNextForwardRunClear rva: 000604A2 ord: 571
+  RtlFindRange rva: 0005D768 ord: 572
+  RtlFindSetBits rva: 0005FE49 ord: 573
+  RtlFindSetBitsAndClear rva: 000607C0 ord: 574
+  RtlFirstEntrySList rva: 00002AF8 ord: 575
+  RtlFirstFreeAce rva: 00025CE2 ord: 576
+  RtlFlushSecureMemoryCache rva: 000650EA ord: 577
+  RtlFormatCurrentUserKeyPath rva: 00014F79 ord: 578
+  RtlFormatMessage rva: 000290DE ord: 579
+  RtlFreeAnsiString rva: 00010466 ord: 580
+  RtlFreeHandle rva: 0001326F ord: 581
+  RtlFreeHeap rva: 0000FF2D ord: 582
+  RtlFreeOemString rva: 0002B474 ord: 583
+  RtlFreeRangeList rva: 0005D3AC ord: 584
+  RtlFreeSid rva: 00025E66 ord: 585
+  RtlFreeThreadActivationContextStack rva: 00013865 ord: 586
+  RtlFreeUnicodeString rva: 00010466 ord: 587
+  RtlFreeUserThreadStack rva: 000640F5 ord: 588
+  RtlGUIDFromString rva: 000276EA ord: 589
+  RtlGenerate8dot3Name rva: 00065558 ord: 590
+  RtlGetAce rva: 00035629 ord: 591
+  RtlGetActiveActivationContext rva: 0001B6A3 ord: 592
+  RtlGetCallersAddress rva: 00060FC2 ord: 593
+  RtlGetCompressionWorkSpaceSize rva: 00063729 ord: 594
+  RtlGetControlSecurityDescriptor rva: 000287CD ord: 595
+  RtlGetCurrentDirectory_U rva: 00014465 ord: 596
+  RtlGetCurrentPeb rva: 00061449 ord: 597
+  RtlGetDaclSecurityDescriptor rva: 000136D6 ord: 598
+  RtlGetElementGenericTable rva: 000649CC ord: 599
+  RtlGetElementGenericTableAvl rva: 00064DBF ord: 600
+  RtlGetFirstRange rva: 0005D3F1 ord: 601
+  RtlGetFrame rva: 0001EEC9 ord: 602
+  RtlGetFullPathName_U rva: 00014307 ord: 603
+  RtlGetGroupSecurityDescriptor rva: 0002B3D8 ord: 604
+  RtlGetLastNtStatus rva: 00065945 ord: 605
+  RtlGetLastWin32Error rva: 0000FE21 ord: 606
+  RtlGetLengthWithoutLastFullDosOrNtPathElement rva: 0001F1A1 ord: 607
+  RtlGetLengthWithoutTrailingPathSeperators rva: 0003079D ord: 608
+  RtlGetLongestNtPathLength rva: 00014939 ord: 609
+  RtlGetNativeSystemInformation rva: 0000D92E ord: 610
+  RtlGetNextRange rva: 0005D4A9 ord: 611
+  RtlGetNtGlobalFlags rva: 0000FF1B ord: 612
+  RtlGetNtProductType rva: 00026839 ord: 613
+  RtlGetNtVersionNumbers rva: 0001FD57 ord: 614
+  RtlGetOwnerSecurityDescriptor rva: 0002B396 ord: 615
+  RtlGetProcessHeaps rva: 000624C9 ord: 616
+  RtlGetSaclSecurityDescriptor rva: 0005E35A ord: 617
+  RtlGetSecurityDescriptorRMControl rva: 0005E5B5 ord: 618
+  RtlGetSetBootStatusData rva: 00031947 ord: 619
+  RtlGetUnloadEventTrace rva: 000527A3 ord: 620
+  RtlGetUserInfoHeap rva: 00013799 ord: 621
+  RtlGetVersion rva: 0002674C ord: 622
+  RtlHashUnicodeString rva: 000155BD ord: 623
+  RtlIdentifierAuthoritySid rva: 00028884 ord: 624
+  RtlImageDirectoryEntryToData rva: 00010346 ord: 625
+  RtlImageNtHeader rva: 00010339 ord: 626
+  RtlImageRvaToSection rva: 00012FF6 ord: 627
+  RtlImageRvaToVa rva: 000320A2 ord: 628
+  RtlImpersonateSelf rva: 0002A60B ord: 629
+  RtlInitAnsiString rva: 0000125D ord: 630
+  RtlInitCodePageTable rva: 0002106E ord: 631
+  RtlInitMemoryStream rva: 0001FF5C ord: 632
+  RtlInitNlsTables rva: 0002103D ord: 633
+  RtlInitOutOfProcessMemoryStream rva: 0001F41A ord: 634
+  RtlInitString rva: 00001225 ord: 635
+  RtlInitUnicodeString rva: 00001295 ord: 636
+  RtlInitUnicodeStringEx rva: 0000FE95 ord: 637
+  RtlInitializeAtomPackage rva: 000204D0 ord: 638
+  RtlInitializeBitMap rva: 00026289 ord: 639
+  RtlInitializeContext rva: 00032471 ord: 640
+  RtlInitializeCriticalSection rva: 0001161D ord: 641
+  RtlInitializeCriticalSectionAndSpinCount rva: 0001151A ord: 642
+  RtlInitializeGenericTable rva: 0001FED9 ord: 643
+  RtlInitializeGenericTableAvl rva: 00031697 ord: 644
+  RtlInitializeHandleTable rva: 000263A8 ord: 645
+  RtlInitializeRXact rva: 00031350 ord: 646
+  RtlInitializeRangeList rva: 0005D191 ord: 647
+  RtlInitializeResource rva: 00024906 ord: 648
+  RtlInitializeSListHead rva: 00035703 ord: 649
+  RtlInitializeSid rva: 0001812D ord: 650
+  RtlInitializeStackTraceDataBase rva: 00065BC7 ord: 651
+  RtlInsertElementGenericTable rva: 0002342F ord: 652
+  RtlInsertElementGenericTableAvl rva: 00064F01 ord: 653
+  RtlInt64ToUnicodeString rva: 000613D9 ord: 654
+  RtlIntegerToChar rva: 000195E0 ord: 655
+  RtlIntegerToUnicodeString rva: 00019706 ord: 656
+  RtlInterlockedFlushSList rva: 00065AE5 ord: 657
+  RtlInterlockedPopEntrySList rva: 00033F5B ord: 658
+  RtlInterlockedPushEntrySList rva: 00033F19 ord: 659
+  RtlInvertRangeList rva: 0005E077 ord: 660
+  RtlIpv4AddressToStringA rva: 000660AB ord: 661
+  RtlIpv4AddressToStringExA rva: 000660F9 ord: 662
+  RtlIpv4AddressToStringExW rva: 0002F1B0 ord: 663
+  RtlIpv4AddressToStringW rva: 0002F228 ord: 664
+  RtlIpv4StringToAddressA rva: 0002AF39 ord: 665
+  RtlIpv4StringToAddressExA rva: 00066A57 ord: 666
+  RtlIpv4StringToAddressExW rva: 000369E7 ord: 667
+  RtlIpv4StringToAddressW rva: 0002B8E7 ord: 668
+  RtlIpv6AddressToStringA rva: 00065D99 ord: 669
+  RtlIpv6AddressToStringExA rva: 00065FC5 ord: 670
+  RtlIpv6AddressToStringExW rva: 00066407 ord: 671
+  RtlIpv6AddressToStringW rva: 0006619F ord: 672
+  RtlIpv6StringToAddressA rva: 000664FB ord: 673
+  RtlIpv6StringToAddressExA rva: 0006681A ord: 674
+  RtlIpv6StringToAddressExW rva: 00066EEE ord: 675
+  RtlIpv6StringToAddressW rva: 00066BF0 ord: 676
+  RtlIsActivationContextActive rva: 0005865E ord: 677
+  RtlIsDosDeviceName_U rva: 000142DA ord: 678
+  RtlIsGenericTableEmpty rva: 0001D48B ord: 679
+  RtlIsGenericTableEmptyAvl rva: 00064DA6 ord: 680
+  RtlIsNameLegalDOS8Dot3 rva: 000653D7 ord: 681
+  RtlIsRangeAvailable rva: 0005DAEB ord: 682
+  RtlIsTextUnicode rva: 00028D65 ord: 683
+  RtlIsThreadWithinLoaderCallout rva: 00052D99 ord: 684
+  RtlIsValidHandle rva: 0001320D ord: 685
+  RtlIsValidIndexHandle rva: 000132A8 ord: 686
+  RtlLargeIntegerAdd rva: 00003002 ord: 687
+  RtlLargeIntegerArithmeticShift rva: 000031E2 ord: 688
+  RtlLargeIntegerDivide rva: 00067151 ord: 689
+  RtlLargeIntegerNegate rva: 0000320E ord: 690
+  RtlLargeIntegerShiftLeft rva: 00003192 ord: 691
+  RtlLargeIntegerShiftRight rva: 000031BA ord: 692
+  RtlLargeIntegerSubtract rva: 00003222 ord: 693
+  RtlLargeIntegerToChar rva: 0006100C ord: 694
+  RtlLeaveCriticalSection rva: 000010E0 ord: 695
+  RtlLengthRequiredSid rva: 000135EF ord: 696
+  RtlLengthSecurityDescriptor rva: 0002B27C ord: 697
+  RtlLengthSid rva: 00017FAE ord: 698
+  RtlLocalTimeToSystemTime rva: 000648B0 ord: 699
+  RtlLockBootStatusData rva: 000317E9 ord: 700
+  RtlLockHeap rva: 0001313B ord: 701
+  RtlLockMemoryStreamRegion rva: 00053C66 ord: 702
+  RtlLogStackBackTrace rva: 000115D4 ord: 703
+  RtlLookupAtomInAtomTable rva: 00028352 ord: 704
+  RtlLookupElementGenericTable rva: 0001FA57 ord: 705
+  RtlLookupElementGenericTableAvl rva: 0006508D ord: 706
+  RtlMakeSelfRelativeSD rva: 0002A1B3 ord: 707
+  RtlMapGenericMask rva: 00028615 ord: 708
+  RtlMapSecurityErrorToNtStatus rva: 0005E642 ord: 709
+  RtlMergeRangeLists rva: 0005DD1E ord: 710
+  RtlMoveMemory rva: 00002C94 ord: 711
+  RtlMultiAppendUnicodeStringBuffer rva: 00016C7D ord: 712
+  RtlMultiByteToUnicodeN rva: 0000ECBA ord: 713
+  RtlMultiByteToUnicodeSize rva: 00029094 ord: 714
+  RtlNewInstanceSecurityObject rva: 00054052 ord: 715
+  RtlNewSecurityGrantedAccess rva: 000540C8 ord: 716
+  RtlNewSecurityObject rva: 0002FE02 ord: 717
+  RtlNewSecurityObjectEx rva: 0002D938 ord: 718
+  RtlNewSecurityObjectWithMultipleInheritance rva: 00053E17 ord: 719
+  RtlNormalizeProcessParams rva: 00020D2D ord: 720
+  RtlNtPathNameToDosPathName rva: 00022E0C ord: 721
+  RtlNtStatusToDosError rva: 0000F62D ord: 722
+  RtlNtStatusToDosErrorNoTeb rva: 0000F679 ord: 723
+  RtlNumberGenericTableElements rva: 00022569 ord: 724
+  RtlNumberGenericTableElementsAvl rva: 00064E94 ord: 725
+  RtlNumberOfClearBits rva: 00060378 ord: 726
+  RtlNumberOfSetBits rva: 000603C8 ord: 727
+  RtlOemStringToUnicodeSize rva: 0005FA30 ord: 728
+  RtlOemStringToUnicodeString rva: 000270C7 ord: 729
+  RtlOemToUnicodeN rva: 00026F9E ord: 730
+  RtlOpenCurrentUser rva: 000262E7 ord: 731
+  RtlPcToFileHeader rva: 0003463B ord: 732
+  RtlPinAtomInAtomTable rva: 0005D0D9 ord: 733
+  RtlPopFrame rva: 00026BD0 ord: 734
+  RtlPrefixString rva: 0002F483 ord: 735
+  RtlPrefixUnicodeString rva: 00014367 ord: 736
+  RtlProtectHeap rva: 00061EA4 ord: 737
+  RtlPushFrame rva: 00026BF0 ord: 738
+  RtlQueryAtomInAtomTable rva: 00034C65 ord: 739
+  RtlQueryDepthSList rva: 00033FC8 ord: 740
+  RtlQueryEnvironmentVariable_U rva: 000144F9 ord: 741
+  RtlQueryHeapInformation rva: 00062E93 ord: 742
+  RtlQueryInformationAcl rva: 0002E60A ord: 743
+  RtlQueryInformationActivationContext rva: 0000FCD2 ord: 744
+  RtlQueryInformationActiveActivationContext rva: 000134E8 ord: 745
+  RtlQueryInterfaceMemoryStream rva: 0001EFE5 ord: 746
+  RtlQueryProcessBackTraceInformation rva: 00054CA1 ord: 747
+  RtlQueryProcessDebugInformation rva: 000554EB ord: 748
+  RtlQueryProcessHeapInformation rva: 00054E49 ord: 749
+  RtlQueryProcessLockInformation rva: 00055375 ord: 750
+  RtlQueryRegistryValues rva: 0004D04D ord: 751
+  RtlQuerySecurityObject rva: 00053E50 ord: 752
+  RtlQueryTagHeap rva: 0006215D ord: 753
+  RtlQueryTimeZoneInformation rva: 00061C63 ord: 754
+  RtlQueueApcWow64Thread rva: 000585FD ord: 755
+  RtlQueueWorkItem rva: 00027B00 ord: 756
+  RtlRaiseException rva: 0000E528 ord: 757
+  RtlRaiseStatus rva: 00067398 ord: 758
+  RtlRandom rva: 000673C7 ord: 759
+  RtlRandomEx rva: 00037B80 ord: 760
+  RtlReAllocateHeap rva: 00018477 ord: 761
+  RtlReadMemoryStream rva: 0001FF17 ord: 762
+  RtlReadOutOfProcessMemoryStream rva: 0001EF67 ord: 763
+  RtlRealPredecessor rva: 0006490F ord: 764
+  RtlRealSuccessor rva: 0001D455 ord: 765
+  RtlRegisterSecureMemoryCacheCallback rva: 000650AE ord: 766
+  RtlRegisterWait rva: 000329E1 ord: 767
+  RtlReleaseActivationContext rva: 00010547 ord: 768
+  RtlReleaseMemoryStream rva: 0001ED77 ord: 769
+  RtlReleasePebLock rva: 00010451 ord: 770
+  RtlReleaseResource rva: 0002859C ord: 771
+  RtlRemoteCall rva: 00065978 ord: 772
+  RtlRemoveVectoredExceptionHandler rva: 00036ADE ord: 773
+  RtlResetRtlTranslations rva: 00020EF3 ord: 774
+  RtlRestoreLastWin32Error rva: 0000FE30 ord: 775
+  RtlRevertMemoryStream rva: 00053C59 ord: 776
+  RtlRunDecodeUnicodeString rva: 0002F011 ord: 777
+  RtlRunEncodeUnicodeString rva: 0002EFC3 ord: 778
+  RtlSecondsSince1970ToTime rva: 00064879 ord: 779
+  RtlSecondsSince1980ToTime rva: 00064842 ord: 780
+  RtlSeekMemoryStream rva: 00053B76 ord: 781
+  RtlSelfRelativeToAbsoluteSD2 rva: 0005CAA0 ord: 782
+  RtlSelfRelativeToAbsoluteSD rva: 0002E70C ord: 783
+  RtlSetAllBits rva: 0002C923 ord: 784
+  RtlSetAttributesSecurityDescriptor rva: 0005E72D ord: 785
+  RtlSetBits rva: 00025818 ord: 786
+  RtlSetControlSecurityDescriptor rva: 00030FE7 ord: 787
+  RtlSetCriticalSectionSpinCount rva: 0002867F ord: 788
+  RtlSetCurrentDirectory_U rva: 000249B5 ord: 789
+  RtlSetCurrentEnvironment rva: 00063FED ord: 790
+  RtlSetDaclSecurityDescriptor rva: 00025C87 ord: 791
+  RtlSetEnvironmentVariable rva: 000274B1 ord: 792
+  RtlSetGroupSecurityDescriptor rva: 0002623F ord: 793
+  RtlSetHeapInformation rva: 00037B2D ord: 794
+  RtlSetInformationAcl rva: 0005CB1F ord: 795
+  RtlSetIoCompletionCallback rva: 0002F5C7 ord: 796
+  RtlSetLastWin32Error rva: 0000FE30 ord: 797
+  RtlSetLastWin32ErrorAndNtStatusFromNtStatus rva: 00065957 ord: 798
+  RtlSetMemoryStreamSize rva: 00053BD8 ord: 799
+  RtlSetOwnerSecurityDescriptor rva: 000261F5 ord: 800
+  RtlSetProcessIsCritical rva: 00030047 ord: 801
+  RtlSetSaclSecurityDescriptor rva: 0002E67B ord: 802
+  RtlSetSecurityDescriptorRMControl rva: 0005E617 ord: 803
+  RtlSetSecurityObject rva: 0002CBC3 ord: 804
+  RtlSetSecurityObjectEx rva: 00053E27 ord: 805
+  RtlSetThreadIsCritical rva: 0003009B ord: 806
+  RtlSetThreadPoolStartFunc rva: 00020529 ord: 807
+  RtlSetTimeZoneInformation rva: 00061D8B ord: 808
+  RtlSetTimer rva: 00060C39 ord: 809
+  RtlSetUnicodeCallouts rva: 0005A329 ord: 810
+  RtlSetUserFlagsHeap rva: 00062007 ord: 811
+  RtlSetUserValueHeap rva: 000182C1 ord: 812
+  RtlSizeHeap rva: 000104DD ord: 813
+  RtlSplay rva: 0001F900 ord: 814
+  RtlStartRXact rva: 0002BEBE ord: 815
+  RtlStatMemoryStream rva: 0001F47D ord: 816
+  RtlStringFromGUID rva: 00028BB0 ord: 817
+  RtlSubAuthorityCountSid rva: 00013617 ord: 818
+  RtlSubAuthoritySid rva: 00018110 ord: 819
+  RtlSubtreePredecessor rva: 0002364D ord: 820
+  RtlSubtreeSuccessor rva: 000648EC ord: 821
+  RtlSystemTimeToLocalTime rva: 0002B8AB ord: 822
+  RtlTimeFieldsToTime rva: 00019411 ord: 823
+  RtlTimeToElapsedTimeFields rva: 000647DB ord: 824
+  RtlTimeToSecondsSince1970 rva: 0002BF51 ord: 825
+  RtlTimeToSecondsSince1980 rva: 0002877C ord: 826
+  RtlTimeToTimeFields rva: 00012A55 ord: 827
+  RtlTraceDatabaseAdd rva: 00067A47 ord: 828
+  RtlTraceDatabaseCreate rva: 0006767A ord: 829
+  RtlTraceDatabaseDestroy rva: 0006776C ord: 830
+  RtlTraceDatabaseEnumerate rva: 000675F2 ord: 831
+  RtlTraceDatabaseFind rva: 00067853 ord: 832
+  RtlTraceDatabaseLock rva: 00067A27 ord: 833
+  RtlTraceDatabaseUnlock rva: 00067A37 ord: 834
+  RtlTraceDatabaseValidate rva: 00067809 ord: 835
+  RtlTryEnterCriticalSection rva: 00001118 ord: 836
+  RtlUnhandledExceptionFilter2 rva: 00067C59 ord: 837
+  RtlUnhandledExceptionFilter rva: 000685DF ord: 838
+  RtlUnicodeStringToAnsiSize rva: 0005FA0B ord: 839
+  RtlUnicodeStringToAnsiString rva: 00012068 ord: 840
+  RtlUnicodeStringToCountedOemString rva: 0005FB06 ord: 841
+  RtlUnicodeStringToInteger rva: 00019769 ord: 842
+  RtlUnicodeStringToOemSize rva: 0005FA0B ord: 843
+  RtlUnicodeStringToOemString rva: 00026E4D ord: 844
+  RtlUnicodeToCustomCPN rva: 0005BC9A ord: 845
+  RtlUnicodeToMultiByteN rva: 00011F3D ord: 846
+  RtlUnicodeToMultiByteSize rva: 00013393 ord: 847
+  RtlUnicodeToOemN rva: 00026D2B ord: 848
+  RtlUniform rva: 000300DC ord: 849
+  RtlUnlockBootStatusData rva: 00031901 ord: 850
+  RtlUnlockHeap rva: 000131A3 ord: 851
+  RtlUnlockMemoryStreamRegion rva: 00053C66 ord: 852
+  RtlUnwind rva: 0002AA79 ord: 853
+  RtlUpcaseUnicodeChar rva: 000103E0 ord: 854
+  RtlUpcaseUnicodeString rva: 00024DC2 ord: 855
+  RtlUpcaseUnicodeStringToAnsiString rva: 0005FA57 ord: 856
+  RtlUpcaseUnicodeStringToCountedOemString rva: 0005FBDA ord: 857
+  RtlUpcaseUnicodeStringToOemString rva: 0002C7F0 ord: 858
+  RtlUpcaseUnicodeToCustomCPN rva: 0005BE49 ord: 859
+  RtlUpcaseUnicodeToMultiByteN rva: 00022BCD ord: 860
+  RtlUpcaseUnicodeToOemN rva: 0002C4CC ord: 861
+  RtlUpdateTimer rva: 0002BC65 ord: 862
+  RtlUpperChar rva: 000290BC ord: 863
+  RtlUpperString rva: 0005FD51 ord: 864
+  RtlUsageHeap rva: 000631D0 ord: 865
+  RtlValidAcl rva: 00025BD5 ord: 866
+  RtlValidRelativeSecurityDescriptor rva: 0002EC82 ord: 867
+  RtlValidSecurityDescriptor rva: 00035554 ord: 868
+  RtlValidSid rva: 00012E22 ord: 869
+  RtlValidateHeap rva: 00062F00 ord: 870
+  RtlValidateProcessHeaps rva: 00063123 ord: 871
+  RtlValidateUnicodeString rva: 00015DCA ord: 872
+  RtlVerifyVersionInfo rva: 00035239 ord: 873
+  RtlWalkFrameChain rva: 00060C92 ord: 874
+  RtlWalkHeap rva: 00062609 ord: 875
+  RtlWriteMemoryStream rva: 00053B69 ord: 876
+  RtlWriteRegistryValue rva: 000328E2 ord: 877
+  RtlZeroHeap rva: 0005F6FB ord: 878
+  RtlZeroMemory rva: 00002C64 ord: 879
+  RtlZombifyActivationContext rva: 0005860D ord: 880
+  RtlpApplyLengthFunction rva: 0001EEFE ord: 881
+  RtlpEnsureBufferSize rva: 0001D337 ord: 882
+  RtlpNotOwnerCriticalSection rva: 00053D56 ord: 883
+  RtlpNtCreateKey rva: 000686A3 ord: 884
+  RtlpNtEnumerateSubKey rva: 00032619 ord: 885
+  RtlpNtMakeTemporaryKey rva: 000686FC ord: 886
+  RtlpNtOpenKey rva: 0002A0CB ord: 887
+  RtlpNtQueryValueKey rva: 0002A00A ord: 888
+  RtlpNtSetValueKey rva: 000686D0 ord: 889
+  RtlpUnWaitCriticalSection rva: 00019B5F ord: 890
+  RtlpWaitForCriticalSection rva: 00019A97 ord: 891
+  RtlxAnsiStringToUnicodeSize rva: 0005FA30 ord: 892
+  RtlxOemStringToUnicodeSize rva: 0005FA30 ord: 893
+  RtlxUnicodeStringToAnsiSize rva: 0005FA0B ord: 894
+  RtlxUnicodeStringToOemSize rva: 0005FA0B ord: 895
+  VerSetConditionMask rva: 000351FB ord: 896
+  ZwAcceptConnectPort rva: 0000CE5E ord: 897
+  ZwAccessCheck rva: 0000CE6E ord: 898
+  ZwAccessCheckAndAuditAlarm rva: 0000CE7E ord: 899
+  ZwAccessCheckByType rva: 0000CE8E ord: 900
+  ZwAccessCheckByTypeAndAuditAlarm rva: 0000CE9E ord: 901
+  ZwAccessCheckByTypeResultList rva: 0000CEAE ord: 902
+  ZwAccessCheckByTypeResultListAndAuditAlarm rva: 0000CEBE ord: 903
+  ZwAccessCheckByTypeResultListAndAuditAlarmByHandle rva: 0000CECE ord: 904
+  ZwAddAtom rva: 0000CEDE ord: 905
+  ZwAddBootEntry rva: 0000CEEE ord: 906
+  ZwAdjustGroupsToken rva: 0000CEFE ord: 907
+  ZwAdjustPrivilegesToken rva: 0000CF0E ord: 908
+  ZwAlertResumeThread rva: 0000CF1E ord: 909
+  ZwAlertThread rva: 0000CF2E ord: 910
+  ZwAllocateLocallyUniqueId rva: 0000CF3E ord: 911
+  ZwAllocateUserPhysicalPages rva: 0000CF4E ord: 912
+  ZwAllocateUuids rva: 0000CF5E ord: 913
+  ZwAllocateVirtualMemory rva: 0000CF6E ord: 914
+  ZwAreMappedFilesTheSame rva: 0000CF7E ord: 915
+  ZwAssignProcessToJobObject rva: 0000CF8E ord: 916
+  ZwCallbackReturn rva: 0000CF9E ord: 917
+  ZwCancelDeviceWakeupRequest rva: 0000CFAE ord: 918
+  ZwCancelIoFile rva: 0000CFBE ord: 919
+  ZwCancelTimer rva: 0000CFCE ord: 920
+  ZwClearEvent rva: 0000CFDE ord: 921
+  ZwClose rva: 0000CFEE ord: 922
+  ZwCloseObjectAuditAlarm rva: 0000CFFE ord: 923
+  ZwCompactKeys rva: 0000D00E ord: 924
+  ZwCompareTokens rva: 0000D01E ord: 925
+  ZwCompleteConnectPort rva: 0000D02E ord: 926
+  ZwCompressKey rva: 0000D03E ord: 927
+  ZwConnectPort rva: 0000D04E ord: 928
+  ZwContinue rva: 0000D05E ord: 929
+  ZwCreateDebugObject rva: 0000D06E ord: 930
+  ZwCreateDirectoryObject rva: 0000D07E ord: 931
+  ZwCreateEvent rva: 0000D08E ord: 932
+  ZwCreateEventPair rva: 0000D09E ord: 933
+  ZwCreateFile rva: 0000D0AE ord: 934
+  ZwCreateIoCompletion rva: 0000D0BE ord: 935
+  ZwCreateJobObject rva: 0000D0CE ord: 936
+  ZwCreateJobSet rva: 0000D0DE ord: 937
+  ZwCreateKey rva: 0000D0EE ord: 938
+  ZwCreateKeyedEvent rva: 0000DFCE ord: 939
+  ZwCreateMailslotFile rva: 0000D0FE ord: 940
+  ZwCreateMutant rva: 0000D10E ord: 941
+  ZwCreateNamedPipeFile rva: 0000D11E ord: 942
+  ZwCreatePagingFile rva: 0000D12E ord: 943
+  ZwCreatePort rva: 0000D13E ord: 944
+  ZwCreateProcess rva: 0000D14E ord: 945
+  ZwCreateProcessEx rva: 0000D15E ord: 946
+  ZwCreateProfile rva: 0000D16E ord: 947
+  ZwCreateSection rva: 0000D17E ord: 948
+  ZwCreateSemaphore rva: 0000D18E ord: 949
+  ZwCreateSymbolicLinkObject rva: 0000D19E ord: 950
+  ZwCreateThread rva: 0000D1AE ord: 951
+  ZwCreateTimer rva: 0000D1BE ord: 952
+  ZwCreateToken rva: 0000D1CE ord: 953
+  ZwCreateWaitablePort rva: 0000D1DE ord: 954
+  ZwDebugActiveProcess rva: 0000D1EE ord: 955
+  ZwDebugContinue rva: 0000D1FE ord: 956
+  ZwDelayExecution rva: 0000D20E ord: 957
+  ZwDeleteAtom rva: 0000D21E ord: 958
+  ZwDeleteBootEntry rva: 0000D22E ord: 959
+  ZwDeleteFile rva: 0000D23E ord: 960
+  ZwDeleteKey rva: 0000D24E ord: 961
+  ZwDeleteObjectAuditAlarm rva: 0000D25E ord: 962
+  ZwDeleteValueKey rva: 0000D26E ord: 963
+  ZwDeviceIoControlFile rva: 0000D27E ord: 964
+  ZwDisplayString rva: 0000D28E ord: 965
+  ZwDuplicateObject rva: 0000D29E ord: 966
+  ZwDuplicateToken rva: 0000D2AE ord: 967
+  ZwEnumerateBootEntries rva: 0000D2BE ord: 968
+  ZwEnumerateKey rva: 0000D2CE ord: 969
+  ZwEnumerateSystemEnvironmentValuesEx rva: 0000D2DE ord: 970
+  ZwEnumerateValueKey rva: 0000D2EE ord: 971
+  ZwExtendSection rva: 0000D2FE ord: 972
+  ZwFilterToken rva: 0000D30E ord: 973
+  ZwFindAtom rva: 0000D31E ord: 974
+  ZwFlushBuffersFile rva: 0000D32E ord: 975
+  ZwFlushInstructionCache rva: 0000D33E ord: 976
+  ZwFlushKey rva: 0000D34E ord: 977
+  ZwFlushVirtualMemory rva: 0000D35E ord: 978
+  ZwFlushWriteBuffer rva: 0000D36E ord: 979
+  ZwFreeUserPhysicalPages rva: 0000D37E ord: 980
+  ZwFreeVirtualMemory rva: 0000D38E ord: 981
+  ZwFsControlFile rva: 0000D39E ord: 982
+  ZwGetContextThread rva: 0000D3AE ord: 983
+  ZwGetDevicePowerState rva: 0000D3BE ord: 984
+  ZwGetPlugPlayEvent rva: 0000D3CE ord: 985
+  ZwGetWriteWatch rva: 0000D3DE ord: 986
+  ZwImpersonateAnonymousToken rva: 0000D3EE ord: 987
+  ZwImpersonateClientOfPort rva: 0000D3FE ord: 988
+  ZwImpersonateThread rva: 0000D40E ord: 989
+  ZwInitializeRegistry rva: 0000D41E ord: 990
+  ZwInitiatePowerAction rva: 0000D42E ord: 991
+  ZwIsProcessInJob rva: 0000D43E ord: 992
+  ZwIsSystemResumeAutomatic rva: 0000D44E ord: 993
+  ZwListenPort rva: 0000D45E ord: 994
+  ZwLoadDriver rva: 0000D46E ord: 995
+  ZwLoadKey2 rva: 0000D48E ord: 996
+  ZwLoadKey rva: 0000D47E ord: 997
+  ZwLockFile rva: 0000D49E ord: 998
+  ZwLockProductActivationKeys rva: 0000D4AE ord: 999
+  ZwLockRegistryKey rva: 0000D4BE ord:1000
+  ZwLockVirtualMemory rva: 0000D4CE ord:1001
+  ZwMakePermanentObject rva: 0000D4DE ord:1002
+  ZwMakeTemporaryObject rva: 0000D4EE ord:1003
+  ZwMapUserPhysicalPages rva: 0000D4FE ord:1004
+  ZwMapUserPhysicalPagesScatter rva: 0000D50E ord:1005
+  ZwMapViewOfSection rva: 0000D51E ord:1006
+  ZwModifyBootEntry rva: 0000D52E ord:1007
+  ZwNotifyChangeDirectoryFile rva: 0000D53E ord:1008
+  ZwNotifyChangeKey rva: 0000D54E ord:1009
+  ZwNotifyChangeMultipleKeys rva: 0000D55E ord:1010
+  ZwOpenDirectoryObject rva: 0000D56E ord:1011
+  ZwOpenEvent rva: 0000D57E ord:1012
+  ZwOpenEventPair rva: 0000D58E ord:1013
+  ZwOpenFile rva: 0000D59E ord:1014
+  ZwOpenIoCompletion rva: 0000D5AE ord:1015
+  ZwOpenJobObject rva: 0000D5BE ord:1016
+  ZwOpenKey rva: 0000D5CE ord:1017
+  ZwOpenKeyedEvent rva: 0000DFDE ord:1018
+  ZwOpenMutant rva: 0000D5DE ord:1019
+  ZwOpenObjectAuditAlarm rva: 0000D5EE ord:1020
+  ZwOpenProcess rva: 0000D5FE ord:1021
+  ZwOpenProcessToken rva: 0000D60E ord:1022
+  ZwOpenProcessTokenEx rva: 0000D61E ord:1023
+  ZwOpenSection rva: 0000D62E ord:1024
+  ZwOpenSemaphore rva: 0000D63E ord:1025
+  ZwOpenSymbolicLinkObject rva: 0000D64E ord:1026
+  ZwOpenThread rva: 0000D65E ord:1027
+  ZwOpenThreadToken rva: 0000D66E ord:1028
+  ZwOpenThreadTokenEx rva: 0000D67E ord:1029
+  ZwOpenTimer rva: 0000D68E ord:1030
+  ZwPlugPlayControl rva: 0000D69E ord:1031
+  ZwPowerInformation rva: 0000D6AE ord:1032
+  ZwPrivilegeCheck rva: 0000D6BE ord:1033
+  ZwPrivilegeObjectAuditAlarm rva: 0000D6CE ord:1034
+  ZwPrivilegedServiceAuditAlarm rva: 0000D6DE ord:1035
+  ZwProtectVirtualMemory rva: 0000D6EE ord:1036
+  ZwPulseEvent rva: 0000D6FE ord:1037
+  ZwQueryAttributesFile rva: 0000D70E ord:1038
+  ZwQueryBootEntryOrder rva: 0000D71E ord:1039
+  ZwQueryBootOptions rva: 0000D72E ord:1040
+  ZwQueryDebugFilterState rva: 0000D73E ord:1041
+  ZwQueryDefaultLocale rva: 0000D74E ord:1042
+  ZwQueryDefaultUILanguage rva: 0000D75E ord:1043
+  ZwQueryDirectoryFile rva: 0000D76E ord:1044
+  ZwQueryDirectoryObject rva: 0000D77E ord:1045
+  ZwQueryEaFile rva: 0000D78E ord:1046
+  ZwQueryEvent rva: 0000D79E ord:1047
+  ZwQueryFullAttributesFile rva: 0000D7AE ord:1048
+  ZwQueryInformationAtom rva: 0000D7BE ord:1049
+  ZwQueryInformationFile rva: 0000D7CE ord:1050
+  ZwQueryInformationJobObject rva: 0000D7DE ord:1051
+  ZwQueryInformationPort rva: 0000D7EE ord:1052
+  ZwQueryInformationProcess rva: 0000D7FE ord:1053
+  ZwQueryInformationThread rva: 0000D80E ord:1054
+  ZwQueryInformationToken rva: 0000D81E ord:1055
+  ZwQueryInstallUILanguage rva: 0000D82E ord:1056
+  ZwQueryIntervalProfile rva: 0000D83E ord:1057
+  ZwQueryIoCompletion rva: 0000D84E ord:1058
+  ZwQueryKey rva: 0000D85E ord:1059
+  ZwQueryMultipleValueKey rva: 0000D86E ord:1060
+  ZwQueryMutant rva: 0000D87E ord:1061
+  ZwQueryObject rva: 0000D88E ord:1062
+  ZwQueryOpenSubKeys rva: 0000D89E ord:1063
+  ZwQueryPerformanceCounter rva: 0000D8AE ord:1064
+  ZwQueryPortInformationProcess rva: 0000E00E ord:1065
+  ZwQueryQuotaInformationFile rva: 0000D8BE ord:1066
+  ZwQuerySection rva: 0000D8CE ord:1067
+  ZwQuerySecurityObject rva: 0000D8DE ord:1068
+  ZwQuerySemaphore rva: 0000D8EE ord:1069
+  ZwQuerySymbolicLinkObject rva: 0000D8FE ord:1070
+  ZwQuerySystemEnvironmentValue rva: 0000D90E ord:1071
+  ZwQuerySystemEnvironmentValueEx rva: 0000D91E ord:1072
+  ZwQuerySystemInformation rva: 0000D92E ord:1073
+  ZwQuerySystemTime rva: 0000D93E ord:1074
+  ZwQueryTimer rva: 0000D94E ord:1075
+  ZwQueryTimerResolution rva: 0000D95E ord:1076
+  ZwQueryValueKey rva: 0000D96E ord:1077
+  ZwQueryVirtualMemory rva: 0000D97E ord:1078
+  ZwQueryVolumeInformationFile rva: 0000D98E ord:1079
+  ZwQueueApcThread rva: 0000D99E ord:1080
+  ZwRaiseException rva: 0000D9AE ord:1081
+  ZwRaiseHardError rva: 0000D9BE ord:1082
+  ZwReadFile rva: 0000D9CE ord:1083
+  ZwReadFileScatter rva: 0000D9DE ord:1084
+  ZwReadRequestData rva: 0000D9EE ord:1085
+  ZwReadVirtualMemory rva: 0000D9FE ord:1086
+  ZwRegisterThreadTerminatePort rva: 0000DA0E ord:1087
+  ZwReleaseKeyedEvent rva: 0000DFEE ord:1088
+  ZwReleaseMutant rva: 0000DA1E ord:1089
+  ZwReleaseSemaphore rva: 0000DA2E ord:1090
+  ZwRemoveIoCompletion rva: 0000DA3E ord:1091
+  ZwRemoveProcessDebug rva: 0000DA4E ord:1092
+  ZwRenameKey rva: 0000DA5E ord:1093
+  ZwReplaceKey rva: 0000DA6E ord:1094
+  ZwReplyPort rva: 0000DA7E ord:1095
+  ZwReplyWaitReceivePort rva: 0000DA8E ord:1096
+  ZwReplyWaitReceivePortEx rva: 0000DA9E ord:1097
+  ZwReplyWaitReplyPort rva: 0000DAAE ord:1098
+  ZwRequestDeviceWakeup rva: 0000DABE ord:1099
+  ZwRequestPort rva: 0000DACE ord:1100
+  ZwRequestWaitReplyPort rva: 0000DADE ord:1101
+  ZwRequestWakeupLatency rva: 0000DAEE ord:1102
+  ZwResetEvent rva: 0000DAFE ord:1103
+  ZwResetWriteWatch rva: 0000DB0E ord:1104
+  ZwRestoreKey rva: 0000DB1E ord:1105
+  ZwResumeProcess rva: 0000DB2E ord:1106
+  ZwResumeThread rva: 0000DB3E ord:1107
+  ZwSaveKey rva: 0000DB4E ord:1108
+  ZwSaveKeyEx rva: 0000DB5E ord:1109
+  ZwSaveMergedKeys rva: 0000DB6E ord:1110
+  ZwSecureConnectPort rva: 0000DB7E ord:1111
+  ZwSetBootEntryOrder rva: 0000DB8E ord:1112
+  ZwSetBootOptions rva: 0000DB9E ord:1113
+  ZwSetContextThread rva: 0000DBAE ord:1114
+  ZwSetDebugFilterState rva: 0000DBBE ord:1115
+  ZwSetDefaultHardErrorPort rva: 0000DBCE ord:1116
+  ZwSetDefaultLocale rva: 0000DBDE ord:1117
+  ZwSetDefaultUILanguage rva: 0000DBEE ord:1118
+  ZwSetEaFile rva: 0000DBFE ord:1119
+  ZwSetEvent rva: 0000DC0E ord:1120
+  ZwSetEventBoostPriority rva: 0000DC1E ord:1121
+  ZwSetHighEventPair rva: 0000DC2E ord:1122
+  ZwSetHighWaitLowEventPair rva: 0000DC3E ord:1123
+  ZwSetInformationDebugObject rva: 0000DC4E ord:1124
+  ZwSetInformationFile rva: 0000DC5E ord:1125
+  ZwSetInformationJobObject rva: 0000DC6E ord:1126
+  ZwSetInformationKey rva: 0000DC7E ord:1127
+  ZwSetInformationObject rva: 0000DC8E ord:1128
+  ZwSetInformationProcess rva: 0000DC9E ord:1129
+  ZwSetInformationThread rva: 0000DCAE ord:1130
+  ZwSetInformationToken rva: 0000DCBE ord:1131
+  ZwSetIntervalProfile rva: 0000DCCE ord:1132
+  ZwSetIoCompletion rva: 0000DCDE ord:1133
+  ZwSetLdtEntries rva: 0000DCEE ord:1134
+  ZwSetLowEventPair rva: 0000DCFE ord:1135
+  ZwSetLowWaitHighEventPair rva: 0000DD0E ord:1136
+  ZwSetQuotaInformationFile rva: 0000DD1E ord:1137
+  ZwSetSecurityObject rva: 0000DD2E ord:1138
+  ZwSetSystemEnvironmentValue rva: 0000DD3E ord:1139
+  ZwSetSystemEnvironmentValueEx rva: 0000DD4E ord:1140
+  ZwSetSystemInformation rva: 0000DD5E ord:1141
+  ZwSetSystemPowerState rva: 0000DD6E ord:1142
+  ZwSetSystemTime rva: 0000DD7E ord:1143
+  ZwSetThreadExecutionState rva: 0000DD8E ord:1144
+  ZwSetTimer rva: 0000DD9E ord:1145
+  ZwSetTimerResolution rva: 0000DDAE ord:1146
+  ZwSetUuidSeed rva: 0000DDBE ord:1147
+  ZwSetValueKey rva: 0000DDCE ord:1148
+  ZwSetVolumeInformationFile rva: 0000DDDE ord:1149
+  ZwShutdownSystem rva: 0000DDEE ord:1150
+  ZwSignalAndWaitForSingleObject rva: 0000DDFE ord:1151
+  ZwStartProfile rva: 0000DE0E ord:1152
+  ZwStopProfile rva: 0000DE1E ord:1153
+  ZwSuspendProcess rva: 0000DE2E ord:1154
+  ZwSuspendThread rva: 0000DE3E ord:1155
+  ZwSystemDebugControl rva: 0000DE4E ord:1156
+  ZwTerminateJobObject rva: 0000DE5E ord:1157
+  ZwTerminateProcess rva: 0000DE6E ord:1158
+  ZwTerminateThread rva: 0000DE7E ord:1159
+  ZwTestAlert rva: 0000DE8E ord:1160
+  ZwTraceEvent rva: 0000DE9E ord:1161
+  ZwTranslateFilePath rva: 0000DEAE ord:1162
+  ZwUnloadDriver rva: 0000DEBE ord:1163
+  ZwUnloadKey rva: 0000DECE ord:1164
+  ZwUnloadKeyEx rva: 0000DEDE ord:1165
+  ZwUnlockFile rva: 0000DEEE ord:1166
+  ZwUnlockVirtualMemory rva: 0000DEFE ord:1167
+  ZwUnmapViewOfSection rva: 0000DF0E ord:1168
+  ZwVdmControl rva: 0000DF1E ord:1169
+  ZwWaitForDebugEvent rva: 0000DF2E ord:1170
+  ZwWaitForKeyedEvent rva: 0000DFFE ord:1171
+  ZwWaitForMultipleObjects rva: 0000DF3E ord:1172
+  ZwWaitForSingleObject rva: 0000DF4E ord:1173
+  ZwWaitHighEventPair rva: 0000DF5E ord:1174
+  ZwWaitLowEventPair rva: 0000DF6E ord:1175
+  ZwWriteFile rva: 0000DF7E ord:1176
+  ZwWriteFileGather rva: 0000DF8E ord:1177
+  ZwWriteRequestData rva: 0000DF9E ord:1178
+  ZwWriteVirtualMemory rva: 0000DFAE ord:1179
+  ZwYieldExecution rva: 0000DFBE ord:1180
+  _CIcos rva: 0000E5E6 ord:1181
+  _CIlog rva: 0000E6A2 ord:1182
+  _CIpow rva: 0000E020 ord:1183
+  _CIsin rva: 000012D1 ord:1184
+  _CIsqrt rva: 0000137F ord:1185
+  __isascii rva: 0002AE8A ord:1186
+  __iscsym rva: 0007227B ord:1187
+  __iscsymf rva: 00072235 ord:1188
+  __toascii rva: 00072223 ord:1189
+  _alldiv rva: 0000143B ord:1190
+  _alldvrm rva: 000014E5 ord:1191
+  _allmul rva: 000015C4 ord:1192
+  _alloca_probe rva: 000015F8 ord:1193
+  _allrem rva: 00001635 ord:1194
+  _allshl rva: 000016E9 ord:1195
+  _allshr rva: 00001708 ord:1196
+  _atoi64 rva: 000722C1 ord:1197
+  _aulldiv rva: 00001729 ord:1198
+  _aulldvrm rva: 00001791 ord:1199
+  _aullrem rva: 00001826 ord:1200
+  _aullshr rva: 0000189B ord:1201
+  _chkstk rva: 000015F8 ord:1202
+  _fltused rva: 0007E048 ord:1203
+  _ftol rva: 000018BA ord:1204
+  _i64toa rva: 0007243D ord:1205
+  _i64tow rva: 0007255F ord:1206
+  _itoa rva: 0002FE3F ord:1207
+  _itow rva: 0002F4DF ord:1208
+  _lfind rva: 000725B9 ord:1209
+  _ltoa rva: 0007237E ord:1210
+  _ltow rva: 00072497 ord:1211
+  _memccpy rva: 000018E1 ord:1212
+  _memicmp rva: 000725F2 ord:1213
+  _snprintf rva: 00072602 ord:1214
+  _snwprintf rva: 0001ACC2 ord:1215
+  _splitpath rva: 00072660 ord:1216
+  _strcmpi rva: 00012314 ord:1217
+  _stricmp rva: 00012314 ord:1218
+  _strlwr rva: 000727A8 ord:1219
+  _strnicmp rva: 0002697E ord:1220
+  _strupr rva: 000727D5 ord:1221
+  _tolower rva: 00072802 ord:1222
+  _toupper rva: 0007284F ord:1223
+  _ui64toa rva: 00072475 ord:1224
+  _ui64tow rva: 00072597 ord:1225
+  _ultoa rva: 000723AA ord:1226
+  _ultow rva: 000724C3 ord:1227
+  _vsnprintf rva: 0003109D ord:1228
+  _vsnwprintf rva: 00072861 ord:1229
+  _wcsicmp rva: 0001330C ord:1230
+  _wcslwr rva: 00023259 ord:1231
+  _wcsnicmp rva: 00018085 ord:1232
+  _wcsupr rva: 000728D7 ord:1233
+  _wtoi rva: 0007290D ord:1234
+  _wtoi64 rva: 0007291D ord:1235
+  _wtol rva: 000366C2 ord:1236
+  abs rva: 00072AD8 ord:1237
+  atan rva: 00001934 ord:1238
+  atoi rva: 00023299 ord:1239
+  atol rva: 000232A6 ord:1240
+  bsearch rva: 00015153 ord:1241
+  ceil rva: 000019D7 ord:1242
+  cos rva: 0000E5FA ord:1243
+  fabs rva: 000729BA ord:1244
+  floor rva: 00001B18 ord:1245
+  isalnum rva: 00072148 ord:1246
+  isalpha rva: 0007200C ord:1247
+  iscntrl rva: 000721F0 ord:1248
+  isdigit rva: 0002AE61 ord:1249
+  isgraph rva: 000721B8 ord:1250
+  islower rva: 00072077 ord:1251
+  isprint rva: 00072180 ord:1252
+  ispunct rva: 00072115 ord:1253
+  isspace rva: 000720E2 ord:1254
+  isupper rva: 00072044 ord:1255
+  iswalpha rva: 00072A72 ord:1256
+  iswctype rva: 00027351 ord:1257
+  iswdigit rva: 000273F5 ord:1258
+  iswlower rva: 00072A8D ord:1259
+  iswspace rva: 00072AC0 ord:1260
+  iswxdigit rva: 00072AA5 ord:1261
+  isxdigit rva: 000720AA ord:1262
+  labs rva: 00072AD8 ord:1263
+  log rva: 0000E69E ord:1264
+  mbstowcs rva: 0002331C ord:1265
+  memchr rva: 00001C60 ord:1266
+  memcmp rva: 00001D07 ord:1267
+  memcpy rva: 00001DB3 ord:1268
+  memmove rva: 000020F5 ord:1269
+  memset rva: 00002435 ord:1270
+  pow rva: 0000E01B ord:1271
+  qsort rva: 0001EE00 ord:1272
+  sin rva: 000012E5 ord:1273
+  sprintf rva: 000245B4 ord:1274
+  sqrt rva: 00001393 ord:1275
+  sscanf rva: 00072AED ord:1276
+  strcat rva: 0000249D ord:1277
+  strchr rva: 0000E80D ord:1278
+  strcmp rva: 00002583 ord:1279
+  strcpy rva: 0000248D ord:1280
+  strcspn rva: 00002608 ord:1281
+  strlen rva: 00002645 ord:1282
+  strncat rva: 000026C0 ord:1283
+  strncmp rva: 000027E5 ord:1284
+  strncpy rva: 0000281D ord:1285
+  strpbrk rva: 0000291D ord:1286
+  strrchr rva: 00002956 ord:1287
+  strspn rva: 0000297D ord:1288
+  strstr rva: 0000E77E ord:1289
+  strtol rva: 00072CE2 ord:1290
+  strtoul rva: 00072D01 ord:1291
+  swprintf rva: 00026102 ord:1292
+  tan rva: 000029CE ord:1293
+  tolower rva: 00072814 ord:1294
+  toupper rva: 00022723 ord:1295
+  towlower rva: 000299F2 ord:1296
+  towupper rva: 00072D20 ord:1297
+  vDbgPrintEx rva: 0001ED4C ord:1298
+  vDbgPrintExWithPrefix rva: 0001D4A3 ord:1299
+  vsprintf rva: 00072D34 ord:1300
+  wcscat rva: 00017FCA ord:1301
+  wcschr rva: 000148E2 ord:1302
+  wcscmp rva: 00034E76 ord:1303
+  wcscpy rva: 00012DFE ord:1304
+  wcscspn rva: 00035139 ord:1305
+  wcslen rva: 0000FE4A ord:1306
+  wcsncat rva: 00026352 ord:1307
+  wcsncmp rva: 00024D86 ord:1308
+  wcsncpy rva: 0001057F ord:1309
+  wcspbrk rva: 00072D92 ord:1310
+  wcsrchr rva: 000145F1 ord:1311
+  wcsspn rva: 00072DDB ord:1312
+  wcsstr rva: 0002221F ord:1313
+  wcstol rva: 0002A787 ord:1314
+  wcstombs rva: 00072E29 ord:1315
+  wcstoul rva: 00035503 ord:1316

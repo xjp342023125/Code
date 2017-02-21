@@ -1,0 +1,49 @@
+mysql -u mysql -p
+abc@123
+
+
+删除
+drop database fox_tft;
+
+创建
+create database fox_tft;
+
+创建表
+DROP TABLE IF EXISTS `test_table`;
+CREATE TABLE `test_table` (
+  `ID` int(10) NOT NULL,
+  `name` char(5) not null
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+修改表
+ALTER TABLE `test_table` 	
+	ADD COLUMN `id2` int(11) unsigned NOT NULL DEFAULT '0' AFTER `name`,
+	ADD COLUMN `name2` int(11) unsigned NOT NULL DEFAULT '0' AFTER `id2`;
+	
+ALTER TABLE test_table MODIFY ID int(10) unsigned NOT NULL;
+ALTER TABLE test_table MODIFY name2 varchar(10);
+
+
+================
+连mysql,执行脚本
+/usr/local/mysql/bin/mysql -umysql -pabc@123
+mysql> source /home/hequ/hequ.sql;
+
+source /home/hequ/tft.sql
+
+show warnings; 查看刚才的警告
+
+
+
+==============================
+ERROR 1153 (08S01): Got a packet bigger than 'max_allowed_packet' bytes
+set global max_allowed_packet = 20*1024*1024
+==================================================
+show databases;
+use mysql;
+show tables;
+
+================================================================================
+CREATE USER 'xjp'@'*.*' IDENTIFIED BY '123';
+GRANT ALL PRIVILEGES ON *.* TO 'xjp'@'*.*' WITH GRANT OPTION;
+

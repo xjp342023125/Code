@@ -1,0 +1,2 @@
+set OPENSSL_PATH=xxxx
+nmake -f Makefile.vc12 CFG=release-ssl

@@ -1,0 +1,23 @@
+hese versions of Connector/C are available:
+
+Connector/C 6.1: Based on the C API parts of current MySQL sources and kept up to date with those sources.
+
+Connector/C 6.0: Created originally from a branch of the MySQL source tree, but now out of date with respect to C API changes in that tree.
+
+Consequently, Connector/C 6.1 is preferred over 6.0. Connector/C 6.1 provides these features not present in 6.0:
+
+Support for the pluggable authentication framework that enables implementation of authentication methods as plugins. This framework can be used for MySQL native authentication as well as external authentication methods. See Pluggable Authentication.
+
+Client-side support for the SHA-256, PAM, and Windows native authentication plugins. See The SHA-256 Authentication Plugin, The PAM Authentication Plugin, and The Windows Native Authentication Plugin.
+
+The older Connector/C 6.0 can connect only to accounts that use native MySQL passwords. If a client program attempts to connect to an account that requires a different authentication method, an ¡°Access denied for user¡± error occurs.
+
+Support for connecting to accounts that have expired passwords. See Password Expiration and Sandbox Mode.
+
+Support for prepared CALL statements. This enables client programs to handle stored procedures that produce multiple result sets and to obtain the final value of OUT and INOUT procedure parameters. See C API Support for Prepared CALL Statements.
+
+Support for connecting over IPv6. See IPv6 Support.
+
+Support for binding client programs to a specific IP address at connect time. See mysql_options().
+
+Support for specifying connection attributes to pass to the server at connect time. See mysql_options(), and mysql_options4().

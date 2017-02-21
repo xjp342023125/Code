@@ -1,0 +1,20 @@
+perl Configure VC-WIN32 no-asm
+ms\do_ms
+nmake -f ms\ntdll.mak
+
+
+==========================
+.\crypto\cryptlib.c(864) : error C2220: warning treated as error - no 'object' f
+ile generated
+.\crypto\cryptlib.c(864) : warning C4996: 'GetVersion': was declared deprecated
+        C:\Program Files (x86)\Windows Kits\8.1\include\um\sysinfoapi.h(110) : s
+ee declaration of 'GetVersion'
+NMAKE : fatal error U1077: '"C:\Program Files (x86)\Microsoft Visual Studio 12.0
+\VC\BIN\cl.EXE"' : return code '0x2'
+Stop.
+错误当成警告
+
+解决办法：ms\ntdll.mak ，CFLAG里的 -WX去掉
+
+
+nt.mak静态

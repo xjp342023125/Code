@@ -1,0 +1,2 @@
+1 erase 获取删除的数量
+size_t del_cnt = ping_map.erase(rid);

@@ -1,0 +1,6 @@
+int listen(
+  SOCKET s,    
+  int backlog  
+);
+
+backlog是就绪队列个数,如果设置1,第一个connect过来不accept,那么别人connect就会失败

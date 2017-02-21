@@ -1,0 +1,3 @@
+libmysqlclient: The client version of the library, used for applications that communicate over a network connection as a client of a standalone server process.
+
+libmysqld: The embedded server version of the library, used for applications intended to include an embedded MySQL server within the application itself. The application communicates with its own private server instance.

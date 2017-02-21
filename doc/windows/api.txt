@@ -1,0 +1,21 @@
+
+WINBASEAPI
+BOOL
+WINAPI
+VirtualProtect(
+    __in  LPVOID lpAddress,
+    __in  SIZE_T dwSize,
+    __in  DWORD flNewProtect,
+    __out PDWORD lpflOldProtect
+    );
+设置的大小不准，需要调用VirtualQuery查询一下
+
+
+WINBASEAPI
+SIZE_T
+WINAPI
+VirtualQuery(
+    __in_opt LPCVOID lpAddress,
+    __out_bcount_part(dwLength, return) PMEMORY_BASIC_INFORMATION lpBuffer,
+    __in     SIZE_T dwLength
+    );

@@ -1,0 +1,50 @@
+1. 添加编译所需要（依赖）的 lib 文件 
+[解决方案资源管理器]“项目->属性->配置属性->连接器->输入->附加依赖项”里填写“winsock.lib”，多个 lib 以空格隔开。 
+（等同于“#pragma comment(lib, "winsock.lib") ”语句） 
+2. 添加库（Libs）文件目录 
+方法 1：[解决方案资源管理器]“项目->属性->配置属性->连接器->常规->附加库目录” 
+方法 2：[菜单]“工具->选项->项目和解决方案->C++ 目录”，选择对应平台，然后添加所需“库文件”目录 
+3. 添加包含（include）文件目录 
+方法 1：[解决方案资源管理器]“项目->属性->配置属性->C/C++->常规->附加包含目录” 
+方法 2：[菜单]“工具->选项->项目和解决方案->C++ 目录”，选择对应平台，然后添加所需“包括文件”目录
+
+
+一，问题描述
+MSVCRTD.lib(crtexew.obj) : error LNK2019: 无法解析的外部符号 _WinMain@16，该符号在函数 ___tmainCRTStartup 中被引用 
+Debug\jk.exe : fatal error LNK1120: 1 个无法解析的外部命令
+
+error LNK2001: unresolved external symbol _WinMain@16
+debug/main.exe:fatal error LNK 1120:1 unresolved externals 
+error executing link.exe;
+
+二，原因及解决办法
+产生这个问题的真正原因是c语言运行时找不到适当的程序入口函数，
+
+一般情况下，如果是windows程序，那么WinMain是入口函数，在VS2008中新建项目为“win32项目”
+
+如果是dos控制台程序，那么main是入口函数，在VS2008中新建项目为“win32控制台应用程序”
+
+而如果入口函数指定不当，很显然c语言运行时找不到配合函数，它就会报告错误。
+
+修改设置适应你的需求
+
+如果是windows程序：
+
+
+1.菜单中选择 Project->Properties, 弹出Property Pages窗口
+
+2.在左边栏中依次选择：Configuration Properties->C/C++->Preprocessor,然后在右边栏的Preprocessor Definitions对应的项中删除_CONSOLE, 添加_WINDOWS.
+
+3.在左边栏中依次选择：Configuration Properties->Linker->System,然后在右边栏的SubSystem对应的项改为Windows(/SUBSYSTEM:WINDOWS)
+
+
+如果是控制台程序：
+
+
+1.菜单中选择 Project->Properties, 弹出Property Pages窗口
+
+2.在左边栏中依次选择：Configuration Properties->C/C++->Preprocessor,然后在右边栏的Preprocessor Definitions对应的项中删除_WINDOWS, 添加_CONSOLE.
+
+3.在左边栏中依次选择：Configuration Properties->Linker->System,然后在右边栏的SubSystem对应的项改为CONSOLE(/SUBSYSTEM:CONSOLE)
+
+

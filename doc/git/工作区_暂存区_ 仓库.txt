@@ -1,0 +1,14 @@
+Workspace:工作区
+Index/Stage:暂存区
+Responsitory:仓库区
+Remote:远程仓库
+
+
+Workspace->Index:add
+Index->Workspace:checkout
+
+Responsitory->Index:reset
+Index->Responsitory:commit
+
+Remote->Workspace:git fetch :获取是否有变动 ### git pull:获取内容
+

@@ -1,0 +1,7 @@
+1 linux访问windows
+mount -t cifs //192.168.56.1/xjp_code /home/xjp/code -o username=xjp,password=kingsoft
+# uname -a # 查看内核/操作系统/CPU信息
+# head -n 1 /etc/issue # 查看操作系统版本
+# cat /proc/cpuinfo # 查看CPU信息
+
+df 查看硬盘空间

@@ -1,0 +1,22 @@
+0 - normal
+1 - signal SIGHUP, Hangup.
+2 - signal SIGINT, Interrupt
+3 - signal SIGQUIT, Quit
+4 - signal SIGILL, Illegal instruction
+5 - signal SIGTRAP, Trace/breakpoint trap
+6 - signal SIGABRT, Aborted
+7 - signal SIGEMT, Emulation trap
+8 - signal SIGFPE, Arithmetic exception
+9 - signal SIGKILL, Killed
+10 - signal SIGBUS, Bus error
+11 - signal SIGSEGV, Segmentation fault
+12 - signal SIGSYS, Bad system call
+13 - signal SIGPIPE, Broken pipe
+14 - signal SIGTERM, Terminated
+15 - signal SIGSTOP, Stopped (signal)
+16 - signal SIGTSTP, Stopped (user)
+17 - signal SIGCONT, Continued
+18 - signal SIGTTIN, Stopped (tty input)
+19 - signal SIGTTOU, Stopped (tty output)
+20 - signal SIGXCPU, CPU time limit exceeded
+21 - signal SIGXFSZ, File size limit exceeded

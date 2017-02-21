@@ -1,0 +1,2 @@
+工作区的文件:git diff
+暂存区的文件:git diff --cached

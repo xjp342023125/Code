@@ -1,0 +1,5 @@
+LoadLibraryA
+[STRING[esp+4]]=="KFXClientNetwork.dll"
+
+LoadLibraryW
+[UNICODE[esp+4]]=="KFXClientNetwork.dll"

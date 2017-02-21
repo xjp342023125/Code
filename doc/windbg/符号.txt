@@ -1,0 +1,14 @@
+新建一个环境变量_NT_SYMBOL_PATH 值为: SRV*c:\mysymbol* http://msdl.microsoft.com/download/symbols
+
+.reload /f win32k.sys
+下载某个文件的
+
+1、检查sympath是否正确
+
+kd> .sympath
+Symbol search path is: srv*http://msdl.microsoft.com/download/symbols;C:\Windows\symbols;D:\VSSDataBase\TrueCrypt\Driver\obj_driver_debug\i386
+Expanded Symbol search path is: srv*http://msdl.microsoft.com/download/symbols;c:\windows\symbols;d:\vssdatabase\truecrypt\driver\obj_driver_debug\i386
+
+之前的尝试，以为符号表的路径在前面和在后面关系很大，毕竟是依次查找路径的嘛，只要查找正确了，路径前后和符号表在什么位置又有什么关系呢。
+
+src*与;之前的区别：src*是符号表服务器上找，而;是去本地路径上去找，对于一台机子来说就一样的。

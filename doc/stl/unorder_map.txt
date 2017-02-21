@@ -1,0 +1,16 @@
+STL map与Boost unordered_map  
+
+2012-03-30 16:06:26|  分类： c|c++ |举报|字号 订阅
+
+分类： C++2011-12-24 11:05 311人阅读 评论(0) 收藏 举报
+今天看到 boost::unordered_map， 它与 stl::map的区别就是，stl::map是按照operator<比较判断元素是否相同，以及比较元素的大小，然后选择合适的位置插入到树中。所以，如果对map进行遍历（中序遍历）的话，输出的结果是有序的。顺序就是按照operator< 定义的大小排序。
+
+而boost::unordered_map是计算元素的Hash值，根据Hash值判断元素是否相同。所以，对unordered_map进行遍历，结果是无序的。
+
+
+
+用法的区别就是，stl::map 的key需要定义operator< 。 而boost::unordered_map需要定义hash_value函数并且重载operator==。对于内置类型，如string，这些都不用操心。对于自定义的类型做key，就需要自己重载operator< 或者hash_value()了。 
+
+
+
+最后，说，当不需要结果排好序时，最好用unordered_map。
