@@ -1,9 +1,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "event2/evhttp_tool.hpp"
-
+#include "event2/evhttp_server.hpp"
 #include <string>
 #include "time.h"
+#include "event2/event_wrap.hpp"
+#include "event2/evhttp_server.hpp"
 using namespace std;
 #define AUTH_STR "eyJhdXRoVG9rZW4iOiJhdXRoVG9rZW4iLCJjaGFubmVsSWQiOiJtaSIsImRldmljZUlkIjoiZGV2aWNlSWQiLCJuYW1lIjoibmFtZSIsInBsYW5JZCI6IjEiLCJ4Z0FwcElkIjoiMjAxOCIsInNpZ24iOiJmYTM0MzgxZGM1ODRmNjMxYTg3YTA0MzZlNDllZjRkM2E3MWVlNTVkIiwidHMiOiIyMDE1MDcyMzE1MDAyOCIsInVpZCI6InVpZCJ9"
 
@@ -45,7 +47,7 @@ string get_xgsdk_str(string appid, string auth)
 }
 
 
-
+int  i = 0;
 class evhttp_wrap_xg :public evhttp_wrap
 {
 public:
@@ -53,43 +55,58 @@ public:
 	{
 		struct evbuffer * data = 0;
 		data = this->buffer;
-		printf("got %d bytes\n", data ? evbuffer_get_length(data) : -1);
+		//printf("got %d bytes\n", data ? evbuffer_get_length(data) : -1);
 
 		if (data)
 		{
 			const unsigned char * joined = evbuffer_pullup(data, -1);
-			printf("data itself:\n====================\n");
-			fwrite(joined, evbuffer_get_length(data), 1, stderr);
-			printf("\n====================\n");
+			//printf("data itself:\n====================\n");
+			//fwrite(joined, evbuffer_get_length(data), 1, stderr);
+			//printf("\n====================\n");
 		}
 		evbuffer_drain(data, evbuffer_get_length(data));
 
-		init_con("a2.xgsdk.com");
+		//init_con("a2.xgsdk.com");
+		init_con("127.0.0.1");
 		make_get_query(get_xgsdk_str("17952", AUTH_STR));
+
+		printf("threadid = %d\n", GetCurrentThreadId());
+		//printf("%d\n", ++i);
 	}
 };
+
+class web_server2 : public evhttp_server_wrap
+{
+public:
+	virtual void do_req(struct evhttp_request &req, struct evbuffer &buf)
+	{
+		printf("%s\n", evhttp_request_get_uri(&req));
+		//printf("%s\n", evhttp_request_get_command(&req));
+	}
+};
+
 int main(int argc, char **argv)
 {
-	struct event_base * base = NULL;
-
+	printf("threadid main = %d\n", GetCurrentThreadId());
+	event_base_wrap base_wrap;
 	evhttp_wrap_xg http;
+	web_server2 web2;
 #ifdef WIN32
 	WORD wVersionRequested;
 	WSADATA wsaData;
-
 	wVersionRequested = MAKEWORD(2, 2);
-
 	(void)WSAStartup(wVersionRequested, &wsaData);
 #endif
-	base = event_base_new();
-	http.init(base);
-	http.init_con("a2.xgsdk.com");
+	base_wrap.init();
+	http.init(base_wrap.base);
+	//init_con("a2.xgsdk.com");
+	http.init_con("127.0.0.1");
 	http.make_get_query(get_xgsdk_str("17952", AUTH_STR));
 	
+	web2.init_web("127.0.0.1", 80, base_wrap.base);
 	while (1)
 	{
-		int ret = event_base_loop(base, EVLOOP_NONBLOCK);
-		//printf("event_base_loop=%d\n", ret);
+		base_wrap.async_loop();
 		//Sleep(100);
 	}
 

@@ -183,6 +183,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\event2\event_wrap.hpp" />
+    <ClInclude Include="..\include\event2\evhttp_server.hpp" />
     <ClInclude Include="..\include\event2\evhttp_tool.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

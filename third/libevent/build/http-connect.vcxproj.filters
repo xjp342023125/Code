@@ -17,5 +17,11 @@
     <ClInclude Include="..\include\event2\evhttp_tool.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\event2\evhttp_server.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\event2\event_wrap.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
