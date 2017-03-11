@@ -542,6 +542,9 @@ MAX_RELEASE_CHECK_RATE   default: 4095 unless not HAVE_MMAP
   improvement at the expense of carrying around more memory.
 */
 
+#ifdef USE_DLMALLOC
+#include "win32_types.h"
+
 /* Version identifier to allow people to support multiple versions */
 #ifndef DLMALLOC_VERSION
 #define DLMALLOC_VERSION 20806
@@ -607,9 +610,6 @@ MAX_RELEASE_CHECK_RATE   default: 4095 unless not HAVE_MMAP
 #ifndef LACKS_SYS_TYPES_H
 #include <sys/types.h>  /* For size_t */
 #endif  /* LACKS_SYS_TYPES_H */
-
-/* The maximum possible size_t value has all bits set */
-#define MAX_SIZE_T           (~(size_t)0)
 
 #define USE_LOCKS 1
 
@@ -1694,19 +1694,17 @@ static int dev_zero_fd = -1; /* Cached file descriptor for /dev/zero. */
 
 #else /* WIN32 */
 
+#ifdef USE_DLMALLOC
 #define USE_COW
+#endif
 
 /* Win32 MMAP via VirtualAlloc */
 static FORCEINLINE void* win32mmap(size_t size) {
 #ifdef USE_COW
-  void* ptr = AllocHeapBlock(size,FALSE);
+  void* ptr = AllocHeapBlock(size, FALSE);
 #else
   void* ptr = VirtualAlloc(0, size, MEM_RESERVE|MEM_COMMIT, PAGE_READWRITE);
 #endif
-  if( ptr == NULL )
-  {
-      printf( "VirtualAlloc/COWAlloc fail!\n");
-  }
   return (ptr != 0)? ptr: MFAIL;
 }
 
@@ -1717,43 +1715,20 @@ static FORCEINLINE void* win32direct_mmap(size_t size) {
 #else
   void* ptr = VirtualAlloc(0, size, MEM_RESERVE|MEM_COMMIT|MEM_TOP_DOWN, PAGE_READWRITE);
 #endif
-  if( ptr == NULL )
-  {
-      printf( "VirtualAlloc/COWAlloc fail!\n");
-  }
   return (ptr != 0)? ptr: MFAIL;
 }
 
-/* This function supports releasing coalesed segments */
+/* This function supports releasing coalesced segments */
 static FORCEINLINE int win32munmap(void* ptr, size_t size) {
-  char* cptr = (char*)ptr;
-
-if (FreeHeapBlock(cptr,size) == 0)
-    return -1;
-else 
-    return 0;
-/*
-  MEMORY_BASIC_INFORMATION minfo;
-  while (size) {
-    if (VirtualQuery(cptr, &minfo, sizeof(minfo)) == 0)
-      return -1;
-    if (minfo.BaseAddress != cptr || minfo.AllocationBase != cptr ||
-        minfo.State != MEM_COMMIT || minfo.RegionSize > size)
-      return -1;
-    
 #ifdef USE_COW
-    if (FreeHeapBlock(cptr) == 0)
+  if (FreeHeapBlock(ptr, size) == FALSE)
 #else
-    if (VirtualFree(cptr, 0, MEM_RELEASE) == 0)
+  if (VirtualFree(ptr, 0, MEM_RELEASE) == FALSE)
 #endif
-    {
-        return -1;
-    }
-    cptr += minfo.RegionSize;
-    size -= minfo.RegionSize;
+  {
+    return -1;
   }
   return 0;
-*/
 }
 
 #define MMAP_DEFAULT(s)             win32mmap(s)
@@ -6056,6 +6031,8 @@ int SetDLMallocGlobalState(size_t bufferSize, LPVOID buffer) {
         return 0;
     }
 }
+
+#endif /* USE_DLMALLOC */
 
 /* -------------------- Alternative MORECORE functions ------------------- */
 

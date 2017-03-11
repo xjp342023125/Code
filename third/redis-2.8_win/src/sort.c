@@ -33,7 +33,7 @@
 #include "pqsort.h" /* Partial qsort for SORT+LIMIT */
 #include <math.h> /* isnan() */
 
-zskiplistNode* zslGetElementByRank(zskiplist *zsl, unsigned long rank);
+zskiplistNode* zslGetElementByRank(zskiplist *zsl, PORT_ULONG rank);
 
 redisSortOperation *createSortOperation(int type, robj *pattern) {
     redisSortOperation *so = zmalloc(sizeof(*so));
@@ -88,16 +88,16 @@ robj *lookupKeyByPattern(redisDb *db, robj *pattern, robj *subst) {
 
     /* Find out if we're dealing with a hash dereference. */
     if ((f = strstr(p+1, "->")) != NULL && *(f+2) != '\0') {
-        fieldlen = (int)(sdslen(spat)-(f-spat)-2);
+        fieldlen = (int)(sdslen(spat)-(f-spat)-2);                              WIN_PORT_FIX /* cast (int) */
         fieldobj = createStringObject(f+2,fieldlen);
     } else {
         fieldlen = 0;
     }
 
     /* Perform the '*' substitution. */
-    prefixlen = (int)(p-spat);
-    sublen = (int)sdslen(ssub);
-    postfixlen = (int)(sdslen(spat)-(prefixlen+1)-(fieldlen ? fieldlen+2 : 0));
+    prefixlen = (int)(p-spat);                                                  WIN_PORT_FIX /* cast (int) */
+    sublen = (int)sdslen(ssub);                                                 WIN_PORT_FIX /* cast (int) */
+    postfixlen = (int)(sdslen(spat)-(prefixlen+1)-(fieldlen ? fieldlen+2 : 0)); WIN_PORT_FIX /* cast (int) */
     keyobj = createStringObject(NULL,prefixlen+sublen+postfixlen);
     k = keyobj->ptr;
     memcpy(k,spat,prefixlen);
@@ -190,10 +190,11 @@ void sortCommand(redisClient *c) {
     list *operations;
     unsigned int outputlen = 0;
     int desc = 0, alpha = 0;
-    long limit_start = 0, limit_count = -1, start, end;
+    PORT_LONG limit_start = 0, limit_count = -1, start, end;
     int j, dontsort = 0, vectorlen;
     int getop = 0; /* GET operation counter */
     int int_convertion_error = 0;
+    int syntax_error = 0;
     robj *sortval, *sortby = NULL, *storekey = NULL;
     redisSortObject *vector; /* Resulting vector to sort */
 
@@ -208,7 +209,7 @@ void sortCommand(redisClient *c) {
     }
 
     /* Create a list of operations to perform for every sorted element.
-     * Operations can be GET/DEL/INCR/DECR */
+     * Operations can be GET */
     operations = listCreate();
     listSetFreeMethod(operations,zfree);
     j = 2; /* options start at argv[2] */
@@ -236,9 +237,8 @@ void sortCommand(redisClient *c) {
                 (getLongFromObjectOrReply(c, c->argv[j+2], &limit_count, NULL)
                  != REDIS_OK))
             {
-                decrRefCount(sortval);
-                listRelease(operations);
-                return;
+                syntax_error++;
+                break;
             }
             j+=2;
         } else if (!strcasecmp(c->argv[j]->ptr,"store") && leftargs >= 1) {
@@ -248,20 +248,41 @@ void sortCommand(redisClient *c) {
             sortby = c->argv[j+1];
             /* If the BY pattern does not contain '*', i.e. it is constant,
              * we don't need to sort nor to lookup the weight keys. */
-            if (strchr(c->argv[j+1]->ptr,'*') == NULL) dontsort = 1;
+            if (strchr(c->argv[j+1]->ptr,'*') == NULL) {
+                dontsort = 1;
+            } else {
+                /* If BY is specified with a real patter, we can't accept
+                 * it in cluster mode. */
+                if (server.cluster_enabled) {
+                    addReplyError(c,"BY option of SORT denied in Cluster mode.");
+                    syntax_error++;
+                    break;
+                }
+            }
             j++;
         } else if (!strcasecmp(c->argv[j]->ptr,"get") && leftargs >= 1) {
+            if (server.cluster_enabled) {
+                addReplyError(c,"GET option of SORT denied in Cluster mode.");
+                syntax_error++;
+                break;
+            }
             listAddNodeTail(operations,createSortOperation(
                 REDIS_SORT_GET,c->argv[j+1]));
             getop++;
             j++;
         } else {
-            decrRefCount(sortval);
-            listRelease(operations);
             addReply(c,shared.syntaxerr);
-            return;
+            syntax_error++;
+            break;
         }
         j++;
+    }
+
+    /* Handle syntax errors set during options parsing. */
+    if (syntax_error) {
+        decrRefCount(sortval);
+        listRelease(operations);
+        return;
     }
 
     /* When sorting a set with no sort specified, we must sort the output
@@ -286,9 +307,9 @@ void sortCommand(redisClient *c) {
 
     /* Objtain the length of the object to sort. */
     switch(sortval->type) {
-    case REDIS_LIST: vectorlen = listTypeLength(sortval); break;
-    case REDIS_SET: vectorlen =  setTypeSize(sortval); break;
-    case REDIS_ZSET: vectorlen = (int)dictSize(((zset*)sortval->ptr)->dict); break;
+    case REDIS_LIST: vectorlen = (int)listTypeLength(sortval); break;           WIN_PORT_FIX /* cast (int) */
+    case REDIS_SET: vectorlen =  (int)setTypeSize(sortval); break;              WIN_PORT_FIX /* cast (int) */
+    case REDIS_ZSET: vectorlen = (int)dictSize(((zset*)sortval->ptr)->dict); break; WIN_PORT_FIX /* cast (int) */
     default: vectorlen = 0; redisPanic("Bad SORT type"); /* Avoid GCC warning */
     }
 
@@ -315,7 +336,7 @@ void sortCommand(redisClient *c) {
         dontsort &&
         (start != 0 || end != vectorlen-1))
     {
-        vectorlen = end-start+1;
+        vectorlen = (int)(end-start+1);                                         WIN_PORT_FIX /* cast (int) */
     }
 
     /* Load the sorting vector with all the objects to sort */
@@ -358,7 +379,7 @@ void sortCommand(redisClient *c) {
 
         /* Check if starting point is trivial, before doing log(N) lookup. */
         if (desc) {
-            long zsetlen = (long)dictSize(((zset*)sortval->ptr)->dict);
+            PORT_LONG zsetlen = (PORT_LONG) dictSize(((zset*)sortval->ptr)->dict); WIN_PORT_FIX /* cast (PORT_LONG) */
 
             ln = zsl->tail;
             if (start > 0)
@@ -417,7 +438,7 @@ void sortCommand(redisClient *c) {
             if (alpha) {
                 if (sortby) vector[j].u.cmpobj = getDecodedObject(byval);
             } else {
-                if (byval->encoding == REDIS_ENCODING_RAW) {
+                if (sdsEncodedObject(byval)) {
                     char *eptr;
 
                     vector[j].u.score = strtod(byval->ptr,&eptr);
@@ -430,7 +451,7 @@ void sortCommand(redisClient *c) {
                     /* Don't need to decode the object if it's
                      * integer-encoded (the only encoding supported) so
                      * far. We can just cast it */
-                    vector[j].u.score = (long)byval->ptr;
+                    vector[j].u.score = (PORT_LONG) byval->ptr;
                 } else {
                     redisAssertWithInfo(c,sortval,1 != 1);
                 }
@@ -457,13 +478,13 @@ void sortCommand(redisClient *c) {
 
     /* Send command output to the output buffer, performing the specified
      * GET/DEL/INCR/DECR operations if any. */
-    outputlen = getop ? getop*(end-start+1) : end-start+1;
+    outputlen = getop ? (unsigned int)(getop*(end-start+1)) : (unsigned int)(end-start+1); WIN_PORT_FIX /* cast (unsigned int), cast (unsigned int) */
     if (int_convertion_error) {
         addReplyError(c,"One or more scores can't be converted into double");
     } else if (storekey == NULL) {
         /* STORE option not specified, sent the sorting result to client */
         addReplyMultiBulkLen(c,outputlen);
-        for (j = start; j <= end; j++) {
+        for (j = (int)start; j <= end; j++) {                                   WIN_PORT_FIX /* cast (int) */
             listNode *ln;
             listIter li;
 
@@ -491,7 +512,7 @@ void sortCommand(redisClient *c) {
         robj *sobj = createZiplistObject();
 
         /* STORE option specified, set the sorting result as a List object */
-        for (j = start; j <= end; j++) {
+        for (j = (int)start; j <= end; j++) {                                   WIN_PORT_FIX /* cast (int) */
             listNode *ln;
             listIter li;
 

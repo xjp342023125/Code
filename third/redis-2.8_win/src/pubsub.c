@@ -49,14 +49,14 @@ int listMatchPubsubPattern(void *a, void *b) {
 
 /* Return the number of channels + patterns a client is subscribed to. */
 int clientSubscriptionsCount(redisClient *c) {
-    return (int)(dictSize(c->pubsub_channels)+
+    return (int)(dictSize(c->pubsub_channels)+                                  WIN_PORT_FIX /* cast (int) */
            listLength(c->pubsub_patterns));
 }
 
 /* Subscribe a client to a channel. Returns 1 if the operation succeeded, or
  * 0 if the client was already subscribed to that channel. */
 int pubsubSubscribeChannel(redisClient *c, robj *channel) {
-    struct dictEntry *de;
+    dictEntry *de;
     list *clients = NULL;
     int retval = 0;
 
@@ -86,7 +86,7 @@ int pubsubSubscribeChannel(redisClient *c, robj *channel) {
 /* Unsubscribe a client from a channel. Returns 1 if the operation succeeded, or
  * 0 if the client was not subscribed to the specified channel. */
 int pubsubUnsubscribeChannel(redisClient *c, robj *channel, int notify) {
-    struct dictEntry *de;
+    dictEntry *de;
     list *clients;
     listNode *ln;
     int retval = 0;
@@ -128,8 +128,8 @@ int pubsubSubscribePattern(redisClient *c, robj *pattern) {
     int retval = 0;
 
     if (listSearchKey(c->pubsub_patterns,pattern) == NULL) {
-        pubsubPattern *pat;
         retval = 1;
+        pubsubPattern *pat;
         listAddNodeTail(c->pubsub_patterns,pattern);
         incrRefCount(pattern);
         pat = zmalloc(sizeof(*pat));
@@ -224,7 +224,7 @@ int pubsubUnsubscribeAllPatterns(redisClient *c, int notify) {
 /* Publish a message */
 int pubsubPublishMessage(robj *channel, robj *message) {
     int receivers = 0;
-    struct dictEntry *de;
+    dictEntry *de;
     listNode *ln;
     listIter li;
 
@@ -254,9 +254,9 @@ int pubsubPublishMessage(robj *channel, robj *message) {
             pubsubPattern *pat = ln->value;
 
             if (stringmatchlen((char*)pat->pattern->ptr,
-                                (int)sdslen(pat->pattern->ptr),
+                                (int)sdslen(pat->pattern->ptr),                 WIN_PORT_FIX /* cast (int) */
                                 (char*)channel->ptr,
-                                (int)sdslen(channel->ptr),0)) {
+                                (int)sdslen(channel->ptr),0)) {                 WIN_PORT_FIX /* cast (int) */
                 addReply(pat->client,shared.mbulkhdr[4]);
                 addReply(pat->client,shared.pmessagebulk);
                 addReplyBulk(pat->client,pat->pattern);
@@ -316,7 +316,10 @@ void punsubscribeCommand(redisClient *c) {
 
 void publishCommand(redisClient *c) {
     int receivers = pubsubPublishMessage(c->argv[1],c->argv[2]);
-    forceCommandPropagation(c,REDIS_PROPAGATE_REPL);
+    if (server.cluster_enabled)
+        clusterPropagatePublish(c->argv[1],c->argv[2]);
+    else
+        forceCommandPropagation(c,REDIS_PROPAGATE_REPL);
     addReplyLongLong(c,receivers);
 }
 
@@ -329,7 +332,7 @@ void pubsubCommand(redisClient *c) {
         sds pat = (c->argc == 2) ? NULL : c->argv[2]->ptr;
         dictIterator *di = dictGetIterator(server.pubsub_channels);
         dictEntry *de;
-        long mblen = 0;
+        PORT_LONG mblen = 0;
         void *replylen;
 
         replylen = addDeferredMultiBulkLength(c);
@@ -337,8 +340,8 @@ void pubsubCommand(redisClient *c) {
             robj *cobj = dictGetKey(de);
             sds channel = cobj->ptr;
 
-            if (!pat || stringmatchlen(pat, (int)sdslen(pat),
-                                       channel, (int)sdslen(channel),0))
+            if (!pat || stringmatchlen(pat, (int)sdslen(pat),                   WIN_PORT_FIX /* cast (int) */
+                                       channel, (int)sdslen(channel),0))        WIN_PORT_FIX /* cast (int) */
             {
                 addReplyBulk(c,cobj);
                 mblen++;

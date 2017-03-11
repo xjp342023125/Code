@@ -28,16 +28,15 @@ namespace ReleasePackagingTool
 
                 string version;
                 version = p.GetRedisVersion();
-                p.UpdateReleaseNotes(version);
                 p.UpdateNuSpecFiles(version);
-                p.BuildReleasePackage(version);
-                p.DocxToMd();
+                p.BuildReleasePackage(version, "x64");
+                
                 Console.Write("Release packaging complete.");
                 Environment.ExitCode = 0;
             }
             catch(Exception ex)
             {
-                Console.WriteLine("Error. Failed to finish release packaging. \n" + ex.ToString());
+                Console.WriteLine("Error. Failed to finish release packaging.\n" + ex.ToString());
                 Environment.ExitCode = -1;
             }
         }
@@ -49,70 +48,6 @@ namespace ReleasePackagingTool
             int start = line.IndexOf('\"');
             int last = line.LastIndexOf('\"');
             return line.Substring(start + 1, last - start - 1);
-        }
-
-        void DocxToMd()
-        {
-            // locate converter (pandoc v1.13.0+) 
-            string pandocToolPath = Path.Combine(rootPath, @"msvs\tools\pandoc\pandoc.exe");
-            if (File.Exists(pandocToolPath))
-            {
-                var files = Directory.EnumerateFiles(Path.Combine(rootPath, @"msvs\setups\documentation"), "*.docx");
-                foreach (string sourceFile in files)
-                {
-                    string fileName = Path.GetFileName(sourceFile);
-                    string destFile = Path.ChangeExtension(Path.Combine(rootPath, fileName), "md");
-                    System.Diagnostics.Process p = new Process();
-                    p.StartInfo.FileName = pandocToolPath;
-                    p.StartInfo.UseShellExecute = false;
-                    p.StartInfo.Arguments = string.Format(
-                                                "-f {0} -t {1} -o \"{2}\" \"{3}\"",
-                                                "docx",
-                                                "markdown_github",
-                                                destFile,
-                                                sourceFile);
-                    p.Start();
-                    p.WaitForExit();
-                    if (p.ExitCode != 0)
-                    {
-                        Console.WriteLine("conversion of'{0}' to '{1}' failed.", sourceFile, destFile);
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine("pandoc tool not found. docx-->md conversion will not take place.");
-            }
-        }
-
-        void UpdateReleaseNotes(string redisVersion)
-        {
-            string releaseNotesPath = Path.Combine(rootPath, @"msvs\setups\documentation\Redis on Windows Release Notes.docx");
-            string templatePath = Path.Combine(rootPath, @"msvs\setups\documentation\templates\Redis Release Notes Template.docx");
-
-            ForceFileErase(releaseNotesPath);
-            File.Copy(templatePath, releaseNotesPath);
-
-            var archive = ZipFile.Open(releaseNotesPath, ZipArchiveMode.Update);
-
-            string docuemntContent = @"word/document.xml";
-            ZipArchiveEntry entry = archive.GetEntry(docuemntContent);
-            string updatedContent;
-            using (TextReader tr = new StreamReader(entry.Open()))
-            {
-                string documentContent = tr.ReadToEnd();
-                updatedContent = documentContent.Replace(versionReplacementText, redisVersion);
-            }
-            entry.Delete();
-            archive.Dispose();  // forces the file to be written to disk with the documentContent entry deleted 
-
-            archive = System.IO.Compression.ZipFile.Open(releaseNotesPath, ZipArchiveMode.Update);
-            ZipArchiveEntry updatedEntry = archive.CreateEntry(docuemntContent, CompressionLevel.Optimal);
-            using (TextWriter tw = new StreamWriter(updatedEntry.Open()))
-            {
-                tw.Write(updatedContent);
-            }
-            archive.Dispose(); // rewrites the file with the updated content
         }
 
         void ForceFileErase(string file)
@@ -141,23 +76,29 @@ namespace ReleasePackagingTool
             }
         }
 
-        void UpdateNuSpecFiles(string redisVersion)
+        void UpdateNuSpecFiles(string version)
         {
-            string chocTemplate = Path.Combine(rootPath, @"msvs\setups\chocolatey\template\Redis.nuspec.template");
-            string chocDocument = Path.Combine(rootPath, @"msvs\setups\chocolatey\Redis.nuspec");
-            CreateTextFileFromTemplate(chocTemplate, chocDocument, versionReplacementText, redisVersion);
+            string chocTemplate = Path.Combine(rootPath, @"msvs\setups\chocolatey\template\redis.nuspec.template");
+            string chocDocument = Path.Combine(rootPath, @"msvs\setups\chocolatey\redis.nuspec");
+            CreateTextFileFromTemplate(chocTemplate, chocDocument, versionReplacementText, version);
 
-            string nugetTemplate = Path.Combine(rootPath, @"msvs\setups\nuget\template\Redis.nuspec.template");
-            string nugetDocument = Path.Combine(rootPath, @"msvs\setups\nuget\Redis.nuspec");
-            CreateTextFileFromTemplate(nugetTemplate, nugetDocument, versionReplacementText, redisVersion);
+            string nugetTemplate = Path.Combine(rootPath, @"msvs\setups\nuget\template\redis.nuspec.template");
+            string nugetDocument = Path.Combine(rootPath, @"msvs\setups\nuget\redis.nuspec");
+            CreateTextFileFromTemplate(nugetTemplate, nugetDocument, versionReplacementText, version);
         }
 
-        void BuildReleasePackage(string version)
+        void BuildReleasePackage(string version, string platform)
         {
-            string releasePackagePath = Path.Combine(rootPath, @"bin\Release\redis-" + version + ".zip");
+            string releasePackageDir = Path.Combine(rootPath, @"msvs\BuildRelease\Redis-" + version + @"\");
+            if (Directory.Exists(releasePackageDir) == false)
+            {
+                Directory.CreateDirectory(releasePackageDir);
+            }
+
+            string releasePackagePath = Path.Combine(rootPath, releasePackageDir + "Redis-" + platform + "-" + version + ".zip");
             ForceFileErase(releasePackagePath);
 
-            string executablesRoot = Path.Combine(rootPath, @"msvs\x64\Release");
+            string executablesRoot = Path.Combine(rootPath, @"msvs\" + platform + @"\Release");
             List<string> executableNames = new List<string>()
             {
                 "redis-benchmark.exe",
@@ -166,13 +107,26 @@ namespace ReleasePackagingTool
                 "redis-cli.exe",
                 "redis-server.exe"
             };
+            List<string> symbolNames = new List<string>()
+            {
+                "redis-benchmark.pdb",
+                "redis-check-aof.pdb",
+                "redis-check-dump.pdb",
+                "redis-cli.pdb",
+                "redis-server.pdb"
+            };
+            List<string> dependencyNames = new List<string>()
+            {
+                "EventLog.dll"
+            };
             string documentsRoot = Path.Combine(rootPath, @"msvs\setups\documentation");
             List<string> docuementNames = new List<string>()
             {
                 "Redis on Windows.docx",
                 "Redis on Windows Release Notes.docx",
                 "Windows Service Documentation.docx",
-                "redis.windows.conf"
+                "redis.windows.conf",
+                "redis.windows-service.conf"
             };
 
             using (ZipArchive archive = ZipFile.Open(releasePackagePath, ZipArchiveMode.Create))
@@ -180,6 +134,14 @@ namespace ReleasePackagingTool
                 foreach (string executableName in executableNames)
                 {
                     archive.CreateEntryFromFile(Path.Combine(executablesRoot, executableName), executableName);
+                }
+                foreach (string symbolName in symbolNames)
+                {
+                    archive.CreateEntryFromFile(Path.Combine(executablesRoot, symbolName), symbolName);
+                }
+                foreach (string dependencyName in dependencyNames)
+                {
+                    archive.CreateEntryFromFile(Path.Combine(executablesRoot, dependencyName), dependencyName);
                 }
                 foreach (string documentName in docuementNames)
                 {

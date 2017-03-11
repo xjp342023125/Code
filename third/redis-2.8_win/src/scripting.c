@@ -27,9 +27,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifdef _WIN32
+#include "Win32_Interop/Win32_Portability.h"
+#endif
 #include "redis.h"
 #include "sha1.h"
 #include "rand.h"
+#include "cluster.h"
 
 #include <lua.h>
 #include <lauxlib.h>
@@ -90,7 +94,7 @@ char *redisProtocolToLuaType(lua_State *lua, char* reply) {
 
 char *redisProtocolToLuaType_Int(lua_State *lua, char *reply) {
     char *p = strchr(reply+1,'\r');
-    long long value;
+    PORT_LONGLONG value;
 
     string2ll(reply+1,p-reply-1,&value);
     lua_pushnumber(lua,(lua_Number)value);
@@ -99,14 +103,14 @@ char *redisProtocolToLuaType_Int(lua_State *lua, char *reply) {
 
 char *redisProtocolToLuaType_Bulk(lua_State *lua, char *reply) {
     char *p = strchr(reply+1,'\r');
-    long long bulklen;
+    PORT_LONGLONG bulklen;
 
     string2ll(reply+1,p-reply-1,&bulklen);
     if (bulklen == -1) {
         lua_pushboolean(lua,0);
         return p+2;
     } else {
-        lua_pushlstring(lua,p+2,(size_t)bulklen);
+        lua_pushlstring(lua,p+2,(size_t)bulklen);                               WIN_PORT_FIX /* cast (size_t) */
         return p+2+bulklen+2;
     }
 }
@@ -133,7 +137,7 @@ char *redisProtocolToLuaType_Error(lua_State *lua, char *reply) {
 
 char *redisProtocolToLuaType_MultiBulk(lua_State *lua, char *reply) {
     char *p = strchr(reply+1,'\r');
-    long long mbulklen;
+    PORT_LONGLONG mbulklen;
     int j = 0;
 
     string2ll(reply+1,p-reply-1,&mbulklen);
@@ -213,11 +217,27 @@ int luaRedisGenericCommand(lua_State *lua, int raise_error) {
     static int argv_size = 0;
     static robj *cached_objects[LUA_CMD_OBJCACHE_SIZE];
     static size_t cached_objects_len[LUA_CMD_OBJCACHE_SIZE];
+    static int inuse = 0;   /* Recursive calls detection. */
+
+    /* By using Lua debug hooks it is possible to trigger a recursive call
+     * to luaRedisGenericCommand(), which normally should never happen.
+     * To make this function reentrant is futile and makes it slower, but
+     * we should at least detect such a misuse, and abort. */
+    if (inuse) {
+        char *recursion_warning =
+            "luaRedisGenericCommand() recursive call detected. "
+            "Are you doing funny stuff with Lua debug hooks?";
+        redisLog(REDIS_WARNING,"%s",recursion_warning);
+        luaPushError(lua,recursion_warning);
+        return 1;
+    }
+    inuse++;
 
     /* Require at least one argument */
     if (argc == 0) {
         luaPushError(lua,
             "Please specify at least one argument for redis.call()");
+        inuse--;
         return 1;
     }
 
@@ -254,8 +274,8 @@ int luaRedisGenericCommand(lua_State *lua, int raise_error) {
             argv[j] = cached_objects[j];
             cached_objects[j] = NULL;
             memcpy(s,obj_s,obj_len+1);
-            sh->free += (int)(sh->len - obj_len);
-            sh->len = (int)obj_len;
+            sh->free += (int)(sh->len - obj_len);                               WIN_PORT_FIX /* cast (int) */
+            sh->len = (int)obj_len;                                             WIN_PORT_FIX /* cast (int) */
         } else {
             argv[j] = createStringObject(obj_s, obj_len);
         }
@@ -272,6 +292,7 @@ int luaRedisGenericCommand(lua_State *lua, int raise_error) {
         }
         luaPushError(lua,
             "Lua redis() command arguments must be strings or integers");
+        inuse--;
         return 1;
     }
 
@@ -291,6 +312,7 @@ int luaRedisGenericCommand(lua_State *lua, int raise_error) {
             luaPushError(lua,"Unknown Redis command called from Lua script");
         goto cleanup;
     }
+    c->cmd = cmd;
 
     /* There are commands that are not allowed inside scripts. */
     if (cmd->flags & REDIS_CMD_NOSCRIPT) {
@@ -337,8 +359,24 @@ int luaRedisGenericCommand(lua_State *lua, int raise_error) {
     if (cmd->flags & REDIS_CMD_RANDOM) server.lua_random_dirty = 1;
     if (cmd->flags & REDIS_CMD_WRITE) server.lua_write_dirty = 1;
 
+    /* If this is a Redis Cluster node, we need to make sure Lua is not
+     * trying to access non-local keys, with the exception of commands
+     * received from our master. */
+    if (server.cluster_enabled && !(server.lua_caller->flags & REDIS_MASTER)) {
+        /* Duplicate relevant flags in the lua client. */
+        c->flags &= ~(REDIS_READONLY|REDIS_ASKING);
+        c->flags |= server.lua_caller->flags & (REDIS_READONLY|REDIS_ASKING);
+        if (getNodeByQuery(c,c->cmd,c->argv,c->argc,NULL,NULL) !=
+                           server.cluster->myself)
+        {
+            luaPushError(lua,
+                "Lua script attempted to access a non local key in a "
+                "cluster node");
+            goto cleanup;
+        }
+    }
+
     /* Run the command */
-    c->cmd = cmd;
     call(c,REDIS_CALL_SLOWLOG | REDIS_CALL_STATS);
 
     /* Convert the result of the Redis command into a suitable Lua type.
@@ -383,7 +421,8 @@ cleanup:
          * (we must be the only owner) for us to cache it. */
         if (j < LUA_CMD_OBJCACHE_SIZE &&
             o->refcount == 1 &&
-            o->encoding == REDIS_ENCODING_RAW &&
+            (o->encoding == REDIS_ENCODING_RAW ||
+             o->encoding == REDIS_ENCODING_EMBSTR) &&
             sdslen(o->ptr) <= LUA_CMD_OBJCACHE_MAX_LEN)
         {
             struct sdshdr *sh = (void*)(((char*)(o->ptr))-(sizeof(struct sdshdr)));
@@ -408,8 +447,10 @@ cleanup:
          * return the plain error. */
         lua_pushstring(lua,"err");
         lua_gettable(lua,-2);
+        inuse--;
         return lua_error(lua);
     }
+    inuse--;
     return 1;
 }
 
@@ -480,7 +521,7 @@ int luaLogCommand(lua_State *lua) {
         luaPushError(lua, "First argument must be a number (log level).");
         return 1;
     }
-    level = (int)lua_tonumber(lua,-argc);
+    level = (int)lua_tonumber(lua,-argc);                                       WIN_PORT_FIX /* cast (int) */
     if (level < REDIS_DEBUG || level > REDIS_WARNING) {
         luaPushError(lua, "Invalid debug level.");
         return 1;
@@ -504,7 +545,7 @@ int luaLogCommand(lua_State *lua) {
 }
 
 void luaMaskCountHook(lua_State *lua, lua_Debug *ar) {
-    long long elapsed;
+    PORT_LONGLONG elapsed;
     REDIS_NOTUSED(ar);
     REDIS_NOTUSED(lua);
 
@@ -574,11 +615,12 @@ void scriptingEnableGlobalsProtection(lua_State *lua) {
 
     /* strict.lua from: http://metalua.luaforge.net/src/lib/strict.lua.html.
      * Modified to be adapted to Redis. */
+    s[j++]="local dbg=debug\n";
     s[j++]="local mt = {}\n";
     s[j++]="setmetatable(_G, mt)\n";
     s[j++]="mt.__newindex = function (t, n, v)\n";
-    s[j++]="  if debug.getinfo(2) then\n";
-    s[j++]="    local w = debug.getinfo(2, \"S\").what\n";
+    s[j++]="  if dbg.getinfo(2) then\n";
+    s[j++]="    local w = dbg.getinfo(2, \"S\").what\n";
     s[j++]="    if w ~= \"main\" and w ~= \"C\" then\n";
     s[j++]="      error(\"Script attempted to create global variable '\"..tostring(n)..\"'\", 2)\n";
     s[j++]="    end\n";
@@ -586,11 +628,12 @@ void scriptingEnableGlobalsProtection(lua_State *lua) {
     s[j++]="  rawset(t, n, v)\n";
     s[j++]="end\n";
     s[j++]="mt.__index = function (t, n)\n";
-    s[j++]="  if debug.getinfo(2) and debug.getinfo(2, \"S\").what ~= \"C\" then\n";
+    s[j++]="  if dbg.getinfo(2) and dbg.getinfo(2, \"S\").what ~= \"C\" then\n";
     s[j++]="    error(\"Script attempted to access unexisting global variable '\"..tostring(n)..\"'\", 2)\n";
     s[j++]="  end\n";
     s[j++]="  return rawget(t, n)\n";
     s[j++]="end\n";
+    s[j++]="debug = nil\n";
     s[j++]=NULL;
 
     for (j = 0; s[j] != NULL; j++) code = sdscatlen(code,s[j],strlen(s[j]));
@@ -694,10 +737,11 @@ void scriptingInit(void) {
      * information about the caller, that's what makes sense from the point
      * of view of the user debugging a script. */
     {
-        char *errh_func =       "function __redis__err__handler(err)\n"
-                                "  local i = debug.getinfo(2,'nSl')\n"
+        char *errh_func =       "local dbg = debug\n"
+                                "function __redis__err__handler(err)\n"
+                                "  local i = dbg.getinfo(2,'nSl')\n"
                                 "  if i and i.what == 'C' then\n"
-                                "    i = debug.getinfo(3,'nSl')\n"
+                                "    i = dbg.getinfo(3,'nSl')\n"
                                 "  end\n"
                                 "  if i then\n"
                                 "    return i.source .. ':' .. i.currentline .. ': ' .. err\n"
@@ -751,7 +795,7 @@ void sha1hex(char *digest, char *script, size_t len) {
     int j;
 
     SHA1Init(&ctx);
-    SHA1Update(&ctx,(unsigned char*)script,(u_int32_t)len);
+    SHA1Update(&ctx,(unsigned char*)script,(u_int32_t)len);                     WIN_PORT_FIX /* cast (u_int32_t) */
     SHA1Final(hash,&ctx);
 
     for (j = 0; j < 20; j++) {
@@ -772,7 +816,7 @@ void luaReplyToRedisReply(redisClient *c, lua_State *lua) {
         addReply(c,lua_toboolean(lua,-1) ? shared.cone : shared.nullbulk);
         break;
     case LUA_TNUMBER:
-        addReplyLongLong(c,(long long)lua_tonumber(lua,-1));
+        addReplyLongLong(c,(PORT_LONGLONG)lua_tonumber(lua,-1));
         break;
     case LUA_TTABLE:
         /* We need to check if it is an array, an error, or a status reply.
@@ -886,7 +930,7 @@ int luaCreateFunction(redisClient *c, lua_State *lua, char *funcname, robj *body
 void evalGenericCommand(redisClient *c, int evalsha) {
     lua_State *lua = server.lua;
     char funcname[43];
-    long long numkeys;
+    PORT_LONGLONG numkeys;
     int delhook = 0, err;
 
     /* We want the same PRNG sequence at every call so that our PRNG is
@@ -964,8 +1008,8 @@ void evalGenericCommand(redisClient *c, int evalsha) {
 
     /* Populate the argv and keys table accordingly to the arguments that
      * EVAL received. */
-    luaSetGlobalArray(lua,"KEYS",c->argv+3,(int)numkeys);
-    luaSetGlobalArray(lua,"ARGV",c->argv+3+numkeys,(int)(c->argc-3-numkeys));
+    luaSetGlobalArray(lua,"KEYS",c->argv+3,(int)numkeys);                       WIN_PORT_FIX /* cast (int) */
+    luaSetGlobalArray(lua,"ARGV",c->argv+3+numkeys,(int)(c->argc-3-numkeys));   WIN_PORT_FIX /* cast (int) */
 
     /* Select the right DB in the context of the Lua client */
     selectDb(server.lua_client,c->db->id);
@@ -1006,7 +1050,7 @@ void evalGenericCommand(redisClient *c, int evalsha) {
      * for every command uses too much CPU. */
     #define LUA_GC_CYCLE_PERIOD 50
     {
-        static long gc_count = 0;
+        static PORT_LONG gc_count = 0;
 
         gc_count++;
         if (gc_count == LUA_GC_CYCLE_PERIOD) {

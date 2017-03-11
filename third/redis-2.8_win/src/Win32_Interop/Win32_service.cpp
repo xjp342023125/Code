@@ -54,6 +54,7 @@ this should preceed the other arguments passed to redis. For instance:
     redis-server --service-install --service-name testServiceName redis.windows.conf --loglevel verbose 
 */
 
+#include "win32_types.h"
 #include <windows.h>
 #include <windowsx.h>
 #include <shlobj.h>
@@ -66,7 +67,7 @@ this should preceed the other arguments passed to redis. For instance:
 #include <sstream>
 #include <vector>
 #include <iostream>
-#include "..\redisLog.h"
+#include "Win32_RedisLog.h"
 #include "Win32_CommandLine.h"
 using namespace std;
 
@@ -481,10 +482,10 @@ DWORD WINAPI ServiceWorkerThread(LPVOID lpParam) {
         main(argc, argv);
 
         for (int a = 0; a < argc; a++) {
-            delete argv[a];
+            delete[] argv[a];
             argv[a] = nullptr;
         }
-        delete argv;
+        delete[] argv;
         argv = nullptr;
 
         SetEvent(g_ServiceStoppedEvent);

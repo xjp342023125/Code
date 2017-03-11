@@ -31,6 +31,10 @@
 #ifndef __ZMALLOC_H
 #define __ZMALLOC_H
 
+#ifdef _WIN32
+#include "Win32_Interop/Win32_Portability.h"
+#endif
+
 /* Double expansion needed for stringification of macro values. */
 #define __xstr(s) __str(s)
 #define __str(s) #s
@@ -61,7 +65,7 @@
 #define zmalloc_size(p) malloc_size(p)
 
 #elif defined(USE_DLMALLOC)
-#include "win32_Interop/win32_dlmalloc.h"
+#include "Win32_Interop/win32_dlmalloc.h"
 #define ZMALLOC_LIB ("dlmalloc-" __xstr(2) "." __xstr(8) )
 #define HAVE_MALLOC_SIZE 1
 #define zmalloc_size(p)  g_msize(p)
@@ -84,9 +88,7 @@ size_t zmalloc_get_rss(void);
 size_t zmalloc_get_private_dirty(void);
 size_t zmalloc_get_smap_bytes_by_field(char *field);
 void zlibc_free(void *ptr);
-#ifdef _WIN32
-void zmalloc_free_used_memory_mutex(void);
-#endif
+WIN32_ONLY(void zmalloc_free_used_memory_mutex(void);)
 
 #ifndef HAVE_MALLOC_SIZE
 size_t zmalloc_size(void *ptr);

@@ -32,7 +32,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120_xp</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -43,7 +43,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120_xp</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -70,6 +70,8 @@
     <LinkIncremental>false</LinkIncremental>
     <TargetName>redis-server</TargetName>
     <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -81,11 +83,13 @@
     <LinkIncremental>false</LinkIncremental>
     <TargetName>redis-server</TargetName>
     <GenerateManifest>false</GenerateManifest>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>WIN32_IOCP;WIN32;USE_DL_PREFIX;LACKS_STDLIB_H;_DEBUG;_CONSOLE;__x86_64__;%(PreprocessorDefinitions);USE_DLMALLOC</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\lua\src;$(SolutionDir)..\deps\hiredis</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>USE_JEMALLOC;_OFF_T_DEFINED;WIN32;LACKS_STDLIB_H;_DEBUG;_CONSOLE;__x86_64__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\lua\src;$(SolutionDir)..\deps\hiredis;$(SolutionDir)..\deps\jemalloc-win\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -105,8 +109,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>WIN32;USE_DL_PREFIX;LACKS_STDLIB_H;_DEBUG;_CONSOLE;__x86_64__;%(PreprocessorDefinitions);USE_DLMALLOC;WIN32_IOCP;_WIN32_WINNT=0x0501</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\lua\src;$(SolutionDir)..\deps\hiredis</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>USE_JEMALLOC;_OFF_T_DEFINED;WIN32;LACKS_STDLIB_H;_DEBUG;_CONSOLE;__x86_64__;%(PreprocessorDefinitions);_WIN32_WINNT=0x0501</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\lua\src;$(SolutionDir)..\deps\hiredis;$(SolutionDir)..\deps\jemalloc-win\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -126,8 +130,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>WIN32_IOCP;WIN32;USE_DL_PREFIX;LACKS_STDLIB_H;NDEBUG;_CONSOLE;__x86_64__;%(PreprocessorDefinitions);USE_DLMALLOC</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\lua\src;$(SolutionDir)..\deps\hiredis</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>USE_JEMALLOC;_OFF_T_DEFINED;WIN32;LACKS_STDLIB_H;NDEBUG;_CONSOLE;__x86_64__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\lua\src;$(SolutionDir)..\deps\hiredis;$(SolutionDir)..\deps\jemalloc-win\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -158,8 +162,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>_WIN32IOCP;WIN32;USE_DL_PREFIX;LACKS_STDLIB_H;NDEBUG;_CONSOLE;__x86_64__;%(PreprocessorDefinitions);WIN32_IOCP;USE_DLMALLOC;_WIN32_WINNT=0x0501</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\lua\src;$(SolutionDir)..\deps\hiredis</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>USE_JEMALLOC;_OFF_T_DEFINED;_WIN32;LACKS_STDLIB_H;NDEBUG;_CONSOLE;__x86_64__;%(PreprocessorDefinitions);_WIN32_WINNT=0x0501</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\deps\lua\src;$(SolutionDir)..\deps\hiredis;$(SolutionDir)..\deps\jemalloc-win\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -188,7 +192,10 @@
     <ClCompile Include="..\src\aof.c" />
     <ClCompile Include="..\src\bio.c" />
     <ClCompile Include="..\src\bitops.c" />
+    <ClCompile Include="..\src\blocked.c" />
+    <ClCompile Include="..\src\cluster.c" />
     <ClCompile Include="..\src\config.c" />
+    <ClCompile Include="..\src\crc16.c" />
     <ClCompile Include="..\src\crc64.c" />
     <ClCompile Include="..\src\db.c" />
     <ClCompile Include="..\src\debug.c" />
@@ -200,7 +207,6 @@
     <ClCompile Include="..\src\lzf_c.c" />
     <ClCompile Include="..\src\lzf_d.c" />
     <ClCompile Include="..\src\memtest.c" />
-    <ClCompile Include="..\src\migrate.c" />
     <ClCompile Include="..\src\multi.c" />
     <ClCompile Include="..\src\networking.c" />
     <ClCompile Include="..\src\notify.c" />
@@ -236,6 +242,7 @@
     <ClInclude Include="..\src\ae.h" />
     <ClInclude Include="..\src\anet.h" />
     <ClInclude Include="..\src\bio.h" />
+    <ClInclude Include="..\src\cluster.h" />
     <ClInclude Include="..\src\config.h" />
     <ClInclude Include="..\src\dict.h" />
     <ClInclude Include="..\src\endianconv.h" />
@@ -249,6 +256,7 @@
     <ClInclude Include="..\src\rand.h" />
     <ClInclude Include="..\src\rdb.h" />
     <ClInclude Include="..\src\redis.h" />
+    <ClInclude Include="..\src\redisassert.h" />
     <ClInclude Include="..\src\rio.h" />
     <ClInclude Include="..\src\sds.h" />
     <ClInclude Include="..\src\sha1.h" />
@@ -263,6 +271,9 @@
     <ClInclude Include="..\src\zmalloc.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\deps\jemalloc-win\projects\jemalloc\proj.win32\vc2013\jemalloc.vcxproj">
+      <Project>{8b897e33-6428-4254-8335-4911d179bad1}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\src\Win32_Interop\Win32_Interop.vcxproj">
       <Project>{8c07f811-c81c-432c-b334-1ae6faecf951}</Project>
     </ProjectReference>

@@ -21,12 +21,12 @@
  */
 
 #include "..\redis.h"
-#include "..\rdb.h"
+#include "Win32_Portability.h"
 
-void SetupGlobals(LPVOID globalData, size_t globalDataSize, uint32_t dictHashSeed)
+void SetupRedisGlobals(LPVOID redisData, size_t redisDataSize, uint32_t dictHashSeed)
 {
 #ifndef NO_QFORKIMPL
-    memcpy(&server, globalData, globalDataSize);
+    memcpy(&server, redisData, redisDataSize);
     dictSetHashFunctionSeed(dictHashSeed);
 #endif
 }
@@ -43,23 +43,30 @@ int do_rdbSave(char* filename)
     return REDIS_OK;
 }
 
-int do_aofSave(char* filename)
+int do_aofSave(char* filename, int aof_pipe_read_ack, int aof_pipe_read_data, int aof_pipe_write_ack)
 {
 #ifndef NO_QFORKIMPL
     int rewriteAppendOnlyFile(char *filename);
 
     server.aof_child_pid = GetCurrentProcessId();
-    if( rewriteAppendOnlyFile(filename) != REDIS_OK ) {
-        redisLog(REDIS_WARNING,"rewriteAppendOnlyFile failed in qfork: %s", strerror(errno));
+    server.aof_pipe_write_ack_to_parent = aof_pipe_write_ack;
+    server.aof_pipe_read_ack_from_parent = aof_pipe_read_ack;
+    server.aof_pipe_read_data_from_parent = aof_pipe_read_data;
+    server.aof_pipe_read_ack_from_child = -1;
+    server.aof_pipe_write_ack_to_child = -1;
+    server.aof_pipe_write_data_to_child = -1;
+    if (rewriteAppendOnlyFile(filename) != REDIS_OK) {
+        redisLog(REDIS_WARNING, "rewriteAppendOnlyFile failed in qfork: %s", strerror(errno));
         return REDIS_ERR;
     }
 #endif
-
     return REDIS_OK;
 }
 
+int rdbSaveRioWithEOFMark(rio *rdb, int *error);
+
 // This function is meant to be an exact replica of the fork() child path in rdbSaveToSlavesSockets
-int do_socketSave2(int *fds, int numfds, uint64_t *clientids)
+int do_rdbSaveToSlavesSockets(int *fds, int numfds, uint64_t *clientids)
 {
 #ifndef NO_QFORKIMPL
     int retval;
@@ -68,12 +75,13 @@ int do_socketSave2(int *fds, int numfds, uint64_t *clientids)
     server.rdb_child_pid = GetCurrentProcessId();
 
     rioInitWithFdset(&slave_sockets,fds,numfds);
-    zfree(fds);
+    // On Windows we need to use the fds after do_socketSave2 has finished
+    // so we don't free them here, moreover since we allocate the fds in
+    // QFork.cpp it's better to use malloc instead of zmalloc.
+    POSIX_ONLY(zfree(fds););
 
     // On Windows we haven't duplicated the listening sockets so we shouldn't close them
-#ifndef _WIN32
-    closeListeningSockets(0);
-#endif
+    POSIX_ONLY(closeListeningSockets(0);)
 
     redisSetProcTitle("redis-rdb-to-slaves");
     
@@ -86,7 +94,7 @@ int do_socketSave2(int *fds, int numfds, uint64_t *clientids)
     
         if (private_dirty) {
             redisLog(REDIS_NOTICE,
-                "RDB: %zu MB of memory used by copy-on-write",
+                "RDB: %Iu MB of memory used by copy-on-write",                  WIN_PORT_FIX /* %zu -> %Iu */
                 private_dirty/(1024*1024));
         }
     
@@ -136,5 +144,5 @@ int do_socketSave2(int *fds, int numfds, uint64_t *clientids)
 int do_socketSave(int *fds, int numfds, uint64_t *clientids, int pipe_write_fd)
 {
     server.rdb_pipe_write_result_to_parent = pipe_write_fd;
-    return do_socketSave2(fds, numfds, clientids);
+    return do_rdbSaveToSlavesSockets(fds, numfds, clientids);
 }

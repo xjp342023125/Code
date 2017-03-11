@@ -42,7 +42,7 @@ int dictStringKeyCompare(void *privdata, const void *key1, const void *key2) {
 }
 
 unsigned int dictStringHash(const void *key) {
-    return dictGenHashFunction(key, strlen(key));
+    return dictGenHashFunction(key, (int)strlen(key));                          WIN_PORT_FIX /* cast (int) */
 }
 
 void dictVanillaFree(void *privdata, void *val);
@@ -79,7 +79,7 @@ int THPIsEnabled(void) {
  * value of the function is non-zero, the process is being targeted by
  * THP support, and is likely to have memory usage / latency issues. */
 int THPGetAnonHugePagesSize(void) {
-    return zmalloc_get_smap_bytes_by_field("AnonHugePages:");
+    return (int)zmalloc_get_smap_bytes_by_field("AnonHugePages:");              WIN_PORT_FIX /* cast (int) */
 }
 
 /* ---------------------------- Latency API --------------------------------- */
@@ -114,13 +114,13 @@ void latencyAddSample(char *event, mstime_t latency) {
     prev = (ts->idx + LATENCY_TS_LEN - 1) % LATENCY_TS_LEN;
     if (ts->samples[prev].time == now) {
         if (latency > ts->samples[prev].latency)
-            ts->samples[prev].latency = (int32_t)latency;
+            ts->samples[prev].latency = (int32_t)latency;                       WIN_PORT_FIX /* cast (int32_t) */
         return;
     }
 
-    ts->samples[ts->idx].time = (int32_t)time(NULL);
-    ts->samples[ts->idx].latency = (int32_t)latency;
-    if (latency > ts->max) ts->max = (int32_t)latency;
+    ts->samples[ts->idx].time = (int32_t)time(NULL);                            WIN_PORT_FIX /* cast (int32_t) */
+    ts->samples[ts->idx].latency = (int32_t)latency;                            WIN_PORT_FIX /* cast (int32_t) */
+    if (latency > ts->max) ts->max = (int32_t)latency;                          WIN_PORT_FIX /* cast (int32_t) */
 
     ts->idx++;
     if (ts->idx == LATENCY_TS_LEN) ts->idx = 0;
@@ -194,7 +194,7 @@ void analyzeLatencyForEvent(char *event, struct latencyStats *ls) {
      * the oldest event time. We need to make the first an average and
      * the second a range of seconds. */
     if (ls->samples) {
-        ls->avg = (int32_t)(sum / ls->samples);
+        ls->avg = (int32_t)(sum / ls->samples);                                 WIN_PORT_FIX /* cast (int32_t) */
         ls->period = time(NULL) - ls->period;
         if (ls->period == 0) ls->period = 1;
     }
@@ -209,7 +209,7 @@ void analyzeLatencyForEvent(char *event, struct latencyStats *ls) {
         if (delta < 0) delta = -delta;
         sum += delta;
     }
-    if (ls->samples) ls->mad = (int32_t)(sum / ls->samples);
+    if (ls->samples) ls->mad = (int32_t)(sum / ls->samples);                    WIN_PORT_FIX /* cast (int32_t) */
 }
 
 /* Create a human readable report of latency events for this Redis instance. */
@@ -228,6 +228,7 @@ sds createLatencyReport(void) {
     int advise_write_load_info = 0; /* Print info about AOF and write load. */
     int advise_hz = 0;              /* Use higher HZ. */
     int advise_large_objects = 0;   /* Deletion of large objects. */
+    int advise_mass_eviction = 0;   /* Avoid mass eviction of keys. */
     int advise_relax_fsync_policy = 0; /* appendfsync always is slow. */
     int advise_disable_thp = 0;     /* AnonHugePages detected. */
     int advices = 0;
@@ -247,7 +248,7 @@ sds createLatencyReport(void) {
     dictEntry *de;
     int eventnum = 0;
 
-    di = dictGetIterator(server.latency_events);
+    di = dictGetSafeIterator(server.latency_events);
     while((de = dictNext(di)) != NULL) {
         char *event = dictGetKey(de);
         struct latencyTimeSeries *ts = dictGetVal(de);
@@ -264,10 +265,10 @@ sds createLatencyReport(void) {
             "%d. %s: %d latency spikes (average %lums, mean deviation %lums, period %.2f sec). Worst all time event %lums.",
             eventnum, event,
             ls.samples,
-            (unsigned long) ls.avg,
-            (unsigned long) ls.mad,
+            (PORT_ULONG) ls.avg,
+            (PORT_ULONG) ls.mad,
             (double) ls.period/ls.samples,
-            (unsigned long) ts->max);
+            (PORT_ULONG) ts->max);
 
         /* Fork */
         if (!strcasecmp(event,"fork")) {
@@ -364,8 +365,13 @@ sds createLatencyReport(void) {
         }
 
         /* Eviction cycle. */
-        if (!strcasecmp(event,"eviction-cycle")) {
+        if (!strcasecmp(event,"eviction-del")) {
             advise_large_objects = 1;
+            advices++;
+        }
+
+        if (!strcasecmp(event,"eviction-cycle")) {
+            advise_mass_eviction = 1;
             advices++;
         }
 
@@ -394,11 +400,11 @@ sds createLatencyReport(void) {
 
         /* Slow log. */
         if (advise_slowlog_enabled) {
-            report = sdscatprintf(report,"- There are latency issues with potentially slow commands you are using. Try to enable the Slow Log Redis feature using the command 'CONFIG SET slowlog-log-slower-than %llu'. If the Slow log is disabled Redis is not able to log slow commands execution for you.\n", (unsigned long long)server.latency_monitor_threshold*1000);
+            report = sdscatprintf(report,"- There are latency issues with potentially slow commands you are using. Try to enable the Slow Log Redis feature using the command 'CONFIG SET slowlog-log-slower-than %llu'. If the Slow log is disabled Redis is not able to log slow commands execution for you.\n", (PORT_ULONGLONG)server.latency_monitor_threshold*1000);
         }
 
         if (advise_slowlog_tuning) {
-            report = sdscatprintf(report,"- Your current Slow Log configuration only logs events that are slower than your configured latency monitor threshold. Please use 'CONFIG SET slowlog-log-slower-than %llu'.\n", (unsigned long long)server.latency_monitor_threshold*1000);
+            report = sdscatprintf(report,"- Your current Slow Log configuration only logs events that are slower than your configured latency monitor threshold. Please use 'CONFIG SET slowlog-log-slower-than %llu'.\n", (PORT_ULONGLONG)server.latency_monitor_threshold*1000);
         }
 
         if (advise_slowlog_inspect) {
@@ -450,6 +456,10 @@ sds createLatencyReport(void) {
 
         if (advise_large_objects) {
             report = sdscat(report,"- Deleting, expiring or evicting (because of maxmemory policy) large objects is a blocking operation. If you have very large objects that are often deleted, expired, or evicted, try to fragment those objects into multiple smaller objects.\n");
+        }
+
+        if (advise_mass_eviction) {
+            report = sdscat(report,"- Sudden changes to the 'maxmemory' setting via 'CONFIG SET', or allocation of large objects via sets or sorted sets intersections, STORE option of SORT, Redis Cluster large keys migrations (RESTORE command), may create sudden memory pressure forcing the server to block trying to evict keys. \n");
         }
 
         if (advise_disable_thp) {
@@ -524,7 +534,7 @@ sds latencyCommandGenSparkeline(char *event, struct latencyTimeSeries *ts) {
         }
         /* Use as label the number of seconds / minutes / hours / days
          * ago the event happened. */
-        elapsed = (int)(time(NULL) - ts->samples[i].time);
+        elapsed = (int)(time(NULL) - ts->samples[i].time);                      WIN_PORT_FIX /* cast (int) */
         if (elapsed < 60)
             snprintf(buf,sizeof(buf),"%ds",elapsed);
         else if (elapsed < 3600)
@@ -537,8 +547,8 @@ sds latencyCommandGenSparkeline(char *event, struct latencyTimeSeries *ts) {
     }
 
     graph = sdscatprintf(graph,
-        "%s - high %lu ms, low %lu ms (all time high %lu ms)\n", event,
-        (unsigned long) max, (unsigned long) min, (unsigned long) ts->max);
+        "%s - high %Iu ms, low %Iu ms (all time high %Iu ms)\n", event,         WIN_PORT_FIX /* %ld -> %Id, %lu -> %Iu */
+        (PORT_ULONG) max, (PORT_ULONG) min, (PORT_ULONG) ts->max);
     for (j = 0; j < LATENCY_GRAPH_COLS; j++)
         graph = sdscatlen(graph,"-",1);
     graph = sdscatlen(graph,"\n",1);

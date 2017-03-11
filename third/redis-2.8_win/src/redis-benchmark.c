@@ -27,29 +27,32 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+#ifdef _WIN32
+#include "Win32_Interop/Win32_Portability.h"
+#include "Win32_Interop/win32fixes.h"
+#include "Win32_Interop/win32_wsiocp2.h"
+#include "Win32_Interop/Win32_Signal_Process.h"
+#include "Win32_Interop/Win32_Time.h"
+#include "Win32_Interop/Win32_Error.h"
+#endif
 
 #include "fmacros.h"
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#ifndef _WIN32
-#include <unistd.h>
-#include <time.h>
-#include <sys/time.h>
-#endif
+POSIX_ONLY(#include <unistd.h>)
 #include <errno.h>
+#include <time.h>
+POSIX_ONLY(#include <sys/time.h>)
 #include <signal.h>
 #include <assert.h>
 
-#ifdef _WIN32
-#include "win32_Interop/win32fixes.h"
-int fmode = _O_BINARY;
-#include <time.h>
-#endif
-
 #include "ae.h"
 #include "hiredis.h"
+#ifdef _WIN32
+#include "win32_hiredis.h"
+#endif
 #include "sds.h"
 #include "adlist.h"
 #include "zmalloc.h"
@@ -73,9 +76,9 @@ static struct config {
     int randomkeys_keyspacelen;
     int keepalive;
     int pipeline;
-    long long start;
-    long long totlatency;
-    long long *latency;
+    PORT_LONGLONG start;
+    PORT_LONGLONG totlatency;
+    PORT_LONGLONG *latency;
     const char *title;
     list *clients;
     int quiet;
@@ -95,8 +98,8 @@ typedef struct _client {
     size_t randlen;         /* Number of pointers in client->randptr */
     size_t randfree;        /* Number of unused pointers in client->randptr */
     unsigned int written;   /* Bytes of 'obuf' already written */
-    long long start;        /* Start time of a request */
-    long long latency;      /* Request latency */
+    PORT_LONGLONG start;        /* Start time of a request */
+    PORT_LONGLONG latency;      /* Request latency */
     int pending;            /* Number of pending requests (replies to consume) */
     int prefix_pending;     /* If non-zero, number of pending prefix commands. Commands
                                such as auth and select are prefixed to the pipeline of
@@ -110,29 +113,29 @@ static void createMissingClients(client c);
 
 
 /* Implementation */
-static long long ustime(void) {
+static PORT_LONGLONG ustime(void) {
 #ifdef _WIN32
     return GetHighResRelativeTime(1000000);
 #else
     struct timeval tv;
-    long long ust;
+    PORT_LONGLONG ust;
 
     gettimeofday(&tv, NULL);
-    ust = ((long)tv.tv_sec)*1000000;
+    ust = ((PORT_LONG)tv.tv_sec)*1000000;
     ust += tv.tv_usec;
     return ust;
 #endif
 }
 
-static long long mstime(void) {
+static PORT_LONGLONG mstime(void) {
 #ifdef _WIN32
     return GetHighResRelativeTime(1000);
 #else
     struct timeval tv;
-    long long mst;
+    PORT_LONGLONG mst;
 
     gettimeofday(&tv, NULL);
-    mst = ((long long)tv.tv_sec)*1000;
+    mst = ((PORT_LONGLONG)tv.tv_sec)*1000;
     mst += tv.tv_usec/1000;
     return mst;
 #endif
@@ -140,12 +143,8 @@ static long long mstime(void) {
 
 static void freeClient(client c) {
     listNode *ln;
-    aeDeleteFileEvent(config.el,(int)c->context->fd,AE_WRITABLE);
-    aeDeleteFileEvent(config.el,(int)c->context->fd,AE_READABLE);
-#ifdef WIN32_IOCP
-    aeWinCloseSocket((int)c->context->fd);
-    c->context->fd = 0;
-#endif
+    aeDeleteFileEvent(config.el,(int)c->context->fd,AE_WRITABLE);               WIN_PORT_FIX /* cast (int) */
+    aeDeleteFileEvent(config.el,(int)c->context->fd,AE_READABLE);               WIN_PORT_FIX /* cast (int) */
     redisFree(c->context);
     sdsfree(c->obuf);
     zfree(c->randptr);
@@ -167,9 +166,9 @@ static void freeAllClients(void) {
 }
 
 static void resetClient(client c) {
-    aeDeleteFileEvent(config.el,(int)c->context->fd,AE_WRITABLE);
-    aeDeleteFileEvent(config.el,(int)c->context->fd,AE_READABLE);
-    aeCreateFileEvent(config.el,(int)c->context->fd,AE_WRITABLE,writeHandler,c);
+    aeDeleteFileEvent(config.el,(int)c->context->fd,AE_WRITABLE);               WIN_PORT_FIX /* cast (int) */
+    aeDeleteFileEvent(config.el,(int)c->context->fd,AE_READABLE);               WIN_PORT_FIX /* cast (int) */
+    aeCreateFileEvent(config.el,(int)c->context->fd,AE_WRITABLE,writeHandler,c);WIN_PORT_FIX /* cast (int) */
     c->written = 0;
     c->pending = config.pipeline;
 }
@@ -209,8 +208,8 @@ static void clientDone(client c) {
 static void readHandler(aeEventLoop *el, int fd, void *privdata, int mask) {
     client c = privdata;
     void *reply = NULL;
-#ifdef WIN32_IOCP
-    int nread;
+#ifdef _WIN32
+    ssize_t nread;
     char buf[1024*16];
 #endif
     REDIS_NOTUSED(el);
@@ -220,18 +219,14 @@ static void readHandler(aeEventLoop *el, int fd, void *privdata, int mask) {
     /* Calculate latency only for the first read event. This means that the
      * server already sent the reply and we need to parse it. Parsing overhead
      * is not part of the latency, so calculate it only once, here. */
-	if (c->latency < 0)
-	{
-		c->latency = ustime() - (c->start);
-	}
+    if (c->latency < 0) c->latency = ustime()-(c->start);
 
-#ifdef WIN32_IOCP
+#ifdef _WIN32
     nread = read(c->context->fd,buf,sizeof(buf));
     if (nread == -1) {
-        errno = WSAGetLastError();
         if ((errno == ENOENT) || (errno == WSAEWOULDBLOCK)) {
             errno = EAGAIN;
-            aeWinReceiveDone((int)c->context->fd);
+            WSIOCP_QueueNextRead((int) c->context->fd);
             return;
         } else {
             fprintf(stderr,"Error: %s\n",c->context->errstr);
@@ -244,9 +239,7 @@ static void readHandler(aeEventLoop *el, int fd, void *privdata, int mask) {
         fprintf(stderr,"Error: %s\n",c->context->errstr);
         exit(1);
     } else {
-#ifdef WIN32_IOCP
-        aeWinReceiveDone((int)c->context->fd);
-#endif
+        WIN32_ONLY(WSIOCP_QueueNextRead((int) c->context->fd);)
         while(c->pending) {
             if (redisGetReply(c->context,&reply) != REDIS_OK) {
                 fprintf(stderr,"Error: %s\n",c->context->errstr);
@@ -292,13 +285,13 @@ static void readHandler(aeEventLoop *el, int fd, void *privdata, int mask) {
 
 #ifdef _WIN32
 static void writeHandlerDone(aeEventLoop *el, int fd, void *privdata, int nwritten) {
-    aeWinSendReq *req = (aeWinSendReq *)privdata;
-    client c = (client)req->client;
+    WSIOCP_Request *req = (WSIOCP_Request *) privdata;
+    client c = (client) req->client;
 
     c->written += nwritten;
     if (sdslen(c->obuf) == c->written) {
-        aeDeleteFileEvent(config.el,(int)c->context->fd,AE_WRITABLE);
-        aeCreateFileEvent(config.el,(int)c->context->fd,AE_READABLE,readHandler,c);
+        aeDeleteFileEvent(config.el, (int) c->context->fd, AE_WRITABLE);
+        aeCreateFileEvent(config.el, (int) c->context->fd, AE_READABLE, readHandler, c);
     }
 }
 #endif
@@ -325,9 +318,14 @@ static void writeHandler(aeEventLoop *el, int fd, void *privdata, int mask) {
 
     if (sdslen(c->obuf) > c->written) {
         void *ptr = c->obuf+c->written;
-#ifdef WIN32_IOCP
-        int result = aeWinSocketSend(c->context->fd,(char*)ptr,(int)(sdslen(c->obuf)-c->written), 
-                                        el, c, NULL, writeHandlerDone);
+#ifdef _WIN32
+        int result = WSIOCP_SocketSend(c->context->fd,
+                                       (char*) ptr,
+                                       (int) (sdslen(c->obuf) - c->written),
+                                       el,
+                                       c,
+                                       NULL,
+                                       writeHandlerDone);
         if (result == SOCKET_ERROR && errno != WSA_IO_PENDING) {
             if (errno != EPIPE)
                 fprintf(stderr, "Writing to socket %s\n", wsa_strerror(errno));
@@ -377,10 +375,10 @@ static client createClient(char *cmd, size_t len, client from) {
     client c = zmalloc(sizeof(struct _client));
 
     if (config.hostsocket == NULL) {
-#ifdef WIN32_IOCP
+#ifdef _WIN32
         SOCKADDR_STORAGE ss;
         c->context = redisPreConnectNonBlock(config.hostip,config.hostport, &ss);
-        if (aeWinSocketConnect(c->context->fd, &ss) != 0) {
+        if (WSIOCP_SocketConnect(c->context->fd, &ss) != 0) {
             c->context->err = errno;
             strerror_r(errno,c->context->errstr,sizeof(c->context->errstr));
         }
@@ -426,7 +424,7 @@ static client createClient(char *cmd, size_t len, client from) {
             (int)sdslen(config.dbnumstr),config.dbnumstr);
         c->prefix_pending++;
     }
-    c->prefixlen = sdslen(c->obuf);
+    c->prefixlen = (int)sdslen(c->obuf);                                        WIN_PORT_FIX /* cast (int) */
     /* Append the request itself. */
     if (from) {
         c->obuf = sdscatlen(c->obuf,
@@ -493,7 +491,7 @@ static void createMissingClients(client c) {
 }
 
 static int compareLatency(const void *a, const void *b) {
-    return (int)((*(long long*)a)-(*(long long*)b));
+    return (int)((*(PORT_LONGLONG*)a)-(*(PORT_LONGLONG*)b));                    WIN_PORT_FIX /* cast (int) */
 }
 
 static void showLatencyReport(void) {
@@ -510,10 +508,10 @@ static void showLatencyReport(void) {
         printf("  keep alive: %d\n", config.keepalive);
         printf("\n");
 
-        qsort(config.latency,config.requests,sizeof(long long),compareLatency);
+        qsort(config.latency,config.requests,sizeof(PORT_LONGLONG),compareLatency);
         for (i = 0; i < config.requests; i++) {
             if (config.latency[i]/1000 != curlat || i == (config.requests-1)) {
-                curlat = (int)config.latency[i]/1000;
+                curlat = (int)config.latency[i]/1000;                           WIN_PORT_FIX /* cast (int) */
                 perc = ((float)(i+1)*100)/config.requests;
                 printf("%.2f%% <= %d milliseconds\n", perc, curlat);
             }
@@ -673,9 +671,7 @@ usage:
     exit(exit_status);
 }
 
-int showThroughput(struct aeEventLoop *eventLoop, long long id, void *clientData) {
-    float dt;
-    float rps;
+int showThroughput(struct aeEventLoop *eventLoop, PORT_LONGLONG id, void *clientData) {
     REDIS_NOTUSED(eventLoop);
     REDIS_NOTUSED(id);
     REDIS_NOTUSED(clientData);
@@ -690,8 +686,8 @@ int showThroughput(struct aeEventLoop *eventLoop, long long id, void *clientData
         fflush(stdout);
 	return 250;
     }
-    dt = (float)((mstime()-config.start)/1000.0);
-    rps = (float)(config.requests_finished/dt);
+    float dt = (float)((float)(mstime()-config.start)/1000.0);              WIN_PORT_FIX /* cast (float) */
+    float rps = (float)config.requests_finished/dt;
     printf("%s: %.2f\r", config.title, rps);
     fflush(stdout);
     return 250; /* every 250ms */
@@ -701,7 +697,7 @@ int showThroughput(struct aeEventLoop *eventLoop, long long id, void *clientData
  * switch, or if all the tests are selected (no -t passed by user). */
 int test_is_selected(char *name) {
     char buf[256];
-    int l = (int)strlen(name);
+    int l = (int)strlen(name);                                                  WIN_PORT_FIX /* cast (int) */
 
     if (config.tests == NULL) return 1;
     buf[0] = ',';
@@ -722,7 +718,7 @@ int main(int argc, const char **argv) {
     InitTimeFunctions();
 #endif
 
-    srandom((unsigned int)time(NULL));
+    srandom((unsigned int)time(NULL));                                          WIN_PORT_FIX /* cast (unsigned int) */
     signal(SIGHUP, SIG_IGN);
     signal(SIGPIPE, SIG_IGN);
 
@@ -753,7 +749,7 @@ int main(int argc, const char **argv) {
     argc -= i;
     argv += i;
 
-    config.latency = zmalloc(sizeof(long long)*config.requests);
+    config.latency = zmalloc(sizeof(PORT_LONGLONG)*config.requests);
 
     if (config.keepalive == 0) {
         printf("WARNING: keepalive disabled, you probably need 'echo 1 > /proc/sys/net/ipv4/tcp_tw_reuse' for Linux and 'sudo sysctl -w net.inet.tcp.msl=1000' for Mac OS X in order to use a lot of clients/requests\n");

@@ -25,7 +25,6 @@
 
 #include "Win32_variadicFunctor.h"
 #include "Win32_CommandLine.h"
-#include "Win32_FDAPI.h"
 
 // Win32_FDAPI.h includes modified winsock definitions that are useful in BindParam below. It
 // also redefines the CRT close(FD) call as a macro. This conflicts with the fstream close 
@@ -154,7 +153,7 @@ public:
         // save [seconds] [changes]
         // or 
         // save ""      -- turns off RDB persistence
-        if (strcmp(argv[argIndex], "\"\"") == 0 || strcmp(argv[argIndex], "''") == 0) {
+        if (strcmp(argv[argIndex], "\"\"") == 0 || strcmp(argv[argIndex], "''") == 0 || strcmp(argv[argIndex], "") == 0) {
             params.push_back(argv[argIndex]);
         } else if (
             isStringAnInt(argv[argIndex]) && 
@@ -171,7 +170,7 @@ public:
 
     virtual vector<string> Extract(vector<string> tokens, int startIndex = 0) {
         vector<string> params;
-        int parameterIndex = 1 + startIndex;
+        unsigned int parameterIndex = 1 + startIndex;
         if ((tokens.size() > parameterIndex) &&
             (tokens.at(parameterIndex) == string("\"\"") ||
             tokens.at(parameterIndex) == string("''"))) {
@@ -270,7 +269,6 @@ public:
 
 } BindParams;
 
-
 static BindParams bp = BindParams();
 
 typedef class SentinelParams : public  ParamExtractor {
@@ -292,7 +290,9 @@ public:
             { "current-epoch",              &fp1 },    // sentinel current-epoch <epoch>
             { "leader-epoch",               &fp2 },    // sentinel leader-epoch [name] [epoch]
             { "known-slave",                &fp3 },    // sentinel known-slave <name> <ip> <port>
-            { "known-sentinel",             &fp4 }     // sentinel known-sentinel <name> <ip> <port> [runid]
+            { "known-sentinel",             &fp4 },    // sentinel known-sentinel <name> <ip> <port> [runid]
+            { "announce-ip",                &fp1 },    // sentinel announce-ip <ip>
+            { "announce-port",              &fp1 }     // sentinel announce-port <port>
         };
     }
 
@@ -310,7 +310,7 @@ public:
         vector<string> params;
         params.push_back(argv[argStartIndex + 1]);
         vector<string> subParams = subCommands[argv[argStartIndex + 1]]->Extract(argStartIndex + 1, argc, argv);
-        for (string p : params) {
+		for (string p : subParams) {
             transform(p.begin(), p.end(), p.begin(), ::tolower);
             p = stripQuotes(p);
             params.push_back(p);
@@ -351,9 +351,7 @@ static SentinelParams sp = SentinelParams();
 static RedisParamterMapper g_redisArgMap =
 {
     // QFork flags
-    { cQFork,                           &fp2 },    // qfork [QForkConrolMemoryMap handle] [parent process id]
-    { cMaxHeap,                         &fp1 },    // maxheap [number]
-    { cHeapDir,                         &fp1 },    // heapdir [path]
+    { cQFork,                           &fp2 },    // qfork [QForkControlMemoryMap handle] [parent process id]
     { cPersistenceAvailable,            &fp1 },    // persistence-available [yes/no]
 
     // service commands
@@ -432,7 +430,15 @@ static RedisParamterMapper g_redisArgMap =
     { cInclude,                         &fp1 },    // include [path]
 
     // sentinel commands
-    { "sentinel",                       &sp }
+    { "sentinel",                       &sp },
+
+    // cluster commands
+    {"cluster-enabled",                 &fp1},     // [yes/no]
+    {"cluster-config-file",             &fp1},     // [filename]
+    {"cluster-node-timeout",            &fp1},     // [number]
+    {"cluster-slave-validity-factor",   &fp1},     // [number]
+    {"cluster-migration-barrier",       &fp1},     // [1/0]
+    {"cluster-require-full-coverage",   &fp1}      // [yes/no]
 };
 
 std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) {
@@ -505,11 +511,7 @@ vector<string> Tokenize(string line)  {
 void ParseConfFile(string confFile, string cwd, ArgumentMap& argMap) {
     ifstream config;
     string line;
-    string value;
 
-#ifdef _DEBUG
-    cout << "processing " << confFile << endl;
-#endif
     char fullConfFilePath[MAX_PATH];
     if (PathIsRelativeA(confFile.c_str())) {
         if (NULL == PathCombineA(fullConfFilePath, cwd.c_str(), confFile.c_str())) {
@@ -563,7 +565,8 @@ vector<string> incompatibleNoPersistenceCommands{
     "no_append_fsync_on_rewrite",
     "auto_aof_rewrite_percentage",
     "auto_aof_rewrite_on_size",
-    "aof_rewrite_incremental_fsync"
+    "aof_rewrite_incremental_fsync",
+    "save"
 };
 
 void ValidateCommandlineCombinations() {
@@ -586,7 +589,9 @@ void ValidateCommandlineCombinations() {
 }
 
 void ParseCommandLineArguments(int argc, char** argv) {
-    if (argc < 2) return;
+    if (argc < 2) {
+        return;
+    }
 
     bool confFile = false;
     string confFilePath;
@@ -595,41 +600,53 @@ void ParseCommandLineArguments(int argc, char** argv) {
             string argument = string(argv[n]).substr(2, argument.length() - 2);
             transform(argument.begin(), argument.end(), argument.begin(), ::tolower);
 
-            if (g_redisArgMap.find(argument) == g_redisArgMap.end()) {
-                stringstream err;
-                err << "unknown argument: " << argument;
-                throw invalid_argument(err.str());
-            }
-
-            vector<string> params;
-            if (argument == cSentinel) {
-                try {
-                    vector<string> sentinelSubCommands = g_redisArgMap[argument]->Extract(n, argc, argv);
-                    for (auto p : sentinelSubCommands) {
-                        params.push_back(p);
-                    }
-                } catch (invalid_argument iaerr) {
-                    // if no subcommands could be mapped, then assume this is the parameterless --sentinel command line only argument
-                }
-            } else if (argument == cServiceRun ) {
-                // When the service starts the current directory is %systemdir%. This needs to be changed to the 
-                // directory the executable is in so that the .conf file can be loaded.
-                char szFilePath[MAX_PATH];
-                if (GetModuleFileNameA(NULL, szFilePath, MAX_PATH) == 0) {
-                    throw std::system_error(GetLastError(), system_category(), "ParseCommandLineArguments: GetModuleFileName failed");
-                }
-                string currentDir = szFilePath;
-                auto pos = currentDir.rfind("\\");
-                currentDir.erase(pos);
-
-                if (FALSE == SetCurrentDirectoryA(currentDir.c_str())) {
-                    throw std::system_error(GetLastError(), system_category(), "SetCurrentDirectory failed");
+            // Some -- arguments are passed directly to redis.c::main()
+            if (find(cRedisArgsForMainC.begin(), cRedisArgsForMainC.end(), argument) != cRedisArgsForMainC.end()) {
+                if (strcasecmp(argument.c_str(), "test-memory") == 0) {
+                    // The test-memory argument is followed by a integer value
+                    n++;
                 }
             } else {
-                params = g_redisArgMap[argument]->Extract(n, argc, argv);
+                // -- arguments processed before calling redis.c::main()
+                if (g_redisArgMap.find(argument) == g_redisArgMap.end()) {
+                    stringstream err;
+                    err << "unknown argument: " << argument;
+                    throw invalid_argument(err.str());
+                }
+
+                vector<string> params;
+                if (argument == cSentinel) {
+                    try {
+                        vector<string> sentinelSubCommands = g_redisArgMap[argument]->Extract(n, argc, argv);
+                        for (auto p : sentinelSubCommands) {
+                            params.push_back(p);
+                        }
+                    }
+                    catch (invalid_argument iaerr) {
+                        // if no subcommands could be mapped, then assume this is the parameterless --sentinel command line only argument
+                    }
+                } else if (argument == cServiceRun) {
+                    // When the service starts the current directory is %systemdir%. This needs to be changed to the 
+                    // directory the executable is in so that the .conf file can be loaded.
+                    char szFilePath[MAX_PATH];
+                    if (GetModuleFileNameA(NULL, szFilePath, MAX_PATH) == 0) {
+                        throw std::system_error(GetLastError(), system_category(), "ParseCommandLineArguments: GetModuleFileName failed");
+                    }
+                    string currentDir = szFilePath;
+                    auto pos = currentDir.rfind("\\");
+                    currentDir.erase(pos);
+
+                    if (FALSE == SetCurrentDirectoryA(currentDir.c_str())) {
+                        throw std::system_error(GetLastError(), system_category(), "SetCurrentDirectory failed");
+                    }
+                } else {
+                    params = g_redisArgMap[argument]->Extract(n, argc, argv);
+                }
+                g_argMap[argument].push_back(params);
+                n += (int) params.size();
             }
-            g_argMap[argument].push_back(params);
-            n += (int)params.size();
+        } else if (string(argv[n]).substr(0, 1) == "-") {
+            // Do nothing, the - arguments are passed to redis.c::main() as they are
         } else {
             confFile = true;
             confFilePath = argv[n];
@@ -641,9 +658,11 @@ void ParseCommandLineArguments(int argc, char** argv) {
         throw std::system_error(GetLastError(), system_category(), "ParseCommandLineArguments: GetCurrentDirectoryA failed");
     }
     
-    if (confFile) ParseConfFile(confFilePath, cwd, g_argMap);
+    if (confFile) {
+        ParseConfFile(confFilePath, cwd, g_argMap);
+    }
 
-    // grab directory where RDB/AOF/DAT files will be created so that service install can add access allowed ACE to path
+    // grab directory where RDB/AOF files will be created so that service install can add access allowed ACE to path
     string fileCreationDirectory = ".\\";
     if (g_argMap.find(cDir) != g_argMap.end()) {
         fileCreationDirectory = g_argMap[cDir][0][0];
@@ -657,27 +676,6 @@ void ParseCommandLineArguments(int argc, char** argv) {
         fileCreationDirectory = fullPath;
     }
     g_pathsAccessed.push_back(fileCreationDirectory);
-
-#ifdef _DEBUG
-    cout << "arguments seen:" << endl;
-    for (auto key : g_argMap) {
-        cout << key.first << endl;
-        bool first = true;
-        for (auto params : key.second) {
-            cout << "\t";
-            bool firstParam = true;
-            for (auto param : params) {
-                if (firstParam == true) {
-                    firstParam = false;
-                } else {
-                    cout << ", ";
-                }
-                cout << param;
-            }
-            cout << endl;
-        }
-    }
-#endif
 
     ValidateCommandlineCombinations();
 }

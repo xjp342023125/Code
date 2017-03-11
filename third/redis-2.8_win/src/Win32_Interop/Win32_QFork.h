@@ -29,6 +29,8 @@
 extern "C" {
 #endif
 
+BOOL g_IsForkedProcess;
+
 typedef enum operationType {
     otINVALID = 0,
     otRDB = 1,
@@ -45,69 +47,54 @@ typedef enum operationStatus {
 
 typedef enum startupStatus {
     ssFAILED = 0,                 // Something went wrong, exit program with error.
-    ssCONTINUE_AS_MASTER = 1,     // Master qfork initialization complete, continue as master instance. Call QForkShutdown when exiting.
-    ssSLAVE_EXIT = 2              // Slave completed operation. Call QForkShutdown and exit.
+    ssCONTINUE_AS_PARENT = 1,     // Parent qfork initialization complete, continue as parent instance. Call QForkShutdown when exiting.
+    ssCHILD_EXIT = 2              // Child completed operation. Call QForkShutdown and exit.
 } StartupStatus;
 
-#define MAX_GLOBAL_DATA 10000
-typedef struct QForkBeginInfo {
-    BYTE globalData[MAX_GLOBAL_DATA];
-    size_t globalDataSize;
-    unsigned __int32 dictHashSeed;
-    char filename[MAX_PATH];
-    int *fds;
-    int numfds;
-    uint64_t *clientids;
-    HANDLE pipe_write_handle;
-    LPVOID protocolInfo;
-} QForkStartupInfo;
-    
-StartupStatus QForkStartup(int argc, char** argv);
-BOOL QForkShutdown();
-
-// For master process use only
-BOOL BeginForkOperation_Rdb(
+// For parent process use only
+pid_t BeginForkOperation_Rdb(
     char* fileName,
-    LPVOID globalData,
-    int sizeOfGlobalData,
-    DWORD* childPID,
-    unsigned __int32 dictHashSeed,
-    char* logfile);
+    LPVOID redisData,
+    int sizeOfRedisData,
+    uint32_t dictHashSeed);
 
-BOOL BeginForkOperation_Aof(
+pid_t BeginForkOperation_Aof(
+    int aof_pipe_write_ack_to_parent,
+    int aof_pipe_read_ack_from_parent,
+    int aof_pipe_read_data_from_parent,
     char* fileName,
-    LPVOID globalData,
-    int sizeOfGlobalData,
-    DWORD* childPID,
-    unsigned __int32 dictHashSeed,
-    char* logfile);
+    LPVOID redisData,
+    int sizeOfRedisData,
+    uint32_t dictHashSeed);
 
-BOOL BeginForkOperation_Socket(
+pid_t BeginForkOperation_Socket(
     int *fds,
     int numfds,
     uint64_t *clientids,
     int pipe_write_fd,
-    LPVOID globalData,
-    int sizeOfGlobalData,
-    DWORD* childPID,
-    unsigned __int32 dictHashSeed,
-    char* logfile);
+    LPVOID redisData,
+    int sizeOfRedisData,
+    uint32_t dictHashSeed);
+
+void BeginForkOperation_Socket_Duplicate(DWORD dwProcessId);
 
 OperationStatus GetForkOperationStatus();
 BOOL EndForkOperation(int * pExitCode); 
 BOOL AbortForkOperation();
 
-// For DLMalloc use only
-LPVOID AllocHeapBlock(size_t size, BOOL allocateHigh);
-int FreeHeapBlock(LPVOID block, size_t size);
-
-// for no persistence optimization/feature
-BOOL IsPersistenceAvailable();
-extern void*(*g_malloc)(size_t);
-extern void*(*g_calloc)(size_t, size_t);
-extern void*(*g_realloc)(void*, size_t);
-extern void(*g_free)(void*);
-extern size_t(*g_msize)(void*);
+#ifdef USE_DLMALLOC
+  LPVOID AllocHeapBlock(size_t size, BOOL allocateHigh);
+  // for no persistence optimization/feature when using dlmalloc
+  extern void*(*g_malloc)(size_t);
+  extern void*(*g_calloc)(size_t, size_t);
+  extern void*(*g_realloc)(void*, size_t);
+  extern void(*g_free)(void*);
+  extern size_t(*g_msize)(void*);
+#elif USE_JEMALLOC
+  LPVOID AllocHeapBlock(LPVOID addr, size_t size, BOOL zero);
+  BOOL PurgePages(LPVOID addr, size_t length);
+#endif
+BOOL FreeHeapBlock(LPVOID addr, size_t size);
 
 #ifndef NO_QFORKIMPL
 #ifdef QFORK_MAIN_IMPL
