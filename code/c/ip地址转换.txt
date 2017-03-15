@@ -1,3 +1,5 @@
+#pragma comment(lib, "ws2_32.lib")
+
 static sockaddr_in convert_to_kenerl_addr(const char *ip, short port)
 {
 	sockaddr_in addr;

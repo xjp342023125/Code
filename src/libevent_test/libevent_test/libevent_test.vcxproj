@@ -143,6 +143,9 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\third\libevent\include\event2\event_wrap.hpp" />
+    <ClInclude Include="..\..\..\third\libevent\include\event2\evhttp_server.hpp" />
+    <ClInclude Include="..\..\..\third\libevent\include\event2\evhttp_tool.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
