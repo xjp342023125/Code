@@ -1,0 +1,9 @@
+static sockaddr_in convert_to_kenerl_addr(const char *ip, short port)
+{
+	sockaddr_in addr;
+	memset(&addr, 0, sizeof(sockaddr_in));
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons(port);
+	addr.sin_addr.s_addr = inet_addr(ip);
+	return addr;
+}
