@@ -15,12 +15,14 @@ public:
 		dnsbase = NULL;
 		conn = NULL;
 		req = NULL;
-		buffer = NULL;
+	}
+	~evhttp_wrap()
+	{
+		clean();
 	}
 	void init(struct event_base * base)
 	{
 		this->base = base;
-		this->buffer = evbuffer_new();
 		this->dnsbase = evdns_base_new(this->base, 1);
 	}
 	//eg:a2.xgsdk.com
@@ -38,32 +40,38 @@ public:
 		evhttp_add_header(this->req->output_headers, "Host", this->host.c_str());
 		return 0;
 	}
-	virtual void on_http_ok() = 0;
+	void clean()
+	{
+		if (this->dnsbase)
+		{
+			evdns_base_free(this->dnsbase,0);
+			this->dnsbase = NULL;
+		}
+		if (this->conn)
+		{
+			evhttp_connection_free(this->conn);
+			this->conn = NULL;
+		}
+	}
+	virtual void on_http_ok(struct evhttp_request *req) = 0;
 private:
 	static void download_callback(struct evhttp_request *req, void *arg)
 	{
-		evhttp_wrap * ctx = (evhttp_wrap*)arg;
-		const char * new_location = 0;
+		if (!arg) {
+			printf("arg NULL\n");
+			return;
+		}
 		if (!req) {
-			printf("timeout\n");
+			printf("req NULL\n");
 			return;
 		}
-
-		switch (req->response_code)
-		{
-		case HTTP_OK:
-			evbuffer_add_buffer(ctx->buffer, req->input_buffer);
-			ctx->on_http_ok();
-			break;
-		default:/* failed */
-			return;
-		}
+		evhttp_wrap * ctx = (evhttp_wrap*)arg;
+		ctx->on_http_ok(req);
 	}
 public:
 	struct event_base * base;
 	struct evdns_base * dnsbase;
 	struct evhttp_connection * conn;
 	struct evhttp_request *req;
-	struct evbuffer *buffer;
 	string host;
 };
