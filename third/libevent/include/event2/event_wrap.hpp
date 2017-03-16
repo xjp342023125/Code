@@ -1,6 +1,7 @@
 #pragma once
 #include <event2/event.h>
 #include <event2/listener.h>
+#include <event2/buffer.h>
 #include <event2/bufferevent.h>
 #pragma comment(lib, "ws2_32.lib")
 
@@ -37,8 +38,35 @@ public:
 };
 
 
-class buffer_event_wrap;
-typedef void (*do_buffer_event_wrap_func)(buffer_event_wrap *,void *);
+
+class buffer_wrap
+{
+public:
+	buffer_wrap()
+	{
+		buffer = NULL;
+	}
+	void free()
+	{
+		evbuffer_free(buffer);
+	}
+	size_t get_len()
+	{
+		return evbuffer_get_length(buffer);
+	}
+	unsigned char* get_buffer(ev_ssize_t size = -1)
+	{
+		return evbuffer_pullup(buffer, size);
+	}
+	int remove(size_t len)
+	{
+		return evbuffer_drain(buffer, len);
+	}
+
+	evbuffer *buffer;
+};
+
+
 class buffer_event_wrap
 {
 public:
@@ -47,51 +75,49 @@ public:
 	buffer_event_wrap()
 	{
 		bev = NULL;
-		para = NULL;
-		events = 0;
+	}
+	~buffer_event_wrap()
+	{
+		free();
+	}
+	void free() {
+		if (bev)
+		{
+			bufferevent_free(bev);
+			bev = NULL;
+		}
 	}
 
-
-	evbuffer* get_output()	{return bufferevent_get_output(bev);}
-	evbuffer* get_input()	{return bufferevent_get_input(bev);	}
-	short get_events()		{return events;	}
-	void free()				{bufferevent_free(bev);	}
-private:
-	static void	on_write(struct bufferevent *bev, void *user_data)
+	evbuffer* get_output() { return bufferevent_get_output(bev); }
+	evbuffer* get_input() { return bufferevent_get_input(bev); }
+public:
+	void enable_event(int flag = EV_READ)
 	{
-		buffer_event_wrap *p = (buffer_event_wrap*)user_data;
-		p->write_cb(p, p->para);
+		bufferevent_enable(bev, flag);
 	}
-	static void	on_read(struct bufferevent *bev, void *user_data)
+	void disable_event(int flag = EV_READ)
 	{
-		buffer_event_wrap *p = (buffer_event_wrap*)user_data;
-		p->read_cb(p, p->para);
+		bufferevent_disable(bev, flag);
 	}
-	static void	on_event(struct bufferevent *bev, short events, void *user_data)
+	//static void read_cb(struct bufferevent *bev, void *ctx)
+	//static void write_cb(struct bufferevent *bev, void *ctx)
+	//static void event_cb(struct bufferevent *bev, short what, void *ctx)
+	void set_cb(bufferevent_data_cb readcb, bufferevent_data_cb writecb,bufferevent_event_cb eventcb, void *cbarg)
 	{
-		buffer_event_wrap *p = (buffer_event_wrap*)user_data;
-		p->events = events;
-		p->event_cb(p, p->para);
+		bufferevent_setcb(bev, readcb, writecb, eventcb, cbarg);
 	}
-
-	int init_with_sock(event_base *base, evutil_socket_t fd, int flag = BEV_OPT_CLOSE_ON_FREE)
+	bool init_with_exist_sock(event_base *base, evutil_socket_t fd, int flag = BEV_OPT_CLOSE_ON_FREE)
 	{
 		bev = bufferevent_socket_new(base, fd, flag);
-		bufferevent_setcb(bev, on_read, on_write, on_event, this);
-
-		bufferevent_enable(bev, EV_WRITE);
-		bufferevent_enable(bev, EV_READ);
-		return 0;
+		return bev != NULL;
+	}
+public:
+	static bool is_event(int event, int check = BEV_EVENT_EOF)
+	{
+		return event & check;
 	}
 public:
 	bufferevent *bev;
-
-	do_buffer_event_wrap_func read_cb;
-	do_buffer_event_wrap_func write_cb;
-	do_buffer_event_wrap_func event_cb;
-
-	void *para;
-	short events;
 };
 
 class listen_event_wrap
@@ -102,24 +128,17 @@ public:
 		ev = NULL;
 	}
 public:
-	int init(event_base *base,const char *ip,short port, int flag= LEV_OPT_CLOSE_ON_FREE| LEV_OPT_REUSEABLE, int backlog = -1)
+	//static void listen_cb(struct evconnlistener *, evutil_socket_t fd, struct sockaddr *, int socklen, void *p)
+	bool init(event_base *base, evconnlistener_cb cb, void *ptr,const char *ip,short port, 
+		int flag= LEV_OPT_CLOSE_ON_FREE| LEV_OPT_REUSEABLE, int backlog = -1)
 	{
 		sockaddr_in sa = convert_to_kenerl_addr(ip,port);
-		ev = evconnlistener_new_bind(base, listen_cb, (void*)this, flag, backlog, (sockaddr*)&sa, sizeof(sockaddr_in));
-		return 0;
+		ev = evconnlistener_new_bind(base, cb, ptr, flag, backlog, (sockaddr*)&sa, sizeof(sockaddr_in));
+		return NULL != ev;
 	}
-private:
-	static void listen_cb(struct evconnlistener *, evutil_socket_t sock, struct sockaddr *, int socklen, void *user)
+	event_base* get_base()
 	{
-		listen_event_wrap *p = (listen_event_wrap*)user;
-		buffer_event_wrap *p_con = new buffer_event_wrap;
-		p_con->init_with_sock(evconnlistener_get_base(p->ev), sock);
-
-		p->on_con(p_con);
-	}
-	virtual void on_con(buffer_event_wrap *p)
-	{
-
+		return evconnlistener_get_base(ev);
 	}
 	
 public:

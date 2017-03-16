@@ -2,8 +2,10 @@
 //
 
 #include "stdafx.h"
-#include "event2\event_wrap.hpp"
+#include "ev_server.hpp"
 #pragma comment(lib,"..\\..\\..\\third\\libevent\\build\\lib\\Debug\\event.lib")
+#pragma comment(lib, "ws2_32.lib")
+
 int main()
 {
 #ifdef _WIN32
@@ -14,9 +16,8 @@ int main()
 	event_base_wrap event;
 	event.init();
 
-	listen_event_wrap listener;
-	listener.init(event.base, "0.0.0.0", 5566);
-
+	ev_fileserver fs;
+	fs.init("", "0.0.0.0", 5566, event.base);
 	while (true)
 	{
 		event.async_loop();
