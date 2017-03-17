@@ -4,38 +4,15 @@
 #include <event2/bufferevent.h>
 #include <event2/event_wrap.hpp>
 #include <iostream>
+#include "../hhdr.h"
 using namespace std;
-#pragma	pack(1)
-#pragma warning(disable: 4200)
-struct f_msg
-{
-	int sum_len;
-	int nType;
-	char sz[];
-};
-
-struct up_log
-{
-	char szpath[256];
-	char szname[100];
-	int len;
-	char sz[];
-};
-
-struct up_log_ret
-{
-	int ret;
-};
-
-#pragma warning(default: 4200)
-#pragma pack()
 
 class ev_filecon
 {
 public:
 	void on_close()
 	{
-
+		cout << "disconnect" << endl;
 	}
 	void on_msg(f_msg &msg)
 	{
@@ -45,13 +22,13 @@ public:
 			cout << "err" << endl;
 			return;
 		}
-		cout << up_log->szpath << "  &&&  " << up_log->szname << endl;
+		cout << log_info->szpath << "  &&&  " << log_info->szname << endl;
 
 	}
 public:
 	static void read_cb(struct bufferevent *bev, void *ctx)
 	{
-		
+		cout << "recv" << endl;
 		ev_filecon *p_this = (ev_filecon*)ctx;
 		evbuffer *in = p_this->bev.get_input();
 
@@ -117,6 +94,7 @@ public:
 		fc->bev.set_cb(ev_filecon::read_cb, ev_filecon::write_cb, ev_filecon::event_cb, fc);
 		fc->bev.enable_event(EV_READ);
 		fc->bev.enable_event(EV_WRITE);
+		cout << "new" << endl;
 	}
 	listen_event_wrap listener;
 };

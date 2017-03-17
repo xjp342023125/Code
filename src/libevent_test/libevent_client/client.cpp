@@ -16,6 +16,10 @@ int main()
 	event_base_wrap event;
 	event.init();
 
+	ev_filecon fc;
+	fc.bev.create(event.base);
+	fc.connect("127.0.0.1", 5566);
+	fc.bev.write("aaa", 4);
 	while (true)
 	{
 		event.async_loop();

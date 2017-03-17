@@ -4,31 +4,9 @@
 #include <event2/bufferevent.h>
 #include <event2/event_wrap.hpp>
 #include <iostream>
+#include "../hhdr.h"
 using namespace std;
-#pragma	pack(1)
-#pragma warning(disable: 4200)
-struct f_msg
-{
-	int sum_len;
-	int nType;
-	char sz[];
-};
 
-struct up_log
-{
-	char szpath[256];
-	char szname[100];
-	int len;
-	char sz[];
-};
-
-struct up_log_ret
-{
-	int ret;
-};
-
-#pragma warning(default: 4200)
-#pragma pack()
 
 class ev_filecon
 {
@@ -41,6 +19,17 @@ public:
 	{
 		
 	}
+
+	int connect(const char *ip, short port)
+	{
+		bev.connect(ip, port);
+		bev.set_cb(ev_filecon::read_cb, ev_filecon::write_cb, ev_filecon::event_cb, this);
+		bev.enable_event(EV_READ);
+		bev.enable_event(EV_WRITE);
+		
+		return 0;
+	}
+	
 public:
 	static void read_cb(struct bufferevent *bev, void *ctx)
 	{
