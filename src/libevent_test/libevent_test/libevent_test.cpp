@@ -6,13 +6,15 @@
 #pragma comment(lib,"..\\..\\..\\third\\libevent\\build\\lib\\Debug\\event.lib")
 #pragma comment(lib, "ws2_32.lib")
 
+CLog gSqlLog;
+
 int main()
 {
 #ifdef _WIN32
 	WSADATA wsa_data;
 	WSAStartup(0x0201, &wsa_data);
 #endif
-
+	init_mysql_log();
 	event_base_wrap event;
 	event.init();
 

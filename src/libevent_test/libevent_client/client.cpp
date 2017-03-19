@@ -19,7 +19,9 @@ int main()
 	ev_filecon fc;
 	fc.bev.create(event.base);
 	fc.connect("127.0.0.1", 5566);
-	fc.bev.write("aaa", 4);
+
+
+	fc.send_msg("aaa", "bbb", 4, "ccc");
 	while (true)
 	{
 		event.async_loop();

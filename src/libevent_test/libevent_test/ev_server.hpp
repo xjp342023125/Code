@@ -5,24 +5,46 @@
 #include <event2/event_wrap.hpp>
 #include <iostream>
 #include "../hhdr.h"
+#include "../../../com/Com/CLog.hpp"
+#include "../../../com/Com/CStr.hpp"
 using namespace std;
+
+#define USE_LOG
+#ifdef USE_LOG
+extern CLog gSqlLog;
+static void init_mysql_log()
+{
+	gSqlLog.InitDevice("fs");
+}
+
+#define HINFO	gSqlLog.l()
+#define HERROR	gSqlLog.l()<<"Error,Line"<<__LINE__<<","
+#else
+#define HINFO	gSqlLog()
+#define HERROR	gSqlLog()
+#endif
 
 class ev_filecon
 {
 public:
 	void on_close()
 	{
-		cout << "disconnect" << endl;
+		HINFO << "disconnect" ;
 	}
 	void on_msg(f_msg &msg)
 	{
 		up_log *log_info = (up_log*)msg.sz;
 		if (msg.sum_len != sizeof(f_msg) + sizeof(up_log) + log_info->len)
 		{
-			cout << "err" << endl;
+			HINFO << "err" ;
 			return;
 		}
-		cout << log_info->szpath << "  &&&  " << log_info->szname << endl;
+		HINFO << log_info->szpath << "  &&&  " << log_info->szname ;
+		if (strchr(log_info->szpath,'.'))
+		{
+			HERROR << "error path  " << log_info->szpath;
+		}
+
 
 	}
 public:
@@ -94,7 +116,7 @@ public:
 		fc->bev.set_cb(ev_filecon::read_cb, ev_filecon::write_cb, ev_filecon::event_cb, fc);
 		fc->bev.enable_event(EV_READ);
 		fc->bev.enable_event(EV_WRITE);
-		cout << "new" << endl;
+		HINFO << "new" ;
 	}
 	listen_event_wrap listener;
 };

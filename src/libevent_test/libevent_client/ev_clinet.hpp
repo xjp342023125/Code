@@ -19,7 +19,21 @@ public:
 	{
 		
 	}
+	void send_msg(const char *path, const char *name, int len, char *p)
+	{
+		f_msg hdr;
+		hdr.sum_len = sizeof(f_msg) + sizeof(up_log) + len;
+		hdr.nType = 1;
 
+		up_log log;
+		strcpy(log.szpath, path);
+		strcpy(log.szname, name);
+		log.len = len;
+
+		bev.write(&hdr, sizeof(hdr));
+		bev.write(&log, sizeof(log));
+		bev.write(&p, len);
+	}
 	int connect(const char *ip, short port)
 	{
 		bev.connect(ip, port);
