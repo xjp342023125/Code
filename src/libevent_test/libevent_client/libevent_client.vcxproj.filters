@@ -14,7 +14,7 @@
     <ClInclude Include="..\..\..\third\libevent\include\event2\event_wrap.hpp">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="ev_server.hpp">
+    <ClInclude Include="ev_clinet.hpp">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
@@ -28,11 +28,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="libevent_test.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="client.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

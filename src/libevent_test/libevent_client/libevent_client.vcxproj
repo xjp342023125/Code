@@ -19,11 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F3B13A94-3D57-4B3E-A81B-672120FC2AF1}</ProjectGuid>
+    <ProjectGuid>{DC24F716-D597-4524-9106-67020E805567}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>libevent_test</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
-    <ProjectName>server</ProjectName>
+    <ProjectName>client</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -143,12 +143,12 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\third\libevent\include\event2\event_wrap.hpp" />
     <ClInclude Include="..\hhdr.h" />
-    <ClInclude Include="ev_server.hpp" />
+    <ClInclude Include="ev_clinet.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="libevent_test.cpp" />
+    <ClCompile Include="client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

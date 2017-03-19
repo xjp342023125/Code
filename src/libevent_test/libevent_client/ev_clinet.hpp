@@ -7,28 +7,33 @@
 #include "../hhdr.h"
 using namespace std;
 
+
 class ev_filecon
 {
 public:
 	void on_close()
 	{
-		cout << "disconnect" << endl;
+
 	}
 	void on_msg(f_msg &msg)
 	{
-		up_log *log_info = (up_log*)msg.sz;
-		if (msg.sum_len != sizeof(f_msg) + sizeof(up_log) + log_info->len)
-		{
-			cout << "err" << endl;
-			return;
-		}
-		cout << log_info->szpath << "  &&&  " << log_info->szname << endl;
-
+		
 	}
+
+	int connect(const char *ip, short port)
+	{
+		bev.connect(ip, port);
+		bev.set_cb(ev_filecon::read_cb, ev_filecon::write_cb, ev_filecon::event_cb, this);
+		bev.enable_event(EV_READ);
+		bev.enable_event(EV_WRITE);
+		
+		return 0;
+	}
+	
 public:
 	static void read_cb(struct bufferevent *bev, void *ctx)
 	{
-		cout << "recv" << endl;
+		
 		ev_filecon *p_this = (ev_filecon*)ctx;
 		evbuffer *in = p_this->bev.get_input();
 
@@ -72,29 +77,4 @@ public:
 	}
 public:
 	buffer_event_wrap bev;
-};
-
-class ev_fileserver
-{
-public:
-	bool init(const char *path, const char *ip, short port, event_base *base)
-	{
-		return listener.init(base, ev_fileserver::cb, this, ip, port);
-	}
-public:
-	static void cb(struct evconnlistener *, evutil_socket_t fd, struct sockaddr *, int socklen, void *p)
-	{
-		ev_filecon *fc = new ev_filecon;
-		if (NULL == fc)
-		{
-			return;
-		}
-		ev_fileserver *fs = (ev_fileserver*)p;
-		fc->bev.init_with_exist_sock(fs->listener.get_base(), fd);
-		fc->bev.set_cb(ev_filecon::read_cb, ev_filecon::write_cb, ev_filecon::event_cb, fc);
-		fc->bev.enable_event(EV_READ);
-		fc->bev.enable_event(EV_WRITE);
-		cout << "new" << endl;
-	}
-	listen_event_wrap listener;
 };
