@@ -203,7 +203,7 @@ static OneLineNoWrite GetNoLog()
 }
 
 
-
+//============.h===============
 //#define USE_LOG
 //#ifdef USE_LOG
 //extern CLog gSqlLog;
@@ -218,4 +218,8 @@ static OneLineNoWrite GetNoLog()
 //#define HINFO	gSqlLog()
 //#define HERROR	gSqlLog()
 //#endif
+
+//============.cpp=============
+//CLog gSqlLog;
+//init_mysql_log();
 #endif

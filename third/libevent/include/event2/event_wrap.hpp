@@ -111,6 +111,23 @@ public:
 		bev = bufferevent_socket_new(base, fd, flag);
 		return bev != NULL;
 	}
+	
+	//struct bufferevent *bufferevent_socket_new(struct event_base *base, evutil_socket_t fd, int options);
+	bool create(event_base *base, int options=BEV_OPT_CLOSE_ON_FREE)
+	{
+		bev = bufferevent_socket_new(base, -1, options);
+		return NULL != bev;
+	}
+	int connect(const char *ip, short port)
+	{
+		sockaddr_in sa = convert_to_kenerl_addr(ip, port);
+		return bufferevent_socket_connect(bev, (sockaddr*)&sa, sizeof(sockaddr_in));
+	}
+
+	int write(const void *data, size_t size)
+	{
+		return bufferevent_write(bev,data,size);
+	}
 public:
 	static bool is_event(int event, int check = BEV_EVENT_EOF)
 	{
