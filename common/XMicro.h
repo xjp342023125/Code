@@ -13,3 +13,8 @@
 #endif 
 
 #define MAX_PATH_LEN	512
+
+#define CHECK_RETV(value,ret)	if (0 == (value)) {  return (ret); };
+
+#define xmalloc		malloc
+#define xfree		free
