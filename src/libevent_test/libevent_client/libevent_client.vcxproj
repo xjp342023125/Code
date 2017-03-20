@@ -141,9 +141,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\common\XFile.hpp" />
+    <ClInclude Include="..\..\..\common\XProcess.hpp" />
     <ClInclude Include="..\..\..\third\libevent\include\event2\event_wrap.hpp" />
     <ClInclude Include="..\hhdr.h" />
     <ClInclude Include="ev_clinet.hpp" />
+    <ClInclude Include="guard_path.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>

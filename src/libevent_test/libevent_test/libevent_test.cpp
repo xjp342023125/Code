@@ -8,8 +8,9 @@
 
 CLog gSqlLog;
 
-int main()
+int main(int argc, char* argv[])
 {
+	xprocess_change_workpath(argv[0]);
 #ifdef _WIN32
 	WSADATA wsa_data;
 	WSAStartup(0x0201, &wsa_data);

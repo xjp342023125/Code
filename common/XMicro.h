@@ -3,13 +3,13 @@
 #define ARRAY_CNT(v)	(sizeof(v)/sizeof((v)[0]))
 #define L_VALUE(v)		"["<<#v<<"]="<<v<<"."
 
-#define WIN_FILE_SEPARATOT		'\\'
-#define LINUX_FILE_SEPARATOT	'//'
+#define WIN_FILE_SEPARATOR		'\\'
+#define LINUX_FILE_SEPARATOR	'//'
 
 #ifdef WIN32
-	#define FILE_SEPARATOT	WIN_FILE_SEPARATOT
+	#define FILE_SEPARATOR	WIN_FILE_SEPARATOR
 #else
-	#define FILE_SEPARATOT	LINUX_FILE_SEPARATOT
+	#define FILE_SEPARATOR	LINUX_FILE_SEPARATOR
 #endif 
 
 #define MAX_PATH_LEN	512

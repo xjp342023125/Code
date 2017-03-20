@@ -26,6 +26,15 @@
     <ClInclude Include="..\hhdr.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\common\XProcess.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="guard_path.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\XFile.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
