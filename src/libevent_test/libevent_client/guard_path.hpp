@@ -37,7 +37,7 @@ public:
 				up_del(intersection[i]);
 			}
 		}
-
+		last.clear();
 		xfoder_get_files(path.c_str(), last);
 	}
 

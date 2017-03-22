@@ -11,8 +11,8 @@
 event_base_wrap g_event;
 int main(int argc, char* argv[])
 {
-	//xprocess_change_workpath(argv[0]);
-	xfile_test();
+	xprocess_change_workpath(argv[0]);
+	//xfile_test();
 #ifdef _WIN32
 	WSADATA wsa_data;
 	WSAStartup(0x0201, &wsa_data);

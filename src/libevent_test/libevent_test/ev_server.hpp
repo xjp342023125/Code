@@ -41,7 +41,7 @@ public:
 			HINFO << "err" ;
 			return;
 		}
-		HINFO << log_info->szpath << "  &&&  " << log_info->szname ;
+		HINFO << log_info->szpath << "  ,name=" << log_info->szname ;
 		if (strstr(log_info->szpath,".."))
 		{
 			HERROR << "error path  " << log_info->szpath;
@@ -53,14 +53,13 @@ public:
 		{
 			path += FILE_SEPARATOR;
 		}
-		xfoder_createx(path.c_str());
+		HINFO<<xfoder_createx(path.c_str());
 		path += log_info->szname;
-		xfile_write_new(path.c_str() , log_info->sz, log_info->len);
+		HINFO<<xfile_write_new(path.c_str() , log_info->sz, log_info->len);
 	}
 public:
 	static void read_cb(struct bufferevent *bev, void *ctx)
 	{
-		cout << "recv" << endl;
 		ev_filecon *p_this = (ev_filecon*)ctx;
 		evbuffer *in = p_this->bev.get_input();
 
@@ -95,8 +94,10 @@ public:
 	static void event_cb(struct bufferevent *bev, short what, void *ctx)
 	{
 		ev_filecon *p_this = (ev_filecon*)ctx;
-
-		if (buffer_event_wrap::is_event(what, BEV_EVENT_EOF))
+		HERROR << "event =" << what;
+		
+		if (buffer_event_wrap::is_event(what, BEV_EVENT_EOF) 
+			|| buffer_event_wrap::is_event(what, BEV_EVENT_ERROR))
 		{
 			p_this->on_close();
 			return;

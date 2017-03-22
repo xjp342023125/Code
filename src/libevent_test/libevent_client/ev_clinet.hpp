@@ -87,7 +87,7 @@ public:
 	static void event_cb(struct bufferevent *bev, short what, void *ctx)
 	{
 		ev_filecon *p_this = (ev_filecon*)ctx;
-
+		cout << "event =" << what<<endl;
 		if (buffer_event_wrap::is_event(what, BEV_EVENT_EOF))
 		{
 			p_this->on_close();
