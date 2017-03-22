@@ -5,19 +5,30 @@
 #include <event2/buffer.h>
 #include <event2/http.h>
 
-#define CHECK_RETURN(exp)\
+#define EV_CHECK_RETURN(exp)\
 	if(!(exp))\
 	{\
 		return;\
 	}
 
-#define CHECK_RETURNV(exp,ret)\
+#define EV_CHECK_RETURNV(exp,ret)\
 	if(!(exp))\
 	{\
 		return ret;\
 	}\
 
 using namespace std;
+
+
+struct http_ret
+{
+	http_ret()
+	{
+		code = HTTP_OK;
+	}
+	int code;
+	string ret;
+};
 class evhttp_server_wrap 
 {
 public:
@@ -32,12 +43,12 @@ public:
 	
 	int init_web(string ip, int port, event_base* base)
 	{
-		CHECK_RETURNV(base, -1);
+		EV_CHECK_RETURNV(base, -1);
 		http_server = evhttp_new(base);
-		CHECK_RETURNV(http_server, -1);
+		EV_CHECK_RETURNV(http_server, -1);
 
 		int ret = evhttp_bind_socket(http_server, ip.c_str(), port);
-		CHECK_RETURNV(0 == ret, -3);
+		EV_CHECK_RETURNV(0 == ret, -3);
 
 		evhttp_set_gencb(http_server, generic_handler, this);
 
@@ -51,20 +62,21 @@ public:
 	}
 
 
-	virtual void do_req(struct evhttp_request &req, struct evbuffer &buf) = 0;
+	virtual http_ret do_req(struct evhttp_request &req, struct evbuffer &buf) = 0;
 private:
 	static void generic_handler(struct evhttp_request *req, void *arg)
 	{
 		evhttp_server_wrap *pthis = (evhttp_server_wrap*)arg;
 		struct evbuffer *buf = evbuffer_new();
-		CHECK_RETURN(req);
-		CHECK_RETURN(arg);
-		CHECK_RETURN(pthis);
-		CHECK_RETURN(buf);
+		EV_CHECK_RETURN(req);
+		EV_CHECK_RETURN(arg);
+		EV_CHECK_RETURN(pthis);
+		EV_CHECK_RETURN(buf);
 
-		pthis->do_req(*req, *buf);
+		http_ret ret = pthis->do_req(*req, *buf);
 
-		evhttp_send_reply(req, HTTP_OK, "OK", buf);
+		evbuffer_add(buf, ret.ret.c_str(), ret.ret.size());
+		evhttp_send_reply(req, ret.code,"OK", buf);
 		evbuffer_free(buf);
 	}
 private:

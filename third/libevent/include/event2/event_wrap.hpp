@@ -33,6 +33,16 @@ public:
 	{
 		event_base_loop(base, EVLOOP_NONBLOCK);
 	}
+	static void set_log_cb(event_log_cb func)
+	{
+		event_set_log_callback(func);
+	}
+
+	static void enable_debug_log()
+	{
+		event_enable_debug_logging(1);
+	}
+
 public:
 	struct event_base *base;
 };

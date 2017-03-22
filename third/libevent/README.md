@@ -96,7 +96,7 @@ Install CMake: <http://www.cmake.org>
 
 ## CMake (Unix)
 
-     $ mkdir build && cd build
+     $ mkdir linux_build && cd linux_build
      $ cmake ..     # Default to Unix Makefiles.
      $ make
      $ make verify  # (optional)
