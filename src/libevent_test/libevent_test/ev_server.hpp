@@ -5,8 +5,10 @@
 #include <event2/event_wrap.hpp>
 #include <iostream>
 #include "../hhdr.h"
-#include "../../../com/Com/CLog.hpp"
-#include "../../../com/Com/CStr.hpp"
+#include "../../../common/XFile.hpp"
+#include "../../../common/XLog.hpp"
+#include "../../../common/XProcess.hpp"
+
 using namespace std;
 
 #define USE_LOG
@@ -40,12 +42,20 @@ public:
 			return;
 		}
 		HINFO << log_info->szpath << "  &&&  " << log_info->szname ;
-		if (strchr(log_info->szpath,'.'))
+		if (strstr(log_info->szpath,".."))
 		{
 			HERROR << "error path  " << log_info->szpath;
+			return;
 		}
-
-
+		xpath_convert(log_info->szpath);
+		string path = log_info->szpath;
+		if (path[path.size() -1 ] != FILE_SEPARATOR)
+		{
+			path += FILE_SEPARATOR;
+		}
+		xfoder_createx(path.c_str());
+		path += log_info->szname;
+		xfile_write_new(path.c_str() , log_info->sz, log_info->len);
 	}
 public:
 	static void read_cb(struct bufferevent *bev, void *ctx)

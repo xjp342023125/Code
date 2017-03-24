@@ -6,7 +6,13 @@
 #include <iostream>
 #include "../hhdr.h"
 #include "../../../common/XFile.hpp"
+
+#include "../../../common/XProcess.hpp"
+
 using namespace std;
+
+
+
 
 
 class ev_filecon
@@ -33,7 +39,7 @@ public:
 
 		bev.write(&hdr, sizeof(hdr));
 		bev.write(&log, sizeof(log));
-		bev.write(&p, len);
+		bev.write(p, len);
 	}
 	int connect(const char *ip, short port)
 	{
@@ -93,3 +99,12 @@ public:
 public:
 	buffer_event_wrap bev;
 };
+
+extern event_base_wrap g_event;
+static ev_filecon* create_ev_filecon()
+{
+	ev_filecon *pf = new ev_filecon;
+	pf->bev.create(g_event.base);
+	pf->connect("127.0.0.1", 5566);
+	return pf;
+}
