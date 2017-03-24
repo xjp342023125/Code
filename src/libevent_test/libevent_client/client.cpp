@@ -8,6 +8,7 @@
 
 int main()
 {
+	xfile_test();
 #ifdef _WIN32
 	WSADATA wsa_data;
 	WSAStartup(0x0201, &wsa_data);

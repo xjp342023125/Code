@@ -5,6 +5,7 @@
 #include <event2/event_wrap.hpp>
 #include <iostream>
 #include "../hhdr.h"
+#include "../../../common/XFile.hpp"
 using namespace std;
 
 

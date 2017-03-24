@@ -4,6 +4,9 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include  <io.h>
+#include  <stdio.h>
+#include  <stdlib.h>
 using namespace std;
 typedef vector<string> linevec_t;
 static bool_t XReadFileLine(cstr_t pPath, linevec_t &lines)
@@ -111,4 +114,13 @@ static int XWriteFile(cstr_t pFile, const int8* p, int64 nLen, int32 nOff = 0)
 static void XDelFile(cstr_t path)
 {
 	remove(path);
+}
+
+static bool exist_foder(cstr_t path)
+{
+	return 0 == _access(path, 0);
+}
+static bool create_foder(cstr_t path)
+{
+
 }
