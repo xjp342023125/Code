@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 14.00
+# Visual Studio 2015
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WorkHelp", "WorkHelp\WorkHelp.vcxproj", "{AC2D6554-0E37-481D-9153-7A2ED6535DC2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC2D6554-0E37-481D-9153-7A2ED6535DC2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AC2D6554-0E37-481D-9153-7A2ED6535DC2}.Debug|Win32.Build.0 = Debug|Win32
+		{AC2D6554-0E37-481D-9153-7A2ED6535DC2}.Release|Win32.ActiveCfg = Release|Win32
+		{AC2D6554-0E37-481D-9153-7A2ED6535DC2}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
