@@ -3,6 +3,13 @@
 #include "cfile.hpp"
 #include <sstream>
 #include <set>
+
+enum op {
+	DB_CREATE,
+	DB_ADD,
+	DB_MODIFY,
+	DB_DEL
+};
 struct CCodeField
 {
 	bool init_with_str(string s)
@@ -37,7 +44,11 @@ struct CCodeField
 		this->mysql_primary_key = (string::npos != s.find("mysql_primary_key"));;
 		this->mysql_unique_key = (string::npos != s.find("mysql_unique_key"));;
 		this->mysql_key_ = (string::npos != s.find("mysql_key"));;
-		
+
+		this->mysql_int8 = (string::npos != s.find("mysql_int8"));;
+		this->mysql_int16 = (string::npos != s.find("mysql_int16"));;
+		this->mysql_uint8 = (string::npos != s.find("mysql_uint8"));;
+		this->mysql_uint16 = (string::npos != s.find("mysql_uint16"));;
 
 		return true;
 	}
@@ -48,6 +59,16 @@ struct CCodeField
 
 	string get_ctype()
 	{
+		if (mysql_int8)
+			return "short";
+		if (mysql_int16)
+			return "short";
+		if (mysql_uint8)
+			return "unsigned short";
+		if (mysql_uint16)
+			return "unsigned short";
+
+
 #define PROTO2C(proto,c)	if(type==(proto))	{return (c);}
 		PROTO2C("bool", "bool");
 		PROTO2C("double", "double");
@@ -55,7 +76,7 @@ struct CCodeField
 		PROTO2C("int32", "int");
 		PROTO2C("uint32", "unsigned int");
 		PROTO2C("int64", "long long");
-		PROTO2C("uint64", "unsigned long ling");
+		PROTO2C("uint64", "unsigned long long");
 		PROTO2C("string", "string");
 
 		return "unkown type!";
@@ -63,20 +84,44 @@ struct CCodeField
 	
 	string get_sql_type()
 	{
+		if (mysql_int8)
+			return "tinyint(4) NOT NULL";
+		if (mysql_int16)
+			return "smallint(6) NOT NULL";
+		if (mysql_uint8)
+			return "tinyint(3) unsigned NOT NULL";
+		if (mysql_uint16)
+			return "smallint(5) unsigned NOT NULL";
+
 #define PROTOSQL(proto,c)	if(type==(proto))	{return (c);}
-		PROTOSQL("int32", "int(10) NOT NULL");
+		PROTOSQL("int32", "int(11) NOT NULL");
 		PROTOSQL("uint32", "int(10) unsigned NOT NULL");
 		PROTOSQL("int64", "bigint(20) NOT NULL");
 		PROTOSQL("uint64", "bigint(20) unsigned NOT NULL");
-		PROTOSQL("string", " varchar(32) NOT NULL ");
+		PROTOSQL("string", " varchar(255) NOT NULL ");
 
 		return "unkown type!";
 	}
-	string get_sql()
+	string get_sql(int opt)
 	{
 		string sql;
-		//`roleid` int(10) unsigned NOT NULL AUTO_INCREMENT
-		sql = "  `" + name + "` " + get_sql_type() + get_sql_fix()+",\r\n";
+		switch (opt) 
+		{
+			case DB_CREATE:
+				//`roleid` int(10) unsigned NOT NULL AUTO_INCREMENT
+				sql = "  `" + name + "` " + get_sql_type() + get_sql_fix() + ",\r\n";
+				break;
+			case DB_ADD:
+				sql = "ADD " + name + " " + get_sql_type() + get_sql_fix() + ";\r\n";
+				break;
+			case DB_MODIFY:
+				sql = "MODIFY " + name + " " + get_sql_type() + get_sql_fix() + ";\r\n";
+				break;
+			case DB_DEL:
+				sql = "DROP COLUMN " + name+ ";\r\n";
+				break;
+		}
+
 		return sql;
 	}
 	string get_index_sql()
@@ -126,6 +171,11 @@ public:
 	bool mysql_primary_key;
 	bool mysql_unique_key;
 	bool mysql_key_;
+public:
+	bool mysql_int8;
+	bool mysql_int16;
+	bool mysql_uint8;
+	bool mysql_uint16;
 };
 
 class CProtoPara
@@ -159,16 +209,45 @@ public:
 	string general_create_sql()
 	{
 		string sql;
+		sql += "[------>New<------]\r\n";
 		sql += "CREATE TABLE `" + m_table_name + "` (" + "\r\n";
 		for (size_t i = 0; i < fields.size(); i++)
 		{
-			sql += fields[i].get_sql() ;
+			sql += fields[i].get_sql(DB_CREATE) ;
 		}
 		for (size_t i = 0; i < fields.size(); i++)
 		{
 			sql += fields[i].get_index_sql();
 		}
-		sql += ") ENGINE=InnoDB  DEFAULT CHARSET=utf8;";
+		sql += ") ENGINE=InnoDB  DEFAULT CHARSET=utf8;\r\n";
+
+
+		sql += "\r\n";
+		sql += "\r\n";
+		sql += "[------>Add<------]\r\n";
+		for (size_t i = 0; i < fields.size(); i++)
+		{
+			sql += "ALTER TABLE " + m_table_name + " ";
+			sql += fields[i].get_sql(DB_ADD);
+		}
+
+		sql += "\r\n";
+		sql += "\r\n";
+		sql += "[------>Mod<------]\r\n";
+		for (size_t i = 0; i < fields.size(); i++)
+		{
+			sql += "ALTER TABLE " + m_table_name + " ";
+			sql += fields[i].get_sql(DB_MODIFY);
+		}
+
+		sql += "\r\n";
+		sql += "\r\n";
+		sql += "[------>Del<------]\r\n";
+		for (size_t i = 0; i < fields.size(); i++)
+		{
+			sql += "ALTER TABLE " + m_table_name + " ";
+			sql += fields[i].get_sql(DB_DEL);
+		}
 		return sql;
 	}
 	string general_code()
@@ -291,11 +370,11 @@ int MainLogic::del_%s_by_%s(%s %s)
 				const char *p = NULL;
 				if (i != fields.size() - 1)
 				{
-					p = R"(ss << "'" << db.escape_str(val.%s()) << "',";)";
+					p = R"(		ss << "'" << db.escape_str(val.%s()) << "',";)";
 				}
 				else
 				{
-					p = R"(ss << "'" << db.escape_str(val.%s()) << "');";)";
+					p = R"(		ss << "'" << db.escape_str(val.%s()) << "');";)";
 				}
 					
 				char sz[500] = { 0 };
@@ -359,7 +438,7 @@ int MainLogic::del_%s_by_%s(%s %s)
 		int idx = 0;)";
 
 		ret += "\r\n";
-		string obj = m_table_name + "_one";
+		string obj ="		"+ m_table_name + "_one";
 		ret += (m_table_name + " " + obj + ";\r\n");
 		for (size_t i = 0; i < fields.size(); i++)
 		{
@@ -466,7 +545,7 @@ int MainLogic::update_%s_by_%s(const %s &ret)
 		ss << " where %s = '"<<db.escape_str(ret.%s())<< "';";
 		int sql_ret = db.do_write(ss.str());
 
-						return 0;
+		return 0;
 	}
 )";
 		}
@@ -476,7 +555,7 @@ int MainLogic::update_%s_by_%s(const %s &ret)
 		ss << " where %s = "<<ret.%s()<< ";";
 		int sql_ret = db.do_write(ss.str());
 
-						return 0;
+		return 0;
 	}
 )";
 		}

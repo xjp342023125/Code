@@ -22,8 +22,8 @@ static void CEditAddText(CEdit &m_edit,const char *p,bool bAddTime = false){
 
 static string GetEditVal(HWND m_hWnd, int ID)
 {
-	wchar_t sz[3000];
-	GetDlgItemTextW(m_hWnd, ID, sz, 3000);
+	wchar_t sz[30000];
+	GetDlgItemTextW(m_hWnd, ID, sz, 30000);
 	char * p = Unicode_Ansi(sz);
 	string ret = p;
 	XFreeMem(p);

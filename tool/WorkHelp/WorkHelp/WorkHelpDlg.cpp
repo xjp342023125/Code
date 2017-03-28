@@ -21,7 +21,7 @@ using namespace std;
 CWorkHelpDlg::CWorkHelpDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CWorkHelpDlg::IDD, pParent)
 {
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	//m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
 void CWorkHelpDlg::DoDataExchange(CDataExchange* pDX)
@@ -47,12 +47,7 @@ BOOL CWorkHelpDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	// 设置此对话框的图标。  当应用程序主窗口不是对话框时，框架将自动
-	//  执行此操作
-	SetIcon(m_hIcon, TRUE);			// 设置大图标
-	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
-	// TODO:  在此添加额外的初始化代码
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -77,8 +72,7 @@ void CWorkHelpDlg::OnPaint()
 		int x = (rect.Width() - cxIcon + 1) / 2;
 		int y = (rect.Height() - cyIcon + 1) / 2;
 
-		// 绘制图标
-		dc.DrawIcon(x, y, m_hIcon);
+
 	}
 	else
 	{
@@ -90,12 +84,12 @@ void CWorkHelpDlg::OnPaint()
 //显示。
 HCURSOR CWorkHelpDlg::OnQueryDragIcon()
 {
-	return static_cast<HCURSOR>(m_hIcon);
+	return NULL;
 }
 
-#include "../../../Com/CMFC.hpp"
-#include "../../../Com/CFile.hpp"
-#include "../../../Com/CAnalysisCode.hpp"
+#include "../../../com/Com/CMFC.hpp"
+#include "../../../com/Com/CFile.hpp"
+#include "../../../com/Com/CAnalysisCode.hpp"
 void CWorkHelpDlg::OnBnClickedButton1()
 {
 	string val = GetEditVal(m_hWnd, IDC_EDIT1);
