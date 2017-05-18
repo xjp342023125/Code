@@ -1,0 +1,13 @@
+索引
+第一个压入是1，第二个压入是2
+最后压入-1
+
+
+#define lua_pop(L,n)		lua_settop(L, -(n)-1)
+lua_settop(L,-1)  无操作
+
+lua_pushvalue() 指定索引值副本压入栈
+lua_remove() 删除指定索引元素,之上所有元素下移
+lua_insert() 指定位置之上元素上移，开辟一个槽，栈顶元素移到该位置
+lua_replace() 弹出栈顶值，设置到索引上
+lua_getglobal() 返回的是类型
