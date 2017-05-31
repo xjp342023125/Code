@@ -6,7 +6,63 @@
 #include <iostream>
 #include <vector>
 #include <list>
+
+#include <new>
 using namespace std;
+
+
+
+
+
+void test_hide_func();
+void test_cast();
+void test_construct();
+void test_place_new();
+void test_destructor();
+int main()
+{
+
+
+
+	//test_hide_func();
+	//test_construct();
+	//test_place_new();
+	//test_destructor();
+	test_cast();
+	
+    return 0;
+}
+//=====================================================
+
+class Array
+{
+public:
+	class ArraySize
+	{
+	public:
+		ArraySize(int n):m_n(n)
+		{}
+
+		int m_n;
+	};
+
+	Array(ArraySize size)
+	{
+		m_n = size.m_n;
+	}
+	int m_n;
+};
+
+void test_construct()
+{
+	Array a1(3);
+	//if (a1 == 3)
+	//if (3 == a1)
+	{
+	}
+}
+//=====================================================
+
 
 
 class A
@@ -19,6 +75,11 @@ public:
 	~A()
 	{
 		cout << "del A";
+	}
+
+	virtual void test_hide()const
+	{
+		cout << __FUNCTION__ << endl;
 	}
 };
 
@@ -33,8 +94,24 @@ public:
 	{
 		cout << "del B";
 	}
+
+	virtual void test_hide()
+	{
+		cout << __FUNCTION__ << endl;
+	}
 };
-int main()
+void test_hide_func()
+{
+	A *p = new B;
+	p->test_hide();
+}
+
+void test_empty_class_size()
+{
+	cout << sizeof(A);
+}
+
+void test_share_ptr_convert()
 {
 	{
 		cout << std::is_convertible<B*, A*>::value;
@@ -42,12 +119,102 @@ int main()
 		std::shared_ptr<A> aaa(bbb);
 
 		std::shared_ptr<A> aaa2 = bbb;
+
+		is_base_of<A, B>;
 	}
 	{
 		shared_ptr<A> aaa(new A);
 		//shared_ptr<B> bbb(aaa); // 无法转换
 	}
-	
-    return 0;
 }
+//=====================================================
 
+void *operator new(size_t, void *p)
+{
+	return p;
+}
+void test_place_new()
+{
+	char sz[100];
+	A *p2 = new (sz) A;
+	//delete p2;
+}
+//=====================================================
+class AA
+{
+public:
+	virtual ~AA()
+	{
+
+	}
+	virtual void ccc() = 0;
+	int a;
+};
+
+class BB :virtual public AA
+{
+public:
+	virtual void ccc()
+	{
+
+	}
+	int aa;
+};
+
+void test_cast()
+{
+	// 至少一个虚函数才可以
+	AA *aa = new BB;
+	BB* bb = dynamic_cast<BB*>(aa);
+	cout << aa << endl;
+	cout << dynamic_cast<BB*>(aa) << endl;
+
+	// 虚继承，转化时，地址不一样了
+	
+}
+//=====================================================
+class AAA
+{
+public:
+	virtual ~AAA()
+	{
+		throw "hhh";
+	}
+};
+
+void test_destructor()
+{
+	try
+	{
+		AAA bb;
+	}
+	catch (const char *p)
+	{
+		cout << p << endl;
+	}
+
+
+	try
+	{
+		AAA aa;
+		throw "ccc";
+	}
+	catch (const char *p)
+	{
+		cout << p << endl;
+	}
+}
+////////////////////////////////////
+class AA3
+{
+private:
+	virtual ~AA3()
+	{
+		throw "hhh";
+	}
+};
+
+void test_must_new()
+{
+	//AA3 aa3; 只能new出来
+}

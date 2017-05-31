@@ -4,7 +4,7 @@
 //
 
 #pragma once
-
+#define __PLACEMENT_NEW_INLINE
 #include "targetver.h"
 
 #include <stdio.h>
