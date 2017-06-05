@@ -6,8 +6,10 @@
 #include <iostream>
 #include <vector>
 #include <list>
-
+#include <iterator>
 #include <new>
+#include <algorithm>
+
 using namespace std;
 
 
@@ -21,9 +23,16 @@ void test_place_new();
 void test_destructor();
 int main()
 {
+	string a = "1234";
+	string b(a);
+	cout << a.c_str();
+	cout << b.c_str();
 
+	vector<int> a1{ 1,2,2,34 };
+	vector<int> a2{ 111,112,1134 };
+	auto iii = std::remove(a1.begin(), a1.end(), 2);
 
-
+	copy(a1.begin(), a1.end(), inserter(a2,a2.begin()));
 	//test_hide_func();
 	//test_construct();
 	//test_place_new();
@@ -33,6 +42,13 @@ int main()
     return 0;
 }
 //=====================================================
+template<class _Ty,class _Alloc = allocator<_Ty> >
+class vectorex :public vector<_Ty, _Alloc>
+{
+
+};
+
+
 
 class Array
 {
