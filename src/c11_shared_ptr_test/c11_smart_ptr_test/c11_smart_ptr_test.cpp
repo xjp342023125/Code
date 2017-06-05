@@ -1,3 +1,4 @@
+
 // c11_smart_ptr_test.cpp : Defines the entry point for the console application.
 //
 
@@ -234,3 +235,25 @@ void test_must_new()
 {
 	//AA3 aa3; 只能new出来
 }
+
+void p_vec(vector<int> &vec)
+{
+	cout << "====" << endl;
+
+	for (auto i : vec)
+	{
+		cout << i << endl;
+	}
+}
+
+void test_reverse_it()
+{
+	
+	vector<int> vec{ 1,2,3,4,5 };
+	p_vec(vec);
+
+	vector<int>::reverse_iterator rit = find(vec.rbegin(), vec.rend(), 3);
+	//vec.insert(rit.base(), 999);
+	vec.erase((++rit).base());
+	p_vec(vec);
+};
