@@ -1,0 +1,5 @@
+#ifdef _WIN32
+#define ATOLL(x) _atoi64((x))
+#elif defined(_LINUX) || defined(__LINUX)
+#define ATOLL(x) atoll((x))
+#endif

@@ -1,0 +1,15 @@
+       #include <sys/time.h>
+       #include <sys/resource.h>
+
+		bool InitCore()
+		{
+			// set core size to unlimited
+			struct rlimit corelimit;
+			corelimit.rlim_cur = RLIM_INFINITY;
+			corelimit.rlim_max = RLIM_INFINITY;
+			if (setrlimit(RLIMIT_CORE, &corelimit) < 0)
+			{
+				return false;
+			}
+			return true;
+		}
