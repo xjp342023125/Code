@@ -15,6 +15,7 @@
     </ClInclude>
     <ClInclude Include="test_temp.hpp" />
     <ClInclude Include="test_lambda.hpp" />
+    <ClInclude Include="test_thread.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="c11_test.cpp" />

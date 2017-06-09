@@ -4,10 +4,12 @@
 #include "stdafx.h"
 #include "test_temp.hpp"
 #include "test_lambda.hpp"
+#include "test_thread.hpp"
 int main()
 {
 	test_lambda();
 	test_temp();
+	test_thread();
     return 0;
 }
 
