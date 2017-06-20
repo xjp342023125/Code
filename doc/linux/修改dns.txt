@@ -2,3 +2,13 @@
 
 2
 查看DNS服务器地址网卡配置，输入 ifconfig -a 可以查看所有设备配置
+
+
+1、CentOS 修改DNS
+
+修改对应网卡的DNS的配置文件
+# vim /etc/resolv.conf 
+修改以下内容
+
+nameserver 8.8.8.8 #google域名服务器
+nameserver 8.8.4.4 #google域名服务器

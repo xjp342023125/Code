@@ -5,8 +5,10 @@
 #include "test_temp.hpp"
 #include "test_lambda.hpp"
 #include "test_thread.hpp"
+#include "test_move.hpp"
 int main()
 {
+	test_move();
 	test_lambda();
 	test_temp();
 	test_thread();
