@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <map>
 #include <condition_variable>
 using namespace std;
 
@@ -64,8 +65,24 @@ static void test_lambda7()
 	vector<int> iii{ 1,2,3,4 };
 	do_vec(iii);
 }
+static void map_merge(map<int, int>& all, map<int, int>& toadd)
+{
+	for_each(toadd.begin(), toadd.end(),
+		[&](map<int, int>::reference it) {all[it.first] = all[it.first] + it.second; });
+}
+static void test_map_merge()
+{
+	map<int, int> all;
+	map<int, int> toadd{ {1,1},{ 2,2 } ,{ 3,3 } };
+	map_merge(all, toadd);
+	map_merge(all, toadd);
+	toadd.insert({ 100,100 });
+	map_merge(all, toadd);
+
+}
 static void test_lambda()
 {
+	test_map_merge();
 	test_lambda1();
 	test_lambda2();
 	test_lambda4();
