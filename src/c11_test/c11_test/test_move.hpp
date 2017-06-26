@@ -40,6 +40,7 @@ public:
 
 static A make_A()
 {
+	cout << ""<<endl;
 	return A();
 }
 
@@ -47,4 +48,7 @@ static void test_move()
 {
 	A aa = make_A();
 	A bb = std::move(aa);
+
+	A cc(std::move(aa));
+	A dd(make_A());
 }

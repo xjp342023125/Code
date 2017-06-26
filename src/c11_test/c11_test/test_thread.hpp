@@ -97,8 +97,19 @@ static void test_std_lock()
 	thread1.join();
 	thread2.join();
 }
+
+static void test_std_call_once()
+{
+	auto f = []() {
+		printf("cccc"); 
+	};
+	std::once_flag once;
+	std::call_once(once, f);
+	std::call_once(once, f);
+}
 static void test_thread()
 {
+	test_std_call_once();
 	test_std_lock();//  π”√ std::lock ±‹√‚À¿À¯
 	test_dead_lock();// À¿À¯
 	test_lock_multi_lock();
