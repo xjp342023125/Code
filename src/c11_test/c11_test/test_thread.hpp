@@ -5,6 +5,7 @@
 #include <condition_variable>
 #include <thread>
 #include <chrono>
+#include <queue>
 using namespace std;
 
 static void test_detach_thread_func()
@@ -107,8 +108,39 @@ static void test_std_call_once()
 	std::call_once(once, f);
 	std::call_once(once, f);
 }
+
+
+
+static std::mutex for_cond;
+static std::condition_variable cond;
+static std::queue<int> q;
+
+void push_thread()
+{
+	cout << __FUNCTION__ << endl;
+	int i = 0;
+	while (true)
+	{
+		std::lock_guard<std::mutex> lg(for_cond);
+		q.push(++i);
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	}
+}
+
+void pop_thread()
+{
+	cout << __FUNCTION__ << endl;
+}
+void test_condition_variable()
+{
+	thread t1(push_thread);
+	thread t2(pop_thread);
+	t1.join();
+	t2.join();
+}
 static void test_thread()
 {
+	test_condition_variable();
 	test_std_call_once();
 	test_std_lock();// Ê¹ÓÃ std::lock ±ÜÃâËÀËø
 	test_dead_lock();// ËÀËø
