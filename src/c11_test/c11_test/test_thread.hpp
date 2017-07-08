@@ -121,15 +121,33 @@ void push_thread()
 	int i = 0;
 	while (true)
 	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		std::lock_guard<std::mutex> lg(for_cond);
 		q.push(++i);
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		cout << "push " << i << endl;
+		cond.notify_one();
 	}
 }
 
 void pop_thread()
 {
 	cout << __FUNCTION__ << endl;
+	while (true)
+	{
+		std::unique_lock<std::mutex> lg(for_cond);
+		// l:解锁lg
+		// 2:阻塞住
+		// 3:当其他线程 调用过notify_one后
+		// 4:线程苏醒，重新锁住lg
+		// 5:检查后面的函数（q是否我空）,条件不满足时，继续跳到1。条件满足则继续执行。
+
+
+		cond.wait(lg, [] {return !q.empty(); });
+		auto val_queue = q.front();
+		q.pop();
+		lg.unlock();
+		cout << "pop "<<val_queue << endl;
+	}
 }
 void test_condition_variable()
 {
