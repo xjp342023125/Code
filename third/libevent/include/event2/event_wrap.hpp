@@ -44,10 +44,6 @@ public:
 	}
 
 public:
-	void set_log_cb(event_log_cb cb)
-	{
-		event_set_log_callback(cb);
-	}
 	void enable_debug_log(bool open)
 	{
 		if (open)
@@ -55,8 +51,8 @@ public:
 		else
 			event_enable_debug_logging(EVENT_DBG_NONE);
 	}
-public:
-	struct event_base *base;
+
+	event_base *base;
 };
 
 
