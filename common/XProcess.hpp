@@ -2,6 +2,8 @@
 #include "XMicro.h"
 #include "XType.h"
 #include <direct.h>
+#include <string>
+using namespace std;
 
 static bool xprocess_change_workpath(cstr_t path)
 {

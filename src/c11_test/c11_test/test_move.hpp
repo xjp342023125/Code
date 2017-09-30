@@ -48,7 +48,7 @@ static void test_move()
 {
 	A aa = make_A();
 	A bb = std::move(aa);
-
+	A ee(bb);
 	A cc(std::move(aa));
 	A dd(make_A());
 }

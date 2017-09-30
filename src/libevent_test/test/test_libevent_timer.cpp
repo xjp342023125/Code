@@ -16,7 +16,7 @@ void onTime(int sock, short event, void *arg)
 	tv.tv_sec = 1;
 	tv.tv_usec = 0;
 	// 重新添加定时事件（定时事件触发后默认自动删除）   
-	event_add((struct event*)arg, &tv);
+	//event_add((struct event*)arg, &tv);
 }
 
 void test_timer()
@@ -25,10 +25,10 @@ void test_timer()
 	event_base.init();
 
 
-	event *timer = evtimer_new(event_base.base,onTime, event_self_cbarg());
+	//event *timer = evtimer_new(event_base.base,onTime, event_self_cbarg());
+	event *timer = event_new(event_base.base, -1, EV_PERSIST, onTime, event_self_cbarg());
 	struct timeval one_sec = { 1, 0 };
 	event_add(timer, &one_sec);
-
 	while (true)
 	{
 		event_base.async_loop();

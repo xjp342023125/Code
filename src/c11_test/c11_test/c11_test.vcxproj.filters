@@ -17,6 +17,8 @@
     <ClInclude Include="test_lambda.hpp" />
     <ClInclude Include="test_thread.hpp" />
     <ClInclude Include="test_move.hpp" />
+    <ClInclude Include="test_async.hpp" />
+    <ClInclude Include="future.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="c11_test.cpp" />
