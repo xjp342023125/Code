@@ -23,7 +23,11 @@ int main(int argc, char* argv[])
 #endif
 	
 	extern void test_timer();
-	test_timer();
+	extern void test_event();
+
+
+	//test_timer();
+	test_event();
     return 0;
 }
 

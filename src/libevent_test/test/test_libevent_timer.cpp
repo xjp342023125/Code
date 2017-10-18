@@ -15,6 +15,7 @@ void onTime(int sock, short event, void *arg)
 	struct timeval tv;
 	tv.tv_sec = 1;
 	tv.tv_usec = 0;
+	struct event* ev = (struct event*)arg;
 	// 重新添加定时事件（定时事件触发后默认自动删除）   
 	//event_add((struct event*)arg, &tv);
 }
@@ -34,4 +35,26 @@ void test_timer()
 		event_base.async_loop();
 		Sleep(1000);
 	}
+}
+
+
+void onEvent(int sock, short event, void *arg)
+{
+	printf("onEvent %d\n", event);
+}
+void test_event()
+{
+	event_base_wrap event_base;
+	event_base.init();
+
+	event *ev = event_new(event_base.base, -1, 0, onEvent, event_self_cbarg());
+	auto ret = event_add(ev, nullptr);
+
+	while (true)
+	{
+		event_base.async_loop();
+		event_active(ev, 1, 100);
+		Sleep(1000);
+	}
+
 }
