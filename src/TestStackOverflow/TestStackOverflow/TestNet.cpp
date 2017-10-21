@@ -1,42 +1,33 @@
-// TestNet.cpp : Defines the entry point for the console application.
-//
-
-#include "stdafx.h"
-
+#include <stdio.h>
+#include <tchar.h>
 #pragma pack(1)
-template<int nBufSize, int nZhanSize>
-struct sStackOverFlow
-{
-	sStackOverFlow()
-	{
-		memset(szZhanWei, 0x8, nZhanSize );
-		
-		memset(sz, 0x7, nBufSize);
-	}
-	char sz[nBufSize];
-	char szZhanWei[nZhanSize];
-	void* addrRet;
-	
-
+//精心构造的参数
+template<int distance>
+struct sStackOverFlow{
+	char local[distance];
+	void* addrRet;// 恶意代码地址
 };
 #pragma pack()
 
-void outstr(int a, const char *p)
-{
-	char sz[10];
+// 有漏洞的函数
+void good_func(const char *p){
+	int a = 111;
+	char sz[16];
+	int b = 222;
+	printf("my func dis=%u \n", (char*)&p - (char*)sz);
 	strcpy(sz, p);
-	//==================
 }
-void fff()
-{
-	printf("hack func");
+
+// 恶意代码
+void hack_func(){
+	printf("hack func ");
 }
-int _tmain(int argc, _TCHAR* argv[])
-{
-	sStackOverFlow<10, 0x2 + 4> ssss;
-	ssss.addrRet = &fff;
-	outstr(111, (char*)&ssss);
-	getchar();
+
+int _tmain(int argc, _TCHAR* argv[]){
+	sStackOverFlow<32-4> para;//魔术一会解释
+	memset(&para, 0xf, sizeof(para));
+	para.addrRet = &hack_func;
+	good_func( (char*)&para);// 调用正常函数
 	return 0;
 }
 
