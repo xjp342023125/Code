@@ -12,6 +12,7 @@ struct sStackOverFlow{
 // 恶意代码
 void  hack_func(){
         printf("hack func ");
+		getchar();
 }
 
 // 有漏洞的函数
