@@ -32,9 +32,7 @@ static inline uint64_t _umul128(uint64_t a, uint64_t b, uint64_t* hi)
 #include <intrin.h>
 #endif // __GNUC__
 
-#if !defined(_LP64) && !defined(_WIN64)
-#error You are trying to do a 32-bit build. This will all end in tears. I know it.
-#endif
+
 
 extern "C"
 {
