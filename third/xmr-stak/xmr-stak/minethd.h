@@ -118,7 +118,6 @@ private:
 	static cn_hash_fun_dbl func_dbl_selector(bool bHaveAes, bool bNoPrefetch);
 
 	void work_main();
-	void double_work_main();
 	void consume_work();
 
 	static std::atomic<uint64_t> iGlobalJobNo;

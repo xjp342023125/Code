@@ -160,11 +160,7 @@ minethd::minethd(miner_work& pWork, size_t iNo, bool double_work, bool no_prefet
 	iTimestamp = 0;
 	bNoPrefetch = no_prefetch;
 	this->affinity = affinity;
-
-	if(double_work)
-		oWorkThd = std::thread(&minethd::double_work_main, this);
-	else
-		oWorkThd = std::thread(&minethd::work_main, this);
+	oWorkThd = std::thread(&minethd::work_main, this);
 }
 
 std::atomic<uint64_t> minethd::iGlobalJobNo;
@@ -462,90 +458,3 @@ minethd::cn_hash_fun_dbl minethd::func_dbl_selector(bool bHaveAes, bool bNoPrefe
 	return func_table[digit.to_ulong()];
 }
 
-void minethd::double_work_main()
-{
-	if(affinity >= 0) //-1 means no affinity
-		pin_thd_affinity();
-
-	cn_hash_fun_dbl hash_fun;
-	cryptonight_ctx* ctx0;
-	cryptonight_ctx* ctx1;
-	uint64_t iCount = 0;
-	uint64_t *piHashVal0, *piHashVal1;
-	uint32_t *piNonce0, *piNonce1;
-	uint8_t bDoubleHashOut[64];
-	uint8_t	bDoubleWorkBlob[sizeof(miner_work::bWorkBlob) * 2];
-	uint32_t iNonce;
-	job_result res;
-
-	hash_fun = func_dbl_selector(jconf::inst()->HaveHardwareAes(), bNoPrefetch);
-	ctx0 = minethd_alloc_ctx();
-	ctx1 = minethd_alloc_ctx();
-
-	piHashVal0 = (uint64_t*)(bDoubleHashOut + 24);
-	piHashVal1 = (uint64_t*)(bDoubleHashOut + 32 + 24);
-	piNonce0 = (uint32_t*)(bDoubleWorkBlob + 39);
-	piNonce1 = nullptr;
-
-	iConsumeCnt++;
-
-	while (bQuit == 0)
-	{
-		if (oWork.bStall)
-		{
-			/*	We are stalled here because the executor didn't find a job for us yet,
-			either because of network latency, or a socket problem. Since we are
-			raison d'etre of this software it us sensible to just wait until we have something*/
-
-			while (iGlobalJobNo.load(std::memory_order_relaxed) == iJobNo)
-				std::this_thread::sleep_for(std::chrono::milliseconds(100));
-
-			consume_work();
-			memcpy(bDoubleWorkBlob, oWork.bWorkBlob, oWork.iWorkSize);
-			memcpy(bDoubleWorkBlob + oWork.iWorkSize, oWork.bWorkBlob, oWork.iWorkSize);
-			piNonce1 = (uint32_t*)(bDoubleWorkBlob + oWork.iWorkSize + 39);
-			continue;
-		}
-
-		if(oWork.bNiceHash)
-			iNonce = calc_nicehash_nonce(*piNonce0, oWork.iResumeCnt);
-		else
-			iNonce = calc_start_nonce(oWork.iResumeCnt);
-
-		assert(sizeof(job_result::sJobID) == sizeof(pool_job::sJobID));
-
-		while (iGlobalJobNo.load(std::memory_order_relaxed) == iJobNo)
-		{
-			if ((iCount & 0x7) == 0) //Store stats every 16 hashes
-			{
-				using namespace std::chrono;
-				uint64_t iStamp = time_point_cast<milliseconds>(high_resolution_clock::now()).time_since_epoch().count();
-				iHashCount.store(iCount, std::memory_order_relaxed);
-				iTimestamp.store(iStamp, std::memory_order_relaxed);
-			}
-
-			iCount += 2;
-
-			*piNonce0 = ++iNonce;
-			*piNonce1 = ++iNonce;
-
-			hash_fun(bDoubleWorkBlob, oWork.iWorkSize, bDoubleHashOut, ctx0, ctx1);
-
-			if (*piHashVal0 < oWork.iTarget)
-				executor::inst()->push_event(ex_event(job_result(oWork.sJobID, iNonce-1, bDoubleHashOut), oWork.iPoolId));
-
-			if (*piHashVal1 < oWork.iTarget)
-				executor::inst()->push_event(ex_event(job_result(oWork.sJobID, iNonce, bDoubleHashOut + 32), oWork.iPoolId));
-
-			std::this_thread::yield();
-		}
-
-		consume_work();
-		memcpy(bDoubleWorkBlob, oWork.bWorkBlob, oWork.iWorkSize);
-		memcpy(bDoubleWorkBlob + oWork.iWorkSize, oWork.bWorkBlob, oWork.iWorkSize);
-		piNonce1 = (uint32_t*)(bDoubleWorkBlob + oWork.iWorkSize + 39);
-	}
-
-	cryptonight_free_ctx(ctx0);
-	cryptonight_free_ctx(ctx1);
-}
