@@ -27,7 +27,6 @@ public:
 	void push_timed_event(ex_event&& ev, size_t sec);
 
 	constexpr static size_t invalid_pool_id = 0;
-	constexpr static size_t dev_pool_id = 1;
 	constexpr static size_t usr_pool_id = 2;
 
 private:
@@ -56,7 +55,6 @@ private:
 	size_t current_pool_id;
 
 	jpsock* usr_pool;
-	jpsock* dev_pool;
 
 	jpsock* pick_pool_by_id(size_t pool_id);
 
@@ -160,7 +158,6 @@ private:
 	void on_pool_have_job(size_t pool_id, pool_job& oPoolJob);
 	void on_miner_result(size_t pool_id, job_result& oResult);
 	void on_reconnect(size_t pool_id);
-	void on_switch_pool(size_t pool_id);
 
 	inline size_t sec_to_ticks(size_t sec) { return sec * (1000 / iTickTime); }
 };

@@ -112,26 +112,12 @@ void executor::log_result_ok(uint64_t iActualDiff)
 jpsock* executor::pick_pool_by_id(size_t pool_id)
 {
 	assert(pool_id != invalid_pool_id);
-
-	if(pool_id == dev_pool_id)
-		return dev_pool;
-	else
-		return usr_pool;
+	return usr_pool;
 }
 
 void executor::on_sock_ready(size_t pool_id)
 {
 	jpsock* pool = pick_pool_by_id(pool_id);
-
-	if(pool_id == dev_pool_id)
-	{
-		if(!pool->cmd_login("", ""))
-			pool->disconnect();
-
-		current_pool_id = dev_pool_id;
-		printer::inst()->print_msg(L1, "Dev pool logged in. Switching work.");
-		return;
-	}
 
 	printer::inst()->print_msg(L1, "Connected. Logging in...");
 
@@ -154,18 +140,6 @@ void executor::on_sock_error(size_t pool_id, std::string&& sError)
 {
 	jpsock* pool = pick_pool_by_id(pool_id);
 
-	if(pool_id == dev_pool_id)
-	{
-		pool->disconnect();
-
-		if(current_pool_id != dev_pool_id)
-			return;
-
-		printer::inst()->print_msg(L1, "Dev pool connection error. Switching work.");
-		on_switch_pool(usr_pool_id);
-		return;
-	}
-
 	log_socket_error(std::move(sError));
 	pool->disconnect();
 	sched_reconnect();
@@ -180,13 +154,11 @@ void executor::on_pool_have_job(size_t pool_id, pool_job& oPoolJob)
 
 	minethd::miner_work oWork(oPoolJob.sJobID, oPoolJob.bWorkBlob,
 		oPoolJob.iWorkLen, oPoolJob.iResumeCnt, oPoolJob.iTarget,
-		pool_id != dev_pool_id && jconf::inst()->NiceHashMode(),
+		 jconf::inst()->NiceHashMode(),
 		pool_id);
 
 	minethd::switch_work(oWork);
 
-	if(pool_id == dev_pool_id)
-		return;
 
 	if(iPoolDiff != pool->get_current_diff())
 	{
@@ -201,14 +173,7 @@ void executor::on_miner_result(size_t pool_id, job_result& oResult)
 {
 	jpsock* pool = pick_pool_by_id(pool_id);
 
-	if(pool_id == dev_pool_id)
-	{
-		//Ignore errors silently
-		if(pool->is_running() && pool->is_logged_in())
-			pool->cmd_submit(oResult.sJobID, oResult.iNonce, oResult.bResult);
 
-		return;
-	}
 
 	if (!pool->is_running() || !pool->is_logged_in())
 	{
@@ -257,8 +222,6 @@ void executor::on_reconnect(size_t pool_id)
 	jpsock* pool = pick_pool_by_id(pool_id);
 
 	std::string error;
-	if(pool_id == dev_pool_id)
-		return;
 
 	printer::inst()->print_msg(L1, "Connecting to pool %s ...", jconf::inst()->GetPoolAddress());
 
@@ -266,47 +229,6 @@ void executor::on_reconnect(size_t pool_id)
 	{
 		log_socket_error(std::move(error));
 		sched_reconnect();
-	}
-}
-
-void executor::on_switch_pool(size_t pool_id)
-{
-	if(pool_id == current_pool_id)
-		return;
-
-	jpsock* pool = pick_pool_by_id(pool_id);
-	if(pool_id == dev_pool_id)
-	{
-		std::string error;
-
-		// If it fails, it fails, we carry on on the usr pool
-		// as we never receive further events
-		printer::inst()->print_msg(L1, "Connecting to dev pool...");
-		const char* dev_pool_addr = jconf::inst()->GetTlsSetting() ? "donate.xmr-stak.net:6666" : "donate.xmr-stak.net:3333";
-		if(!pool->connect(dev_pool_addr, error))
-			printer::inst()->print_msg(L1, "Error connecting to dev pool. Staying with user pool.");
-	}
-	else
-	{
-		printer::inst()->print_msg(L1, "Switching back to user pool.");
-
-		current_pool_id = pool_id;
-		pool_job oPoolJob;
-
-		if(!pool->get_current_job(oPoolJob))
-		{
-			pool->disconnect();
-			return;
-		}
-
-		minethd::miner_work oWork(oPoolJob.sJobID, oPoolJob.bWorkBlob,
-			oPoolJob.iWorkLen, oPoolJob.iResumeCnt, oPoolJob.iTarget,
-			jconf::inst()->NiceHashMode(), pool_id);
-
-		minethd::switch_work(oWork);
-
-		if(dev_pool->is_running())
-			push_timed_event(ex_event(EV_DEV_POOL_EXIT), 5);
 	}
 }
 
@@ -320,7 +242,6 @@ void executor::ex_main()
 
 	current_pool_id = usr_pool_id;
 	usr_pool = new jpsock(usr_pool_id, jconf::inst()->GetTlsSetting());
-	dev_pool = new jpsock(dev_pool_id, jconf::inst()->GetTlsSetting());
 
 	ex_event ev;
 
@@ -359,14 +280,6 @@ void executor::ex_main()
 
 		case EV_RECONNECT:
 			on_reconnect(ev.iPoolId);
-			break;
-
-		case EV_SWITCH_POOL:
-			on_switch_pool(ev.iPoolId);
-			break;
-
-		case EV_DEV_POOL_EXIT:
-			dev_pool->disconnect();
 			break;
 
 		case EV_PERF_TICK:
@@ -576,7 +489,7 @@ void executor::connection_report(std::string& out)
 
 	out.reserve(512);
 
-	jpsock* pool = pick_pool_by_id(dev_pool_id + 1);
+	jpsock* pool = pick_pool_by_id( 1);
 
 	out.append("CONNECTION REPORT\n");
 	out.append("Pool address    : ").append(jconf::inst()->GetPoolAddress()).append(1, '\n');
