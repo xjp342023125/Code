@@ -67,7 +67,7 @@ private:
 	void hashrate_report(std::string& out);
 	void result_report(std::string& out);
 	void connection_report(std::string& out);
-	void ex_clock_thd()
+	void ex_clock_thd();
 
 	void print_report(ex_event_name ev);
 
