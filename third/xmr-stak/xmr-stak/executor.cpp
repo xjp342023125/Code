@@ -50,6 +50,33 @@ void executor::push_timed_event(ex_event&& ev, size_t sec)
 	lTimedEvents.emplace_back(std::move(ev), sec_to_ticks(sec));
 }
 
+void executor::ex_clock_thd()
+{
+
+
+	while (true)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(size_t(iTickTime)));
+
+		push_event(ex_event(EV_PERF_TICK));
+
+		// Service timed events
+		std::unique_lock<std::mutex> lck(timed_event_mutex);
+		std::list<timed_event>::iterator ev = lTimedEvents.begin();
+		while (ev != lTimedEvents.end())
+		{
+			ev->ticks_left--;
+			if (ev->ticks_left == 0)
+			{
+				push_event(std::move(ev->event));
+				ev = lTimedEvents.erase(ev);
+			}
+			else
+				ev++;
+		}
+		lck.unlock();
+	}
+}
 
 void executor::sched_reconnect()
 {
@@ -244,6 +271,7 @@ void executor::ex_main()
 	usr_pool = new jpsock(usr_pool_id, jconf::inst()->GetTlsSetting());
 
 	ex_event ev;
+	std::thread clock_thd(&executor::ex_clock_thd, this);
 
 	//This will connect us to the pool for the first time
 	push_event(ex_event(EV_RECONNECT, usr_pool_id));
