@@ -73,7 +73,6 @@ void thd_setaffinity(std::thread::native_handle_type h, uint64_t cpu_id)
 #include "minethd.h"
 #include "jconf.h"
 #include "crypto/cryptonight_aesni.h"
-#include "hwlocMemory.hpp"
 
 telemetry::telemetry(size_t iThd)
 {
@@ -359,8 +358,7 @@ minethd::cn_hash_fun minethd::func_selector(bool bHaveAes, bool bNoPrefetch)
 
 void minethd::pin_thd_affinity()
 {
-	// pin memory to NUMA node
-	bindMemoryToNUMANode(affinity);
+
 
 #if defined(__APPLE__)
 	printer::inst()->print_msg(L1, "WARNING on MacOS thread affinity is only advisory.");

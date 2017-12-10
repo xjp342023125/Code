@@ -25,11 +25,9 @@
 #include "minethd.h"
 #include "jconf.h"
 #include "console.h"
-#ifndef CONF_NO_HWLOC
-#   include "autoAdjustHwloc.hpp"
-#else
-#   include "autoAdjust.hpp"
-#endif
+
+#include "autoAdjust.hpp"
+
 #include "version.h"
 
 
@@ -112,17 +110,6 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
-
-#ifndef CONF_NO_HTTPD
-	if(jconf::inst()->GetHttpdPort() != 0)
-	{
-		if (!httpd::inst()->start_daemon())
-		{
-			win_exit();
-			return 0;
-		}
-	}
-#endif
 
 	printer::inst()->print_str("-------------------------------------------------------------------\n");
 	printer::inst()->print_str( XMR_STAK_NAME" " XMR_STAK_VERSION " mining software, CPU Version.\n");
