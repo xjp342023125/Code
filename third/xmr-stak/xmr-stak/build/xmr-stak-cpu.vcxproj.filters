@@ -22,9 +22,6 @@
     <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\socket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\webdesign.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\crypto\cryptonight_common.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

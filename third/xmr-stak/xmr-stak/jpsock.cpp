@@ -32,8 +32,9 @@
 #include "jext.h"
 #include "socks.h"
 #include "socket.h"
-#include "version.h"
 
+#define XMR_STAK_NAME "xmr-stak-cpu"
+#define XMR_STAK_VERSION "1.3.0-1.5.0"
 #define AGENTID_STR XMR_STAK_NAME "/" XMR_STAK_VERSION
 
 using namespace rapidjson;

@@ -316,7 +316,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\jpsock.cpp" />
     <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\minethd.cpp" />
     <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\socket.cpp" />
-    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\webdesign.cpp" />
     <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\crypto\cryptonight_common.cpp" />
   </ItemGroup>
   <ItemGroup>

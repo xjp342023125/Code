@@ -28,7 +28,6 @@
 
 #include "autoAdjust.hpp"
 
-#include "version.h"
 
 
 #include <stdlib.h>
@@ -112,7 +111,6 @@ int main(int argc, char *argv[])
 
 
 	printer::inst()->print_str("-------------------------------------------------------------------\n");
-	printer::inst()->print_str( XMR_STAK_NAME" " XMR_STAK_VERSION " mining software, CPU Version.\n");
 	printer::inst()->print_str("Based on CPU mining code by wolf9466 (heavily optimized by fireice_uk).\n");
 	printer::inst()->print_str("Brought to you by fireice_uk and psychocrypt under GPLv3.\n\n");
 	printer::inst()->print_str("You can use following keys to display reports:\n");

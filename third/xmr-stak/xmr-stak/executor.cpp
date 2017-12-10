@@ -32,7 +32,6 @@
 #include "minethd.h"
 #include "jconf.h"
 #include "console.h"
-#include "webdesign.h"
 
 #ifdef _WIN32
 #define strncasecmp _strnicmp
