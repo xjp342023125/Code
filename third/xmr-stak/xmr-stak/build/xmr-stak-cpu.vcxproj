@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -138,7 +138,8 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CONF_NO_HTTPD;CONF_NO_TLS;CONF_NO_HWLOC;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <DebugInformationFormat></DebugInformationFormat>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CONF_NO_HTTPD;CONF_NO_TLS;CONF_NO_HWLOC;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -180,7 +181,8 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CONF_NO_HTTPD;CONF_NO_TLS;CONF_NO_HWLOC;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <DebugInformationFormat></DebugInformationFormat>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CONF_NO_HTTPD;CONF_NO_TLS;CONF_NO_HWLOC;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -307,16 +309,15 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\cli-miner.cpp"  />
-    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\console.cpp"  />
-    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\executor.cpp"  />
-    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\httpd.cpp"  />
-    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\jconf.cpp"  />
-    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\jpsock.cpp"  />
-    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\minethd.cpp"  />
-    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\socket.cpp"  />
-    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\webdesign.cpp"  />
-    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\crypto\cryptonight_common.cpp"  />
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\cli-miner.cpp" />
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\console.cpp" />
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\executor.cpp" />
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\jconf.cpp" />
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\jpsock.cpp" />
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\minethd.cpp" />
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\socket.cpp" />
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\webdesign.cpp" />
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\crypto\cryptonight_common.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\home\code\git\third\xmr-stak\xmr-stak\build\ZERO_CHECK.vcxproj">

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\cli-miner.cpp">
@@ -8,9 +8,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\executor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\httpd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\jconf.cpp">

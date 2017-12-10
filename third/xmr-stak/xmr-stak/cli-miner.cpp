@@ -32,9 +32,6 @@
 #endif
 #include "version.h"
 
-#ifndef CONF_NO_HTTPD
-#	include "httpd.h"
-#endif
 
 #include <stdlib.h>
 #include <stdio.h>
