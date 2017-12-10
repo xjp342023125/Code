@@ -1,0 +1,43 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xmr-stak-c", "xmr-stak-c.vcxproj", "{FAA7E110-019F-37F4-A9E0-5B484049736A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xmr-stak-cpu", "xmr-stak-cpu.vcxproj", "{FA00CF8B-8D72-3B61-90F3-4D44E7BEF28F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FAA7E110-019F-37F4-A9E0-5B484049736A} = {FAA7E110-019F-37F4-A9E0-5B484049736A}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		MinSizeRel|x64 = MinSizeRel|x64
+		Release|x64 = Release|x64
+		RelWithDebInfo|x64 = RelWithDebInfo|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAA7E110-019F-37F4-A9E0-5B484049736A}.Debug|x64.ActiveCfg = Debug|x64
+		{FAA7E110-019F-37F4-A9E0-5B484049736A}.Debug|x64.Build.0 = Debug|x64
+		{FAA7E110-019F-37F4-A9E0-5B484049736A}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
+		{FAA7E110-019F-37F4-A9E0-5B484049736A}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
+		{FAA7E110-019F-37F4-A9E0-5B484049736A}.Release|x64.ActiveCfg = Release|x64
+		{FAA7E110-019F-37F4-A9E0-5B484049736A}.Release|x64.Build.0 = Release|x64
+		{FAA7E110-019F-37F4-A9E0-5B484049736A}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
+		{FAA7E110-019F-37F4-A9E0-5B484049736A}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
+		{FA00CF8B-8D72-3B61-90F3-4D44E7BEF28F}.Debug|x64.ActiveCfg = Debug|x64
+		{FA00CF8B-8D72-3B61-90F3-4D44E7BEF28F}.Debug|x64.Build.0 = Debug|x64
+		{FA00CF8B-8D72-3B61-90F3-4D44E7BEF28F}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
+		{FA00CF8B-8D72-3B61-90F3-4D44E7BEF28F}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
+		{FA00CF8B-8D72-3B61-90F3-4D44E7BEF28F}.Release|x64.ActiveCfg = Release|x64
+		{FA00CF8B-8D72-3B61-90F3-4D44E7BEF28F}.Release|x64.Build.0 = Release|x64
+		{FA00CF8B-8D72-3B61-90F3-4D44E7BEF28F}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
+		{FA00CF8B-8D72-3B61-90F3-4D44E7BEF28F}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {60303F39-47AB-33DA-89F8-5609BA81BB57}
+	EndGlobalSection
+EndGlobal

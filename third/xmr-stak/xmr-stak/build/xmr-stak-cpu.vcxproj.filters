@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\cli-miner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\console.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\executor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\httpd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\jconf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\jpsock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\minethd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\socket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\webdesign.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\home\code\git\third\xmr-stak\xmr-stak\crypto\cryptonight_common.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\home\code\git\third\xmr-stak\xmr-stak\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{A4456CB9-59D8-32F7-94B2-DCD05819D6D8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
