@@ -4,39 +4,10 @@
 #include <algorithm>
 #include <map>
 #include <condition_variable>
+#include "test_common.hpp"
 using namespace std;
 
-class A
-{
-public:
-	A()
-	{
-		cout << "new A" << endl;
-	}
-	~A()
-	{
-		cout << "del A" << endl;
-	}
 
-	A(const A& r)
-	{
-		cout << "copy A" << endl;
-	}
-	A(const A&& r)
-	{
-		cout << "&& copy A" << endl;
-	}
-
-	A& operator=(const A& r)
-	{
-		cout << "= A" << endl;
-	}
-	A& operator=(const A&& r)
-	{
-		cout << "&& = A" << endl;
-	}
-	string name;
-};
 
 static A make_A()
 {

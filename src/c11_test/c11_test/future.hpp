@@ -1,10 +1,11 @@
 #pragma once
 #include <future>
 #include <iostream>
+#include <thread>
 using namespace std;
 static int get_int()
 {
-	cout <<__FUNCTION__<< thread::get_id() << endl;
+	cout <<__FUNCTION__<< this_thread::get_id() << endl;
 
 	return time(NULL);
 }
@@ -24,5 +25,5 @@ static void  test_future()
 
 		cout << answer.get()<<"\n";
 	}
-	cout << thread::get_id() << endl;
+	cout << this_thread::get_id() << endl;
 }

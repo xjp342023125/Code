@@ -7,9 +7,11 @@
 #include "test_thread.hpp"
 #include "test_move.hpp"
 #include "test_async.hpp"
+#include "test_std_func.hpp"
 #include "future.hpp"
 int main()
 {
+	test_default_delete();
 	test_future();
 	test_async();
 	test_move();

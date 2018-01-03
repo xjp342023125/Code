@@ -19,6 +19,8 @@
     <ClInclude Include="test_move.hpp" />
     <ClInclude Include="test_async.hpp" />
     <ClInclude Include="future.hpp" />
+    <ClInclude Include="test_common.hpp" />
+    <ClInclude Include="test_std_func.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="c11_test.cpp" />
