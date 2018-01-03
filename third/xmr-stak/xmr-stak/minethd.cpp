@@ -426,7 +426,7 @@ void minethd::work_main()
 			if (*piHashVal < oWork.iTarget)
 				executor::inst()->push_event(ex_event(result, oWork.iPoolId));
 
-			std::this_thread::yield();
+			//std::this_thread::yield();
 		}
 
 		consume_work();

@@ -33,5 +33,43 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{A4456CB9-59D8-32F7-94B2-DCD05819D6D8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="hdr">
+      <UniqueIdentifier>{9a674515-f342-4da1-a342-e113e94731bd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\thdq.hpp">
+      <Filter>hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\autoAdjust.hpp">
+      <Filter>hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\console.h">
+      <Filter>hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\executor.h">
+      <Filter>hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jconf.h">
+      <Filter>hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jext.h">
+      <Filter>hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jpsock.h">
+      <Filter>hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\minethd.h">
+      <Filter>hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\msgstruct.h">
+      <Filter>hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\socket.h">
+      <Filter>hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\socks.h">
+      <Filter>hdr</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

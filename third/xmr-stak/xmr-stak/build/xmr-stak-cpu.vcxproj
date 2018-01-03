@@ -328,6 +328,19 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <Name>xmr-stak-c</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\autoAdjust.hpp" />
+    <ClInclude Include="..\console.h" />
+    <ClInclude Include="..\executor.h" />
+    <ClInclude Include="..\jconf.h" />
+    <ClInclude Include="..\jext.h" />
+    <ClInclude Include="..\jpsock.h" />
+    <ClInclude Include="..\minethd.h" />
+    <ClInclude Include="..\msgstruct.h" />
+    <ClInclude Include="..\socket.h" />
+    <ClInclude Include="..\socks.h" />
+    <ClInclude Include="..\thdq.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
