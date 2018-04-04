@@ -1,6 +1,6 @@
 查询
 swapon -s
-=======================================================
+
 [root@localhost ~]# swapon -s
 文件名				类型		大小	已用	权限
 /dev/dm-1                              	partition	2097148	0	-1
@@ -8,8 +8,27 @@ swapon -s
 
 关闭
 swapoff 上面查出的交换文件名字
-=======================================================
+
 [root@localhost ~]# swapoff /dev/dm-1  
 
 
 =======================================================
+新增
+dd  if=/dev/zero  of=/var/swapfile  bs=1024  count=2048k
+mkswap  /var/swapfile
+swapon   /var/swapfile
+
+=======================================================
+使用策略
+
+swappiness=0的时候表示最大限度使用物理内存，然后才是 swap空间，swappiness＝100的时候表示积极的使用swap分区，并且把内存上的数据及时的搬运到swap空间里面。
+查看
+cat /proc/sys/vm/swappiness
+
+临时修改
+sudo sysctl vm.swappiness=10
+
+永久修改（修改后重启）
+$ sudo vim /etc/sysctl.conf
+　　在这个文档的最后加上这样一行:
+　　vm.swappiness=10
