@@ -1,0 +1,2 @@
+show scheduler-locking  gdb线程调试 显示线程状态
+set scheduler-locking on gdb调试加锁当前线程，其他线程停止
