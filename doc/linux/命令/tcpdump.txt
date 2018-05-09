@@ -1,4 +1,6 @@
-tcpdump tcp port 7451
+ifconfig -a  查看所有网卡
+
+tcpdump tcp -i 网卡名 port 7451
 检查指定端口
 tcpdump tcp port 7451
 [root@ser6-75 ~]# tcpdump tcp port 7451
@@ -21,3 +23,4 @@ listening on eth0, link-type EN10MB (Ethernet), capture size 96 bytes
 07:10:24.542994 IP 192.168.66.144.fsportmap > 192.168.66.75.7451: . ack 196 win 64045
 07:10:54.539368 IP 192.168.66.75.7451 > 192.168.66.144.fsportmap: . ack 172 win 6432
 07:10:54.539958 IP 192.168.66.144.fsportmap > 192.168.66.75.7451: . ack 196 win 64045
+

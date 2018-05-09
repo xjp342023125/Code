@@ -1,2 +1,11 @@
 grep -R 'struct rlimit'  /usr/include/*
 搜索目录下所有文件 找字符串
+
+grep -n 行数
+
+grep -e "关键字1" -e "关键字2" -e "关键字3"
+
+grep [0-9a-eA-E]* 任意多个数字
+
+grep .* 任意字符串
+
