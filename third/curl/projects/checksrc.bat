@@ -73,7 +73,7 @@ rem ***************************************************************************
 
 :prerequisites
   rem Check we have Perl in our path
-  echo %PATH% | findstr /I /C:"\Perl" 1>nul
+  perl --version <NUL 1>NUL 2>&1
   if errorlevel 1 (
     rem It isn't so check we have it installed and set the path if it is
     if exist "%SystemDrive%\Perl" (
@@ -104,7 +104,7 @@ rem ***************************************************************************
     rem Check the lib directory
     if exist %SRC_DIR%\lib (
       for /f "delims=" %%i in ('dir "%SRC_DIR%\lib\*.c.*" /b 2^>NUL') do @perl "%SRC_DIR%\lib\checksrc.pl" "-D%SRC_DIR%\lib" "%%i"
-      for /f "delims=" %%i in ('dir "%SRC_DIR%\lib\*.h.*" /b 2^>NUL') do @perl "%SRC_DIR%\lib\checksrc.pl" "-D%SRC_DIR%\lib" -Wcurl_config.h.cmake "%%i"
+      for /f "delims=" %%i in ('dir "%SRC_DIR%\lib\*.h.*" /b 2^>NUL') do @perl "%SRC_DIR%\lib\checksrc.pl" "-D%SRC_DIR%\lib" -Wcurl_config.h.cmake -Wcurl_config.h.in -Wcurl_config.h "%%i"
     )
 
     rem Check the lib\vauth directory
@@ -143,7 +143,7 @@ rem ***************************************************************************
   if "%CHECK_EXAMPLES%" == "TRUE" (
     rem Check the docs\examples directory
     if exist %SRC_DIR%\docs\examples (
-      for /f "delims=" %%i in ('dir "%SRC_DIR%\docs\examples\*.c.*" /b 2^>NUL') do @perl "%SRC_DIR%\lib\checksrc.pl" "-D%SRC_DIR%\docs\examples" "%%i"
+      for /f "delims=" %%i in ('dir "%SRC_DIR%\docs\examples\*.c.*" /b 2^>NUL') do @perl "%SRC_DIR%\lib\checksrc.pl" "-D%SRC_DIR%\docs\examples" -ASNPRINTF "%%i"
     )
   )
 

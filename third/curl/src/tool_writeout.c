@@ -5,7 +5,7 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 1998 - 2016, Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 1998 - 2018, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
@@ -60,6 +60,8 @@ typedef enum {
   VAR_LOCAL_PORT,
   VAR_HTTP_VERSION,
   VAR_SCHEME,
+  VAR_STDOUT,
+  VAR_STDERR,
   VAR_NUM_OF_VARS /* must be the last */
 } replaceid;
 
@@ -101,6 +103,8 @@ static const struct variable replacements[]={
   {"local_port", VAR_LOCAL_PORT},
   {"http_version", VAR_HTTP_VERSION},
   {"scheme", VAR_SCHEME},
+  {"stdout", VAR_STDOUT},
+  {"stderr", VAR_STDERR},
   {NULL, VAR_NONE}
 };
 
@@ -113,7 +117,7 @@ void ourWriteOut(CURL *curl, struct OutStruct *outs, const char *writeinfo)
   double doubleinfo;
 
   while(ptr && *ptr) {
-    if('%' == *ptr) {
+    if('%' == *ptr && ptr[1]) {
       if('%' == ptr[1]) {
         /* an escaped %-letter */
         fputc('%', stream);
@@ -122,9 +126,9 @@ void ourWriteOut(CURL *curl, struct OutStruct *outs, const char *writeinfo)
       else {
         /* this is meant as a variable to output */
         char *end;
-        char keepit;
-        int i;
         if('{' == ptr[1]) {
+          char keepit;
+          int i;
           bool match = FALSE;
           end = strchr(ptr, '}');
           ptr += 2; /* pass the % and the { */
@@ -321,6 +325,12 @@ void ourWriteOut(CURL *curl, struct OutStruct *outs, const char *writeinfo)
                                      &stringp))
                   fprintf(stream, "%s", stringp);
                 break;
+              case VAR_STDOUT:
+                stream = stdout;
+                break;
+              case VAR_STDERR:
+                stream = stderr;
+                break;
               default:
                 break;
               }
@@ -341,7 +351,7 @@ void ourWriteOut(CURL *curl, struct OutStruct *outs, const char *writeinfo)
         }
       }
     }
-    else if('\\' == *ptr) {
+    else if('\\' == *ptr && ptr[1]) {
       switch(ptr[1]) {
       case 'r':
         fputc('\r', stream);
