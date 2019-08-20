@@ -1242,7 +1242,7 @@ int aofCreatePipes(void) {
 #ifndef WIN32
     if (anetNonBlock(NULL,fds[0]) != ANET_OK) goto error;
     if (anetNonBlock(NULL,fds[1]) != ANET_OK) goto error;
-    if (aeCreateFileEvent(server.el, fds[2], AE_READABLE, aofChildPipeReadable, NULL) == AE_ERR) goto error;
+    if (ffaeCreateFileEvent(server.el, fds[2], AE_READABLE, aofChildPipeReadable, NULL) == AE_ERR) goto error;
 #else
     if (FDAPI_PipeSetNonBlock(fds[0], 1) != 0) goto error;
     if (FDAPI_PipeSetNonBlock(fds[1], 1) != 0) goto error;

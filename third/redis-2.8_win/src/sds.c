@@ -109,7 +109,8 @@ void sdsfree(sds s) {
  * remains 6 bytes. */
 void sdsupdatelen(sds s) {
     struct sdshdr *sh = (void*) (s-(sizeof(struct sdshdr)));
-    int reallen = (int)strlen(s);                                               WIN_PORT_FIX /* cast (int) */
+    int reallen = (int)strlen(s);                                          
+	WIN_PORT_FIX /* cast (int) */
     sh->free += (sh->len-reallen);
     sh->len = reallen;
 }
