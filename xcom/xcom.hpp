@@ -98,7 +98,11 @@ public:
             return 0;
         }else if(-1 == ret){
             // -1 if an error occurred.  In the event of an error,  errno is set to indicate the error.
-            xclose();
+            if(EINTR != errno && 
+                EAGAIN != errno && 
+                EWOULDBLOCK != errno){
+                xclose();
+            }
             X_CHECK(false,-1);
         }else{
             // return the number of bytes received
@@ -112,12 +116,34 @@ public:
         auto ret = ::sendto(sock_,buf,len,flags,dest_addr,addrlen);
         if(-1 == ret){
             // -1 if an error occurred.  In the event of an error,  errno is set to indicate the error.
-            xclose();
+            if(EINTR != errno && 
+                EAGAIN != errno && 
+                EWOULDBLOCK != errno){
+                xclose();
+            }
             X_CHECK(false,-1);
         }else{
             // return the number of bytes received
             return ret;
         }
+    }
+    uint32_t get_recv_buf_size(){
+        uint32_t real = 0;
+        socklen_t len = sizeof(uint32_t);
+
+        auto ret = getsockopt(sock_,SOL_SOCKET,SO_RCVBUF,(char*)&real,&len);
+        X_CHECK(-1 != ret,-1);
+        return real;
+    }
+    bool set_recv_buf_size(uint32_t buf_size){
+        auto ret = setsockopt(sock_,SOL_SOCKET,SO_RCVBUF,(char*)&buf_size,sizeof(buf_size));
+        X_CHECK_RET_BOOL(-1 != ret);
+
+        uint32_t real = get_recv_buf_size();
+        if(real != buf_size){
+            printf("set_recv_buf_size err,set=%u,real=%u \n",buf_size,real);
+        }
+        return true;
     }
 public:
     int sock_{-1};
