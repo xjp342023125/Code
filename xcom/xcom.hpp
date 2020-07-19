@@ -102,8 +102,9 @@ public:
                 EAGAIN != errno && 
                 EWOULDBLOCK != errno){
                 xclose();
+                X_CHECK(false,-1);
             }
-            X_CHECK(false,-1);
+            return -1;
         }else{
             // return the number of bytes received
             return ret;
