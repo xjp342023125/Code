@@ -48,21 +48,21 @@ static sockaddr_in fill_addr(const char *ip, port_t port)
 class xsock
 {
 public:
-    void xclose(){
-        if(invalid_sock != sock_){
+    void close(){
+        if(invalid_sock == sock_){
             return ;
         }
         ::close(sock_);
         sock_ = invalid_sock;
     }
     bool xtcp_create(){
-        xclose();
+        close();
         sock_ = ::socket(AF_INET, SOCK_STREAM, 0);
 		X_CHECK_RET_BOOL(invalid_sock != sock_);
         return true;
     }
 
-    bool xset_nonblock(int value)
+    bool set_nonblock(int value)
 	{
 		int oldflags = ::fcntl(sock_, F_GETFL, 0);
         X_CHECK_RET_BOOL(-1 != oldflags);
@@ -77,7 +77,7 @@ public:
         return true;
 	}
 
-    bool xconnect(const char *ip, port_t port){
+    bool connect(const char *ip, port_t port){
         sockaddr_in addr = fill_addr(ip,port);
         auto ret = ::connect(sock_,(struct sockaddr*)&addr,sizeof(addr));
         X_CHECK_RET_BOOL(-1 != ret);
@@ -85,7 +85,7 @@ public:
         return true;
     }
 
-    int xrecv_from(void *buf, 
+    int recv_from(void *buf, 
                 size_t n, 
                 int flags = 0,
                 struct sockaddr *src_addr = nullptr, 
@@ -94,14 +94,14 @@ public:
         auto ret = ::recvfrom(sock_,buf,n,flags,src_addr,addrlen);
         if(0 == ret){
             // When a stream socket peer has performed an orderly shutdown, the return value will be 0
-            xclose();
+            close();
             return 0;
         }else if(-1 == ret){
             // -1 if an error occurred.  In the event of an error,  errno is set to indicate the error.
             if(EINTR != errno && 
                 EAGAIN != errno && 
                 EWOULDBLOCK != errno){
-                xclose();
+                close();
                 X_CHECK(false,-1);
             }
             return -1;
@@ -111,7 +111,7 @@ public:
         }
     }
 
-    int xsendto(const void *buf, size_t len, int flags = 0,
+    int sendto(const void *buf, size_t len, int flags = 0,
                 const struct sockaddr *dest_addr = nullptr, socklen_t addrlen = 0)
     {
         auto ret = ::sendto(sock_,buf,len,flags,dest_addr,addrlen);
@@ -120,7 +120,7 @@ public:
             if(EINTR != errno && 
                 EAGAIN != errno && 
                 EWOULDBLOCK != errno){
-                xclose();
+                close();
             }
             X_CHECK(false,-1);
         }else{
@@ -147,5 +147,46 @@ public:
         return true;
     }
 public:
-    int sock_{-1};
+    int32_t sock_{-1};
+};
+
+#define MAX_EP_EVT_CNT 4096
+class xevent{
+public:
+    virtual ~xevent(){}
+    virtual void handle_evt(uint32_t evt_type){}
+    virtual int32_t get_fd(){return invalid_sock;}
+};
+
+class xepoll{
+public:
+    bool init(){
+        epfd_ = epoll_create(MAX_EP_EVT_CNT);
+        X_CHECK_RET_BOOL(invalid_sock != epfd_);
+        memset(&events_,0,sizeof(events_));
+        return true;
+    }
+
+    bool remove(xevent *evt){
+        auto ret = epoll_ctl(epfd_,EPOLL_CTL_DEL,evt->get_fd(),nullptr);
+        X_CHECK_RET_BOOL(0 == ret);
+        return true;
+    }
+
+    bool insert(uint32_t evt_type,xevent *evt){
+        epoll_event ev = {evt_type,evt};
+        auto ret = epoll_ctl(epfd_,EPOLL_CTL_ADD,evt->get_fd(),&ev);
+        return true;
+    }
+
+    void wait(){
+        int cnt = epoll_wait(epfd_,events_,MAX_EP_EVT_CNT,-1);
+        for(int i = 0;i < cnt; ++i){
+            auto event = (xevent*)(events_[i].data.ptr);
+            event->handle_evt(events_[i].events);
+        }
+    }
+public:
+    epoll_event events_[MAX_EP_EVT_CNT];
+    int32_t epfd_{-1};
 };
