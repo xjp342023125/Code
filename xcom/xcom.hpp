@@ -5,6 +5,8 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <thread>
+#include <chrono>
 #include <set>
 #include "cstring"
 using namespace std;
@@ -35,6 +37,10 @@ typedef unsigned short port_t;
 //////////////////////////////
 #define invalid_sock -1
 //////////////////////////////
+static void sleep_ns(uint64_t ns){
+    std::this_thread::sleep_for(std::chrono::nanoseconds(ns));
+}
+
 static sockaddr_in fill_addr(const char *ip, port_t port)
 {
 	sockaddr_in addr;
@@ -55,7 +61,7 @@ public:
         ::close(sock_);
         sock_ = invalid_sock;
     }
-    bool xtcp_create(){
+    bool tcp_create(){
         close();
         sock_ = ::socket(AF_INET, SOCK_STREAM, 0);
 		X_CHECK_RET_BOOL(invalid_sock != sock_);
