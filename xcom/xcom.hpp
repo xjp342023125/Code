@@ -33,6 +33,9 @@ typedef unsigned short port_t;
 #define ARRAY_CNT(v)	(sizeof(v)/sizeof((v)[0]))
 #define X_CHECK(v,ret) \
     if(0 == (v)){printf("err!file:%s,line:%u,last err=%u \n",__FILE__,__LINE__,errno);return ret;}
+
+#define X_CHECK_NO_RET(v) \
+    if(0 == (v)){printf("err!file:%s,line:%u,last err=%u \n",__FILE__,__LINE__,errno);return ;}
 #define X_CHECK_RET_BOOL(v) X_CHECK(v,false)
 //////////////////////////////
 #define invalid_sock -1
@@ -67,6 +70,31 @@ public:
 		X_CHECK_RET_BOOL(invalid_sock != sock_);
         return true;
     }
+
+    bool xbind(const char *ip, port_t port)
+	{
+		sockaddr_in addr = fill_addr(ip,port);
+
+		int ret = bind(sock_, (struct sockaddr*)&addr, sizeof(addr));
+		return 0 == ret;
+	}
+
+	bool xlisten(int iBacklog=20)
+	{
+		return 0 == ::listen(sock_, iBacklog);
+	}
+
+
+    int xaccept()
+	{
+		int ret;
+
+		struct sockaddr_in addr;
+		socklen_t	addrlen = sizeof(addr);
+
+		ret = ::accept(sock_, (struct sockaddr*)&addr, &addrlen);
+		return ret;
+	}
 
     bool set_nonblock(int value)
 	{
@@ -181,12 +209,13 @@ public:
 
     bool insert(uint32_t evt_type,xevent *evt){
         epoll_event ev = {evt_type,evt};
-        auto ret = epoll_ctl(epfd_,EPOLL_CTL_ADD,evt->get_fd(),&ev);
+        auto fd = evt->get_fd();
+        auto ret = epoll_ctl(epfd_,EPOLL_CTL_ADD,fd,&ev);
         return true;
     }
 
-    void wait(){
-        int cnt = epoll_wait(epfd_,events_,MAX_EP_EVT_CNT,-1);
+    void wait(int timeout = -1){
+        int cnt = epoll_wait(epfd_,events_,MAX_EP_EVT_CNT,timeout);
         for(int i = 0;i < cnt; ++i){
             auto event = (xevent*)(events_[i].data.ptr);
             event->handle_evt(events_[i].events);
@@ -196,3 +225,4 @@ public:
     epoll_event events_[MAX_EP_EVT_CNT];
     int32_t epfd_{-1};
 };
+
