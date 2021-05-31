@@ -5,6 +5,7 @@ class xepoll;
 class xevent{
 public:
     virtual ~xevent(){}
+    // EPOLLIN,EPOLLOUT
     virtual void handle_evt(uint32_t evt_type){}
     virtual int32_t get_fd(){return invalid_sock;}
 
@@ -28,6 +29,7 @@ public:
         return true;
     }
 
+    // EPOLLIN,EPOLLOUT
     bool insert(uint32_t evt_type,xevent *evt){
         epoll_event ev = {evt_type,evt};
         auto fd = evt->get_fd();
