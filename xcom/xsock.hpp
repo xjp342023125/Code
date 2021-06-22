@@ -71,20 +71,7 @@ public:
 		return ret;
 	}
 
-    bool set_nonblock(int value)
-	{
-		int oldflags = ::fcntl(sock_, F_GETFL, 0);
-        X_CHECK_RET_BOOL(-1 != oldflags);
 
-		if (value != 0)
-			oldflags |= O_NONBLOCK;
-		else
-			oldflags &= ~O_NONBLOCK;
-		/* Store modified flag word in the descriptor. */
-		auto ret = ::fcntl(sock_, F_SETFL, oldflags);
-        X_CHECK_0(ret,false);
-		return true;
-	}
 
     bool connect(const char *ip, port_t port){
         sockaddr_in addr = fill_addr(ip,port);
@@ -178,9 +165,32 @@ public:
         return addr;
     }
 
-    bool reuse_addr(){
+    bool reuse_addr(int32_t flag){
+        
+        auto ret = setsockopt(sock_,SOL_SOCKET,SO_REUSEADDR,&flag,sizeof(flag));
         return true;
     }
+
+    bool reuse_port(int32_t flag){
+        
+        auto ret = setsockopt(sock_,SOL_SOCKET,SO_REUSEPORT,&flag,sizeof(flag));
+        return true;
+    }
+
+    bool set_nonblock(int32_t value)
+	{
+		int oldflags = ::fcntl(sock_, F_GETFL, 0);
+        X_CHECK_RET_BOOL(-1 != oldflags);
+
+		if (value != 0)
+			oldflags |= O_NONBLOCK;
+		else
+			oldflags &= ~O_NONBLOCK;
+		/* Store modified flag word in the descriptor. */
+		auto ret = ::fcntl(sock_, F_SETFL, oldflags);
+        X_CHECK_0(ret,false);
+		return true;
+	}
 public:
     int32_t sock_{-1};
 };
