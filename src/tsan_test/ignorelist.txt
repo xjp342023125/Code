@@ -1,0 +1,2 @@
+fun:add3
+fun:sub3

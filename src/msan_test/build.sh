@@ -1,0 +1,1 @@
+g++ main.cpp -g -lpthread  -fsanitize=memory -fPIE -pie
