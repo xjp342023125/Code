@@ -3,6 +3,7 @@
 
 
 #define API_ATTR __attribute__ ((visibility("default")))
+#define API_ATTR_HIDE __attribute__ ((visibility ("hidden")))
 
 class API_ATTR so_class1
 {
