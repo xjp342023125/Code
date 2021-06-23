@@ -13,8 +13,13 @@ void so2(){
 	printf("so2\n");
 }
 
+void solib_same_name(){
+	printf("solib_same_name in so\n");
+}
+
 void so_class1::so_class_f1()
 {
 	printf("so_class1::so_class_f1\n");
 
 }
+
