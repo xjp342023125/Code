@@ -1,5 +1,3 @@
 mkdir build
-cd build
-rm -rf *
-cmake ../
-make
+cd build && rm -rf *
+cmake ../ && make
