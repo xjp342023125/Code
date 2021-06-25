@@ -1,6 +1,6 @@
 PROJECT(xxso)
 
-SET(CMAKE_CXX_FLAGS "-fvisibility=hidden")
+SET(CMAKE_CXX_FLAGS "-fvisibility=hidden -Wl,--exclude-libs,ALL")
 #print compile info
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
