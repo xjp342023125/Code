@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
 PROJECT(xxbin)
 
+#SET(CMAKE_CXX_FLAGS "-fvisibility=hidden -Wl,--exclude-libs,ALL")
+
 #head file path
 include_directories(./include)
 include_directories(../so1/include/)

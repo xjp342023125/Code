@@ -5,6 +5,7 @@
 void xxx(){
 	printf("xxx in bin\n");
 }
+//extern  void xxx();
 int main(){
 	so1();
 	so2();

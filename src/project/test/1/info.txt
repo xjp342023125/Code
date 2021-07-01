@@ -1,0 +1,3 @@
+bin，so1，so2不设置隐藏：都会调用bin的函数。
+bin设置，so1，so2不设置:so1,so2调用so1的。bin调用bin的。
+bin，so1不设置，so2设置：so1调用bin的，so2调用so2的，bin调用bin的。
