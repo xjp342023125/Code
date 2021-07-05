@@ -11,6 +11,7 @@ include_directories(../so2/include/)
 #so .a path
 link_directories(../so1/build/)
 link_directories(../so2/build/)
+link_directories(../so2_ref/build/)
 
 #bin
 aux_source_directory(./src/ SRC_FILES)
@@ -18,6 +19,7 @@ add_executable(xxbin ${SRC_FILES})
 
 #so .a
 target_link_libraries(xxbin
+xxso2_ref
 xxso2
 xxso1
 )
